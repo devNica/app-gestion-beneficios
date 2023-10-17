@@ -1,0 +1,25 @@
+[
+    {
+        "registerDate": "2023-10-10",
+        "beneficiary": {
+            "id": 6,
+            "first_name": "Ramsey",
+            "last_name": "Alforde",
+            "email": "calforde5@digg.com"
+        },
+        "paymentType": {
+            "id": 2,
+            "value": "Cheque"
+        },
+        "clinic": {
+            "id": 2,
+            "value": "Optica Munkell"
+        },
+        "amountApproved": "C$ 1,200.00",
+        "notes": "",
+        "logger": "lucas alejandro gonzalez",
+        "authorizer": "Juana Ramona",
+        "letterRef": "",
+        "memoRef": ""
+    }
+]

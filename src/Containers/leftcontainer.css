@@ -1,0 +1,57 @@
+.left__container {
+    position: fixed;
+    top: var(--top-container-height);
+    left: 0;
+
+    width: var(--left-container-width);
+    height: calc(100vh - (var(--top-container-height) + 2px));
+    background-color: var(--secondary--color);
+    display: flex;
+    justify-content: center;
+    
+    transition: .4s ease all;
+
+    /*efectos*/
+    &.collapsed~.main__container {
+        left: 35px;
+        transition: .4s ease all;
+        width: calc(100% - 35px - ((4 * var(--main-container-margin))));
+    }
+
+
+    &.collapsed {
+        transition: .4s ease all;
+        --left-container-width: 0px;
+        
+
+        >.menu__items {
+            height: 0;
+        }
+    }
+
+    &.collapsed .sidebar__toggle {
+        transition: .4s ease all;
+        transform: translateY(-50%) rotate(0deg);
+        left: 5px;
+        top: calc(100vh/4);
+    }
+
+    .sidebar__toggle {
+        position: absolute;
+        top: 20px;
+        left: 150px;
+        width: 40px;
+        height: 25px;
+        transform: translateY(-50%) rotate(180deg);
+        background-color: var(--bg-gray-600);
+        color: aliceblue;
+        border-radius: 4px;
+        transition: .4s ease all;
+
+        &:hover {
+            background-color: var(--primary--color);
+            cursor: pointer;
+        }
+
+    }
+}

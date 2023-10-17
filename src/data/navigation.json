@@ -1,0 +1,94 @@
+[
+    {
+        "title": "Lentes",
+        "icon": "bi bi-sunglasses",
+        "childrens": [
+            {
+                "title": "Historicos",
+                "icon": "bi bi-hourglass-split",
+                "path": "/glasses/history"
+            },
+            {
+                "title": "Nuevo",
+                "icon": "bi bi-file-earmark-plus-fill",
+                "path": "/glasses/insert"
+            },
+            {
+                "title": "Editar",
+                "icon": "bi bi-pen",
+                "path": "/glasses/edit"
+            }
+        ]
+    },
+    {
+        "title": "Maternidad",
+        "icon": "bi bi-person-heart",
+        "childrens": [
+            {
+                "title": "Nuevo",
+                "icon": "bi bi-file-earmark-plus-fill",
+                "path": "/maternity/insert"
+            }
+        ]
+    },
+    {
+        "title": "Defuncion",
+        "icon": "bi bi-heartbreak-fill",
+        "childrens": [
+            {
+                "title": "Historicos",
+                "icon": "bi bi-hourglass-split",
+                "path": "/death/history"
+            },
+            {
+                "title": "Nuevo",
+                "icon": "bi bi-file-earmark-plus-fill",
+                "path": "/death/register"
+            },
+            {
+                "title": "Editar",
+                "icon": "bi bi-pen",
+                "path": "/glasses/edit"
+            }
+        ]
+    },
+    {
+        "title": "Ayuda",
+        "icon": "bi bi-person-raised-hand",
+        "path": "/helping",
+        "childrens": [
+            {
+                "title": "En efectivo",
+                "icon": "bi bi-cash",
+                "path": "/helping/cash"
+            },
+            {
+                "title": "Deposito",
+                "icon": "bi bi-wallet2",
+                "path": "/helping/deposit"
+            }
+        ]
+    },
+    {
+        "title": "Becas",
+        "icon": "bi bi-mortarboard-fill",
+        "path": "/study"
+    },
+    {
+        "title": "Viaticos",
+        "icon": "bi bi-bus-front",
+        "path": "/",
+        "childrens": [
+            {
+                "title": "En efectivo",
+                "icon": "bi bi-cash",
+                "path": "/helping/cash"
+            },
+            {
+                "title": "Deposito",
+                "icon": "bi bi-wallet2",
+                "path": "/helping/deposit"
+            }
+        ]
+    }
+]

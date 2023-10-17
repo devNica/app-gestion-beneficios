@@ -1,0 +1,40 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+    .form__group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+
+        >input {
+            height: 35px;
+            border: none;
+            background-color: var(--bg-gray-400);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.1rem;
+        }
+    }
+
+    .btn {
+        height: 40px;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.2rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.5rem;
+        margin-top: 20px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(7, 80, 249, 0.954);
+        }
+    }
+}

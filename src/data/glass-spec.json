@@ -1,0 +1,56 @@
+{
+    "material": [
+        {
+            "id": 1,
+            "type": "Policarbonato"
+        },
+        {
+            "id": 2,
+            "type": "CR39"
+        },
+        {
+            "id": 3,
+            "type": "Resina"
+        },
+        {
+            "id": 4,
+            "type": "BlueRay"
+        },
+        {
+            "id": 5,
+            "type": "Sencillo"
+        }
+    ],
+    "details": [
+        {
+            "id": 1,
+            "type": "Antireflejo"
+        },
+        {
+            "id": 2,
+            "type": "SunSensor"
+        },
+        {
+            "id": 3,
+            "type": "Transition"
+        },
+        {
+            "id": 4,
+            "type": "Sin Detalle"
+        }
+    ],
+    "lens": [
+        {
+            "id": 1,
+            "type": "Monofocal"
+        },
+        {
+            "id": 2,
+            "type": "Bifocal"
+        },
+        {
+            "id": 3,
+            "type": "Progresivo"
+        }
+    ]
+}

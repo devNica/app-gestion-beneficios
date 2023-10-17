@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "Optica Matamoros",
+        "inAgreement": true
+    },
+    {
+        "id": 2,
+        "name": "Optica Munkell",
+        "inAgreement": true
+    },
+    {
+        "id": 3,
+        "name": "Optica Nicaraguenses",
+        "inAgreement": false
+    },
+    {
+        "id": 4,
+        "name": "Optica Munkell",
+        "inAgreement": true
+    },
+    {
+        "id": 5,
+        "name": "Optica Vision",
+        "inAgreement": false
+    },
+    {
+        "id": 6,
+        "name": "Optica Gaitan",
+        "inAgreement": false
+    },
+    {
+        "id": 7,
+        "name": "Optica Pereira",
+        "inAgreement": true
+    }
+]

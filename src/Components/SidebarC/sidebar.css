@@ -1,0 +1,103 @@
+.sidebar{
+    width: 100%;
+    margin-top: 40px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    overflow-y: auto;
+    padding-bottom: 5px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar__list{
+        margin-left: 15px;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0;
+        list-style: none;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        .sidebar__item {
+            height: 30px;
+            display: flex;
+
+            .nav__link{
+                text-decoration: none;
+                width: 145px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 10px;
+                padding: .13em;
+                color: var(--bg-gray-600);
+                border-radius: 4px;
+                padding: .5rem;
+
+                &:hover{
+                    background-color: var(--primary--color);
+                    color: var(--bg-white-100) !important;
+                }
+
+                .nav__icon{
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.3em;
+
+                    &:hover{
+                        cursor: pointer;
+                    }
+
+                    transition: transform .4s;
+                   
+                }
+
+                .nav__icon.toggle{
+                    transform: rotate(90deg);
+                }
+
+                .nav__title{
+                    font-size: 1.1em;
+                    text-wrap: nowrap;
+                    
+                }
+            }
+
+            
+        }
+
+        .sidebar__item.dropdown {
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            overflow: hidden;
+            
+            .dropdown__content {
+                margin-top: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 90px;
+                margin-left: 15px;
+                gap: 15px;
+                transition: height .4s; 
+                border-left: .13rem solid gray;  
+
+            }
+
+            .dropdown__content.close{
+                height: 0;
+            }
+            
+            /* .dropdown__content.open {
+                height: 135px;
+            } */
+        }
+    }
+
+   
+}

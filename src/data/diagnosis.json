@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "type": "Miopia"
+    },
+    {
+        "id": "2",
+        "type": "Astigmatismo"
+    },
+    {
+        "id": "3",
+        "type": "Presbicia"
+    },
+    {
+        "id": "4",
+        "type": "Hipermetropia"
+    },
+    {
+        "id": "5",
+        "type": "Estravismo"
+    },
+    {
+        "id": "6",
+        "type": "Plano"
+    },
+    {
+        "id": "7",
+        "type": "Enfermedad Progresiva"
+    }
+]
