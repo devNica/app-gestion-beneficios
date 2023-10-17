@@ -1,0 +1,14 @@
+.content__page{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.bread__crum{
+   text-align: left;
+   width: 100%;
+   color: var(--bg-gray-500);
+   font-family: 'Barlow Condensed', sans-serif;
+   font-size: 1.5rem;
+}

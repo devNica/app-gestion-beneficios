@@ -1,0 +1,64 @@
+{
+    "indicators": [
+        {
+            "name": "Ojo",
+            "type": "text"
+        },
+        {
+            "name": "ESF",
+            "type": "text",
+            "partialName": "Esf",
+            "mockups": ["+2.25", "-2.55"],
+            "description": ["Dioptrias"]
+        },
+        {
+            "name": "CIL",
+            "type": "text",
+            "partialName": "Cil",
+            "mockups": ["-1.50", "+1.75"],
+            "description": "Fuerza de Correccion (Astigmatismo)"
+        },
+        {
+            "name": "EJE",
+            "type": "text",
+            "partialName": "Axis",
+            "mockups": [85, 90],
+            "description":"Posicion del Astigamtismo"
+        },
+        {
+            "name": "D.P.",
+            "type": "text",
+            "partialName": "Dip",
+            "mockups": ["63mm"],
+            "description": "Distancia Pupilar"
+        },
+        {
+            "name": "Prisma",
+            "type": "text",
+            "partialName": "Prisma",
+            "mockups": [0.5],
+            "description": "Cantidad de Estrabismo"
+        },
+        {
+            "name": "Base",
+            "type": "text",
+            "partialName": "Base",
+            "mockups": ["abajo", "arriba"],
+            "description": "Direccion del Ojo"
+        },
+        {
+            "name": "Adicion",
+            "type": "text",
+            "partialName": "Addition",
+            "mockups": ["+2.40", "+2.15"],
+            "description": "Adicion"
+        },
+        {
+            "name": "AV",
+            "type": "text",
+            "partialName": "Av",
+            "mockups": [0.9, "30%"],
+            "description": "Agudeza Visual"
+        }
+    ]
+}

@@ -1,0 +1,172 @@
+.custom__select__tag {
+
+    &.column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    &.row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+
+        .form__label {
+            width: 120px;
+        }
+    }
+
+    .form__label {
+        font-size: 1.2rem;
+        font-family: 'Barlow Condensed', sans-serif;
+        height: 30px;
+    }
+
+    .form__select__tag {
+        position: relative;
+        width: 100%;
+        font-family: 'Barlow Condensed', sans-serif;
+        box-sizing: border-box;
+
+
+        .select-box {
+            background-color: var(--bg-white-300);
+            border: 1px solid var(--bg-gray-600);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            padding: 0 10px;
+            cursor: pointer;
+
+            .selected-options {
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 0;
+                gap: 5px;
+
+                .tag {
+                    background-color: var(--bg-gray-500);
+                    color: var(--bg-white-100);
+                    border-radius: 4px;
+                    padding: 3px 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    cursor: default;
+                    font-size: 1rem;
+
+                    .remove-tag {
+                        cursor: pointer;
+                    }
+                }
+
+                .tag.pending {
+                    background-color: var(--primary-selected-color);
+                }
+            }
+
+            .arrow {
+                margin: 0 10px;
+
+                .bi-chevron-down {
+                    color: var(--bg-gray-600);
+                    font-size: 1.1rem;
+                }
+
+            }
+        }
+
+        &.open .options {
+            display: block;
+        }
+
+        .options {
+            display: none;
+            position: absolute;
+            margin-top: 4px;
+            width: 100%;
+            background-color: rgb(247, 247, 247);
+            color: var(--bg-gray-600);
+            border-radius: 4px;
+            border: 1px solid gray;
+            max-height: 140px;
+            overflow-y: auto;
+            z-index: 1;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .option-search-tag {
+                border: .12em solid gray;
+                border-radius: 4px;
+                padding: 4px 0;
+                margin: 8px;
+
+                .search-tags {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    padding: 4px;
+                    font-size: 12px;
+                    text-align: center;
+                }
+
+                .clear {
+                    position: absolute;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    font-size: 18px;
+                    font-weight: 400;
+                    padding: 0;
+                    right: 15px;
+                    top: 14px;
+                    left: auto;
+                }
+
+
+            }
+
+            .no-result-message {
+                padding: 0 0 12px 12px;
+            }
+
+            .option {
+                margin: 8px;
+                padding: 6px;
+                height: 30px;
+                border-radius: 4px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                cursor: pointer;
+                transition: background-color .4s;
+                font-size: 1.3rem;
+
+                &:hover {
+                    background-color: var(--bg-white-300);
+                }
+
+                &.active {
+                    background-color: var(--default-active-tag);
+                    border-bottom: 1px solid var(--primary-border-color);
+                    cursor: default;
+                }
+            }
+
+        }
+
+        .error {
+            color: rgb(253, 75, 75);
+            position: absolute;
+            top: 45px;
+        }
+    }
+}

@@ -1,0 +1,61 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  /* background-color: #242424; */
+
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  /*color definition*/
+  --primary--color: #142a7e;
+  --success--color: rgb(23, 174, 134);
+  --secondary--color: #dedede;
+  --border-container-color: rgb(219, 218, 218);
+
+  --default-active-tag: rgba(119, 190, 248, 0.527);
+  --primary-border-color: hsl(200, 100%, 50%);
+
+  --primary-selected-color: hsl(212, 69%, 53%);
+
+  --bg-gray-600: rgb(89, 92, 94);
+  --bg-gray-500: rgb(148, 148, 148);
+  --bg-gray-400: rgb(162, 164, 166);
+
+  
+  --bg-white-100: #f3f3f3;
+  --bg-white-200: #e7e7e7;
+  --bg-white-300: #e2e2e2;
+  --bg-white-400: #dcdcdc;
+
+  /*sizes container definition*/
+  --top-container-height: 80px;
+  --left-container-width: 200px;
+
+  /*margins*/
+  --main-container-margin: 15px;
+
+  /*paddings*/
+  --main-container-padding: 10px; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+}

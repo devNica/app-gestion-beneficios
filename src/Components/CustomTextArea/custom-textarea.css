@@ -1,0 +1,50 @@
+.custom__textarea {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    box-sizing: border-box;
+
+    &.column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+
+        .form__label {
+            height: 30px;
+        }
+    }
+
+    &.row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        box-sizing: border-box;
+
+        .form__label {
+            width: 150px;
+        }
+    }
+
+    .form__label {
+        font-size: 1.2rem;
+        font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .form__textarea {
+        outline: none;
+        background-color: var(--bg-white-100);
+        color: var(--bg-gray-600);
+        width: 100%;
+        border: 1px solid var(--bg-gray-600);
+        border-radius: 4px;
+        font-size: 1.2rem;
+        font-family: 'Barlow Condensed', sans-serif;
+
+        &:focus {
+            border: 1px solid rgb(78, 161, 249);
+        }
+    }
+}

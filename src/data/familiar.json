@@ -1,0 +1,235 @@
+[
+    {
+        "id": 1,
+        "first_name": "Alexander",
+        "last_name": "Rosales",
+        "email": "arosales@gmail.com",
+        "gender": "M",
+        "hasFamilyRecord": true,
+        "couple": "Maria Luisa Zeledon",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Maria Luisa Zeledon",
+                "relationShip": "esposo/a",
+                "sex": "F",
+                "status": true
+            },
+            {
+                "id": 2,
+                "fullname": "Maria Isabel Rosales Zeledon",
+                "relationShip": "hijo/a",
+                "sex": "M",
+                "status": true
+            },
+            {
+                "id": 3,
+                "fullname": "Juana del Carmen Rocha",
+                "relationShip": "madre",
+                "sex": "F",
+                "status": false
+            }
+        ],
+        "status": true
+    },
+    {
+        "id": 2,
+        "first_name": "Dayana Lucia",
+        "last_name": "Lopez",
+        "email": "dayanna.lopez@google.es",
+        "gender": "F",
+        "hasFamilyRecord": false,
+        "couple": "",
+        "familyRecord": [],
+        "status": false
+    },
+    {
+        "id": 3,
+        "first_name": "Jessica Aleyda",
+        "last_name": "Alvarez",
+        "email": "jaleyda@telcor.com",
+        "gender": "F",
+        "hasFamilyRecord": true,
+        "couple": "",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Antonio Alvarez",
+                "relationShip": "padre",
+                "sex": "M",
+                "status": false
+            },
+            {
+                "id": 2,
+                "fullname": "Carlos Aleman Alvarez",
+                "relationShip": "hijo/a",
+                "sex": "M",
+                "status": false
+            }
+        ],
+        "status": true
+    },
+    {
+        "id": 4,
+        "first_name": "Shelsy Amaranta",
+        "last_name": "Llanes",
+        "email": "shelsy.llanes89@mtv.com",
+        "gender": "F",
+        "hasFamilyRecord": true,
+        "couple": "Jose Antonio Ruiz",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Ali Mendoza",
+                "relationShip": "suegro/a",
+                "sex": "M",
+                "status": true
+            },
+            {
+                "id": 2,
+                "fullname": "Jose Antonio Ruiz",
+                "relationShip": "esposo/a",
+                "sex": "M",
+                "status": true
+            }
+        ],
+        "status": true
+    },
+    {
+        "id": 5,
+        "first_name": "Julia",
+        "last_name": "Tellez Paz",
+        "email": "jtellez@corp.com",
+        "gender": "F",
+        "hasFamilyRecord": true,
+        "couple": "",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Patronila de Calderon",
+                "relationShip": "madre",
+                "sex": "F",
+                "status": false
+            },
+            {
+                "id": 2,
+                "fullname": "Lutencio Calderon",
+                "relationShip": "padre",
+                "sex": "M",
+                "status": true
+            },
+            {
+                "id": 3,
+                "fullname": "Ana Margarita Rosales",
+                "relationShip": "sobrino/a",
+                "sex": "F",
+                "status": false
+            },
+            {
+                "id": 4,
+                "fullname": "Michael Steven Rosales Calderon",
+                "relationShip": "sobrino/a",
+                "sex": "M",
+                "status": true
+            }
+        ],
+        "status": true
+    },
+    {
+        "id": 6,
+        "first_name": "Ramon de Leon",
+        "last_name": "Sanchez",
+        "email": "ramonleon90@tigo.com",
+        "gender": "M",
+        "hasFamilyRecord": false,
+        "couple": "",
+        "familyRecord": [],
+        "status": false
+    },
+    {
+        "id": 7,
+        "first_name": "Augustin",
+        "last_name": "Martinez",
+        "email": "amartinez@claro.com",
+        "gender": "M",
+        "hasFamilyRecord": false,
+        "couple": "",
+        "familyRecord": [],
+        "status": true
+    },
+    {
+        "id": 8,
+        "first_name": "Lucresia",
+        "last_name": "Milch",
+        "email": "lukresia.milch@usa.com",
+        "gender": "F",
+        "hasFamilyRecord": true,
+        "couple": "",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Lucrecia Flores Willhem",
+                "relationShip": "abuelo/a",
+                "sex": "F",
+                "status": true
+            },
+            {
+                "id": 2,
+                "fullname": "Moises Petronilo Saenz",
+                "relationShip": "tio/a",
+                "sex": "M",
+                "status": true
+            }
+        ],
+        "status": true
+    },
+    {
+        "id": 9,
+        "first_name": "Nicolas",
+        "last_name": "Mora",
+        "email": "nicolasmora@ecomoda.com",
+        "gender": "M",
+        "hasFamilyRecord": true,
+        "couple": "Beatriz Pinzon Solano",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Beatriz Pinzon Solano",
+                "relationShip": "esposo/a",
+                "sex": "F",
+                "status": false
+            }
+        ],
+        "status": false
+    },
+    {
+        "id": 10,
+        "first_name": "Elmer Jose",
+        "last_name": "Pereira",
+        "email": "e.jose.pereira@munkell.com",
+        "gender": "M",
+        "hasFamilyRecord": false,
+        "couple": "",
+        "familyRecord": [],
+        "status": false
+    },
+    {
+        "id": 11,
+        "first_name": "Lucas Alejandro",
+        "last_name": "Estrada",
+        "email": "laest@nic.com",
+        "gender": "M",
+        "hasFamilyRecord": true,
+        "couple": "",
+        "familyRecord": [
+            {
+                "id": 1,
+                "fullname": "Estela Ramirez",
+                "relationShip": "madre",
+                "sex": "F",
+                "status": true
+            }
+        ],
+        "status": true
+    }
+]

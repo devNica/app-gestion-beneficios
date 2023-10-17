@@ -1,0 +1,33 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "value": "Blue" 
+        },
+
+        {
+            "id": 2,
+            "value": "Red" 
+        },
+        {
+            "id": 3,
+            "value": "Yellow" 
+        },
+        {
+            "id": 4,
+            "value": "Green" 
+        },
+        {
+            "id": 5,
+            "value": "White" 
+        },
+        {
+            "id": 6,
+            "value": "Brown" 
+        },
+        {
+            "id": 7,
+            "value": "Pink" 
+        }
+    ]
+}

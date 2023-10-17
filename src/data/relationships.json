@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "type": "padre"
+    },
+    {
+        "id": 2,
+        "type": "madre"
+    },
+    {
+        "id": 3,
+        "type": "esposo/a"
+    },
+    {
+        "id": 4,
+        "type": "hijo/a"
+    },
+    {
+        "id": 5,
+        "type": "abuelo/a"
+    },
+    {
+        "id": 6,
+        "type": "suegro/a"
+    },
+    {
+        "id": 7,
+        "type": "tio/a"
+    },
+    {
+        "id": 8,
+        "type": "sobrino/a"
+    },
+    {
+        "id": 9,
+        "type": "primo/a"
+    }
+]

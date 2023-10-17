@@ -1,0 +1,198 @@
+.navbar__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary--color);
+
+    /* background: linear-gradient(45deg, rgba(235, 188, 46, 1) 0%, rgba(255, 199, 42, 1) 25%, rgba(48, 43, 143, 1) 25%); */
+
+    .nav__items {
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        padding: 0;
+
+        &.left {
+            margin-left: 30px;
+            width: 50%;
+            justify-content: flex-start;
+        }
+
+        &.right {
+            width: 50%;
+            margin-right: 30px;
+            justify-content: flex-end;
+        }
+    }
+
+    .nav__items .nav__link__brand {
+        list-style: none;
+        height: 60px;
+        cursor: pointer;
+    }
+
+    .logo {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        object-fit: contain;
+    }
+
+    .nav__items .nav__link {
+        width: 30px;
+        height: 30px;
+
+        &.badge{
+            background-color: rgba(250, 115, 115, 1);
+            
+            > i {
+                rotate: -45deg;
+                transition: .6s all;
+            }
+
+            &:hover{
+                background-color: rgb(254, 102, 102);
+        
+                > i {
+                    rotate: 45deg;
+                    transition: .6s all;
+                }
+
+                
+               
+            }
+        }
+
+        &.badge,
+        &.profile {
+            position: relative;
+
+        }
+
+        padding: .6em;
+        border-radius: 50%;
+        list-style: none;
+        text-indent: 0;
+        background-color: var(--bg-gray-600);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--bg-gray-400);
+        }
+
+        .badge-content {
+            background-color: var(--primary-border-color);
+            border-radius: 4px;
+            color: var(--bg-white-100);
+            position: absolute;
+            top: -5px;
+            width: 25px;
+            transform: translateX(70%);
+            display: flex;
+            height: 18px;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.nav__link.profile .menu::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--bg-white-300);
+    transform: rotate(45deg);
+}
+
+.nav__link.profile .menu {
+
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .3s;
+
+    &.active {
+        visibility: visible;
+        opacity: .96;
+    }
+
+    position: absolute;
+    top: 60px;
+    right: -5px;
+    padding: 10px 10px;
+    background-color: var(--bg-white-300);
+
+
+    width: 140px;
+    box-sizing: 0 5px 25px rgba(0, 0, 0, 0, 0.1);
+    transition: 0.5s;
+    border-radius: 12px;
+
+    font-family: monospace;
+
+    >h3 {
+        width: 100%;
+        text-align: center;
+        font-size: 0.75rem;
+        padding: 5px 0;
+        color: var(--bg-gray-600);
+
+        >span {
+            font-size: 0.65rem;
+        }
+    }
+}
+
+.nav__link.profile .menu ul {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    >li {
+        list-style: none;
+        padding: 5px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+        width: 100%;
+        height: 30px;
+
+        .link {
+            height: 100%;
+            width: 100%;
+            border: none;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            gap: 10px;
+
+            background-color: transparent;
+            color: var(--bg-gray-600);
+            border-radius: 4px;
+            transition: background .4s;
+
+
+
+            &:hover {
+                cursor: pointer;
+                background: var(--primary--color);
+                color: var(--bg-white-200);
+            }
+        }
+
+    }
+}
