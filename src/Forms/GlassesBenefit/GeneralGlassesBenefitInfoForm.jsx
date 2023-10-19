@@ -12,6 +12,7 @@ import { useHandleGeneralGlassesBenefitInfoForm } from "../../hooks/forms/glasse
 import './glasses-benefit-form.css'
 
 export const GeneralGlassesBenefitInfoForm = ({
+    mode = '',
     clinics,
     paymentTypes,
     authorizers,
@@ -20,11 +21,13 @@ export const GeneralGlassesBenefitInfoForm = ({
 
 }) => {
 
-    const { states, actions } = useHandleGeneralGlassesBenefitInfoForm({ paymentTypes, currentIndex, updateCurrentIndex })
+    const { states, actions } = useHandleGeneralGlassesBenefitInfoForm({
+        paymentTypes, currentIndex, updateCurrentIndex, mode
+    })
 
     const { getEmployeeList } = useEmployeeProps()
     const employeeList = getEmployeeList({
-        queryFields: [{ gender: 'M'}],
+        queryFields: [{ gender: 'M' }],
         returnFields: ['id', 'first_name', 'last_name', 'email']
     })
 
@@ -36,10 +39,10 @@ export const GeneralGlassesBenefitInfoForm = ({
 
     const {
         handleEmployeeSelection, handleRegisterDate, handleSubmit,
-        setCurrentAuthorizer, setCurrentClinic, setNotes, setPaymentType,
+        setCurrentAuthorizer, setCurrentClinic, setNotes,
         setIsModalOpen, updateDocumentRefs, handleKeyDown, handleSetPaymentType
     } = actions
-    
+
 
     return (
         <form action="" className="form__gnral__glasses__benefit__info">
@@ -58,7 +61,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                         label="Fecha:"
                         orientation="row"
                         value={registerDate}
-                        onChange={(e)=>handleRegisterDate(e.target.value)}
+                        onChange={(e) => handleRegisterDate(e.target.value)}
                     />
 
                     <CustomInput
@@ -71,7 +74,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
-                            <InvokeModal handleClick={setIsModalOpen}/>
+                            <InvokeModal handleClick={setIsModalOpen} />
                         }
                     />
 
@@ -157,7 +160,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                             type="text"
                             value={letterRef}
                             handleKeyDown={handleKeyDown}
-                            onChange={(e)=>updateDocumentRefs(e.target.value)}
+                            onChange={(e) => updateDocumentRefs(e.target.value)}
                         /> :
 
                         <CustomInput
@@ -168,7 +171,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                             type="text"
                             value={memoRef}
                             handleKeyDown={handleKeyDown}
-                            onChange={(e)=>updateDocumentRefs(e.target.value)}
+                            onChange={(e) => updateDocumentRefs(e.target.value)}
                         />
                 }
             </div>

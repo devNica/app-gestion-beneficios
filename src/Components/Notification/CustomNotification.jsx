@@ -32,6 +32,14 @@ const CustomNotification = () => {
             })
         }
 
+        if (type === 'info' && type !== null) {  
+            toast.info(message, {
+                autoClose: delay,
+                
+            })
+        }
+
+
         return () => {
             dispatch(resetNotification())
         }

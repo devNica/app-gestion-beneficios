@@ -51,7 +51,6 @@ const CustomTable = ({
                     </td>
                 ))
             }
-
         </tr>
     ))
 

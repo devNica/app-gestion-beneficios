@@ -1,28 +1,38 @@
 [
     {
         "benefitId": 1,
-        "firstName": "Alexander",
-        "lastName": "Rosales",
-        "employeeNumber": "NE-895",
+        "fullname": "Alexander Rosales",
+        "employeeNumber": "NE-0001",
         "employeeSex": "M",
-        "registeredAt": "",
-        "approvedAt": "",
+        "registeredAt": "07/10/2023",
+        "approvedAt": "-",
         "generatedBy": "Alejandro Gonsalez",
-        "approvedBy": "Miguel Solis",
+        "approvedBy": "Juana Maria Mendez",
         "statusId": 1,
-        "statusDesc": "pendiente de aprobacion"
+        "statusDesc": "Aprobado"
     },
     {
-        "benefitId": 1,
-        "firstName": "Juan Ramon",
-        "lastName": "Riquelme",
-        "employeeNumber": "NE-675",
-        "employeeSex": "M",
-        "registeredAt": "",
-        "approvedAt": "",
+        "benefitId": 2,
+        "fullname": "Dayana Lucia Lopez",
+        "employeeNumber": "NE-0002",
+        "employeeSex": "F",
+        "registeredAt": "12/10/2023",
+        "approvedAt": "-",
         "generatedBy": "Alejandro Gonsalez",
-        "approvedBy": "Miguel Solis",
-        "statusId": 1,
-        "statusDesc": "pendiente de aprobacion"
+        "approvedBy": "Juana Maria Mendez",
+        "statusId": 2,
+        "statusDesc": "Rechazado"
+    },
+    {
+        "benefitId": 3,
+        "fullname": "Jessica Aleyda Alvarez",
+        "employeeNumber": "NE-0003",
+        "employeeSex": "F",
+        "registeredAt": "18/10/2023",
+        "approvedAt": "-",
+        "generatedBy": "Alejandro Gonsalez",
+        "approvedBy": "Juana Maria Mendez",
+        "statusId": 3,
+        "statusDesc": "En Revision"
     }
 ]

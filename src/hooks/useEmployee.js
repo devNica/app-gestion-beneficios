@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import { filterData } from "../utils/object.util"
 
+
 export const useGetEmployeeList = () => useSelector(state => state.employee.employeeList)
 
 export const useEmployeeProps = () => {
@@ -33,7 +34,7 @@ export const useEmployeeProps = () => {
         return filterData(queryFields, returnFields, employees)
     }
 
-    function calcBenefitAmountPerRelative(employeeId, typeRegister='F') {
+    function calcBenefitAmountPerRelative(employeeId, typeRegister = 'F') {
 
         const preload = employees.filter(emp => emp.id === employeeId)
 
@@ -47,7 +48,7 @@ export const useEmployeeProps = () => {
                 date: '',
                 amount: family.find(element => element.relative === item.relationShip).amount
             }))
-    
+
         } else {
             results = records.map(item => ({
                 ...item,
@@ -56,7 +57,7 @@ export const useEmployeeProps = () => {
             }))
         }
 
-        
+
         return results
 
     }

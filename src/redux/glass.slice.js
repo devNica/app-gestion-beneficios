@@ -4,7 +4,7 @@ import diagnosisMockup from '../data/diagnosis.json'
 import glassSpec from '../data/glass-spec.json'
 
 const initialState = {
-    requestList: [],
+    history: [],
 
     clinics: clinicMockup,
     lensDetail: glassSpec.details,
@@ -12,7 +12,7 @@ const initialState = {
     lensType: glassSpec.lens,
     diagnosis: diagnosisMockup,
 
-    newUnSavedRequest: false,
+    memoryFlag: false,
 
     generalInfoReq: {
         registerDate: null,
@@ -80,10 +80,33 @@ const glassSlice = createSlice({
     initialState,
     reducers: {
 
+        setMemoryFlag: (state, action) => {
+            return {
+                ...state,
+                memoryFlag: action.payload
+            }
+        },
+
+        loadHistory: (state, action) => {
+            return {
+                ...state,
+                history: action.payload
+            }
+        },
+
+        loadRecord: (state, action) => {
+            return {
+                ...state,
+                generalInfoReq: action.payload.gnral,
+                ophthalmicInfoReq: action.payload.oph, 
+                applicationSupports: action.payload.sup
+            }
+        },
+
         setGeneralInfoReq: (state, action) => {
             return {
                 ...state,
-                newUnSavedRequest: true,
+                memoryFlag: true,
                 generalInfoReq: action.payload
             }
         },
@@ -105,7 +128,7 @@ const glassSlice = createSlice({
         resetGlassReq: (state) => {
             return {
                 ...state,
-                newUnSavedRequest: false,
+                memoryFlag: false,
                 generalInfoReq: {
                     registerDate: null,
                     beneficiary: null,
@@ -170,7 +193,14 @@ const glassSlice = createSlice({
     }
 })
 
-export const { setGeneralInfoReq, setOphthalmicInfoReq, setSupportsReq, resetGlassReq } = glassSlice.actions
+export const {
+    setMemoryFlag,
+    loadHistory,
+    loadRecord,
+    setGeneralInfoReq,
+    setOphthalmicInfoReq,
+    setSupportsReq,
+    resetGlassReq } = glassSlice.actions
 
 
 export default glassSlice.reducer

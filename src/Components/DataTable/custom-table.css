@@ -1,7 +1,7 @@
 table {
     font-family: sans-serif;
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 table.custom__table .table-head {
@@ -57,3 +57,4 @@ table.custom__table .table-row:last-child {
     justify-content: center;
     align-items: center;
 }
+

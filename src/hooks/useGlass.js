@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setGeneralInfoReq, setOphthalmicInfoReq, setSupportsReq, resetGlassReq } from '../redux/glass.slice'
-import { decrementTracking, incrementTracking } from "../redux/tracking.slice"
+import { setGeneralInfoReq, setOphthalmicInfoReq, setSupportsReq, resetGlassReq, loadHistory, loadRecord, setMemoryFlag } from '../redux/glass.slice'
+import mockupHistory from '../data/history/glasses.json'
+import mockupRecord from '../data/edit/glasses.json'
+import { filterData } from "../utils/object.util"
 
 export const useGlassProps = () => {
     const {
+        history,
         clinics,
         diagnosis,
         lensDetail,
@@ -19,26 +22,44 @@ export const useGlassProps = () => {
 
     const serializedDiagnosis = diagnosis.map(dg => ({ id: dg.id, value: dg.type }))
 
+    function serializedHistory({ queryFields, returnFields }) {
+        return filterData(queryFields, returnFields, history)
+    }
+
     return {
         serializedClinics,
         serializedDiagnosis,
         serializedLensDetail,
         serializedLensMaterial,
-        serializedLensType
+        serializedLensType,
+        serializedHistory
     }
 }
 
 export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
-    const newUnSavedRequest = useSelector(state => state.glass.newUnSavedRequest)
-    const generalInfoReq = useSelector(state => state.glass.generalInfoReq)
-    const ophthalmicInfoReq = useSelector(state => state.glass.ophthalmicInfoReq)
-    const supportsReq = useSelector(state => state.glass.applicationSupports)
+
+    const { 
+        memoryFlag,
+        generalInfoReq,
+        ophthalmicInfoReq,
+        applicationSupports: supportsReq
+    } = useSelector(state => state.glass)
+
+    function fetchAsyncGlassesHistory() {
+        dispatch(loadHistory(mockupHistory))
+    }
+
+    function fetchGlassesRequestRecordById() {
+        dispatch(setMemoryFlag(true))
+        dispatch(loadRecord({
+            gnral: mockupRecord.gnralInfoReq,
+            oph: mockupRecord.opthalmicInfo,
+            sup: mockupRecord.applicationSupports
+        }))
+    }
 
     function setGnralInfo(data) {
-        if (!newUnSavedRequest) {
-            dispatch(incrementTracking())
-        }
         dispatch(setGeneralInfoReq(data))
     }
 
@@ -50,23 +71,29 @@ export const useGlassesRequestManagement = () => {
         dispatch(setSupportsReq(data))
     }
 
-    function resetGlassRequest(data) {
-        dispatch(decrementTracking())
+    function saveRequest() {
         dispatch(resetGlassReq())
     }
 
+    function clearRequestData() {
+        dispatch(resetGlassReq())
+    }
 
     return {
         states: {
+            memoryFlag,
             generalInfoReq,
             ophthalmicInfoReq,
             supportsReq
         },
         actions: {
+            fetchAsyncGlassesHistory,
+            fetchGlassesRequestRecordById,
             setGnralInfo,
             setOphthalmicInfo,
             setApplicationSupports,
-            resetGlassRequest
+            saveRequest,
+            clearRequestData
         }
     }
 }
