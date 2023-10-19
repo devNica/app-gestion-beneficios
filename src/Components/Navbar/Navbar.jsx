@@ -9,7 +9,7 @@ export default function Navbar() {
 
     const [isMenuOpen, setMenuOpen] = useState(false)
     const { clearCredentials } = useManageCredential()
-    const {pendingNumbers} = useTrackingProps()
+    const { states } = useTrackingProps()
 
     return (
         <nav className="navbar__container">
@@ -25,9 +25,13 @@ export default function Navbar() {
             <ul className="nav__items right">
                 <li className='nav__link badge'>
                     <i className="bi bi-pin-angle-fill"></i>
-                    <div className="badge-content">
-                        <span className='badge-count'>{`+${pendingNumbers}`}</span>
-                    </div>
+                    {
+                        states.spool > 0 ?
+                            <div className="badge-content">
+                                <span className='badge-count'>{`${states.spool}`}</span>
+                            </div> : <></>
+                    }
+
                 </li>
                 <li className="nav__link profile" onClick={() => setMenuOpen(prev => !prev)}>
                     <span>AG</span>

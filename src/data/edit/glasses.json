@@ -1,0 +1,131 @@
+{
+    "gnralInfoReq": {
+        "registerDate": "2023-10-09",
+        "beneficiary": {
+            "id": 1,
+            "first_name": "Alexander",
+            "last_name": "Rosales",
+            "email": "arosales@gmail.com"
+        },
+        "paymentType": {
+            "id": 1,
+            "value": "Reembolso"
+        },
+        "clinic": {
+            "id": 1,
+            "value": "Optica Matamoros"
+        },
+        "amountApproved": "C$ 1,2000.00",
+        "notes": "",
+        "logger": "agonzalezs",
+        "authorizer": {
+            "id": 1,
+            "value": "Juana Maria Mendez"
+        },
+        "letterRef": "sa-17102023",
+        "memoRef": ""
+    },
+    "opthalmicInfo": {
+        "rightEye": [
+            {
+                "erEsf": "+2.15"
+            },
+            {
+                "erCil": "+1.2"
+            },
+            {
+                "erAxis": "87"
+            },
+            {
+                "erDip": "78"
+            },
+            {
+                "erPrisma": "-"
+            },
+            {
+                "erBase": "-"
+            },
+            {
+                "erAddition": "-"
+            },
+            {
+                "erAv": "+2.35"
+            }
+        ],
+        "leftEye": [
+            {
+                "elEsf": "+1.75"
+            },
+            {
+                "elCil": "+1.2"
+            },
+            {
+                "elAxis": "90"
+            },
+            {
+                "elDip": "78"
+            },
+            {
+                "elPrisma": "-"
+            },
+            {
+                "elBase": "-"
+            },
+            {
+                "elAddition": "-"
+            },
+            {
+                "elAv": "+2.65"
+            }
+        ],
+        "lenMaterial": {
+            "id": 3,
+            "value": "Resina"
+        },
+        "lenDetail": {
+            "id": 1,
+            "value": "Antireflejo"
+        },
+        "lenType": {
+            "id": 2,
+            "value": "Bifocal"
+        },
+        "diagnosis": [
+            {
+                "id": 1,
+                "value": "Miopia"
+            },
+            {
+                "id": 2,
+                "value": "Astigmatismo"
+            }
+        ]
+    },
+    "applicationSupports": {
+        "currentMode": "OIV",
+        "hasProform": false,
+        "proforma": {
+            "date": "2023-09-27",
+            "serie": "",
+            "amount": "",
+            "currency": {
+                "id": 1,
+                "value": "C$"
+            },
+            "amountInCS": "",
+            "exchangeRate": "1.00"
+        },
+        "hasInvoice": true,
+        "invoice":  {
+            "date": "2023-09-27",
+            "serie": "FAC-6754",
+            "amount": "1,450",
+            "currency": {
+                "id": 1,
+                "value": "C$"
+            },
+            "amountInCS": "C$ 1,450.00",
+            "exchangeRate": "1.00"
+        }
+    }
+}

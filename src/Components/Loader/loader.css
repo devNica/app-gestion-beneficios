@@ -1,0 +1,20 @@
+.custom__loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 10px solid;
+    border-color: rgba(45, 144, 119, 0.15) rgba(32, 177, 153, 0.25) rgba(39, 188, 186, 0.35) rgba(14, 157, 138, 0.5);
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 

@@ -12,11 +12,6 @@
                 "title": "Nuevo",
                 "icon": "bi bi-file-earmark-plus-fill",
                 "path": "/glasses/insert"
-            },
-            {
-                "title": "Editar",
-                "icon": "bi bi-pen",
-                "path": "/glasses/edit"
             }
         ]
     },

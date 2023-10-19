@@ -4,7 +4,7 @@ import { useAdminProps } from '../../hooks/useProps'
 import Stepper from '../../Components/Stepper/Stepper'
 import DeathGeneralInfoForm from '../../Forms/Death/DeathGeneralInfoForm'
 
-import './main-page.css'
+import '../main-page.css'
 import AdditionalDeathInfoForm from '../../Forms/Death/AdditionalDeathInfoForm'
 
 export default function DeathBenefitPage() {

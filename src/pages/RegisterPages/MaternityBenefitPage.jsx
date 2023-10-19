@@ -4,7 +4,7 @@ import MaternityGeneralInfoForm from "../../Forms/maternity/MaternityGeneralInfo
 import { useAdminProps } from "../../hooks/useProps"
 import NewbornInfoForm from "../../Forms/maternity/NewbornInfoForm"
 
-import './main-page.css'
+import '../main-page.css'
 
 export default function MaternityBenefitPage() {
 

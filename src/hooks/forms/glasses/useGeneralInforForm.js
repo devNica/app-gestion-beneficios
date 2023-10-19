@@ -12,8 +12,14 @@ import { setNotification } from "../../../redux/notification.slice"
 import { useGlassesRequestManagement } from "../../useGlass"
 import { getCurrentDateString } from "../../../utils/date.util"
 import { isEmpty } from "lodash"
+import { useTrackingProps } from '../../useTracking'
 
-export const useHandleGeneralGlassesBenefitInfoForm = ({ paymentTypes, currentIndex, updateCurrentIndex }) => {
+export const useHandleGeneralGlassesBenefitInfoForm = ({ 
+    paymentTypes, 
+    currentIndex, 
+    updateCurrentIndex, 
+    mode
+}) => {
 
 
     const dispatch = useDispatch()
@@ -22,6 +28,8 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({ paymentTypes, currentIn
     const logger = useGetUserInfo()
 
     const { actions, states } = useGlassesRequestManagement()
+    const { actions: trackingAct } = useTrackingProps()
+
 
     const { generalInfoReq: gnrl } = states
 
@@ -185,6 +193,17 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({ paymentTypes, currentIn
             authorizer: currentAuthorizer,
             letterRef,
             memoRef
+        }, mode)
+
+        trackingAct.trackingUpdate({
+            typeAction: 'add',
+            data: {
+                message: '',
+                space: 'glass',
+                mode,
+                procIdentity: mode === 'register' ? 'GL-REG' : 'GL-EDIT'
+            },
+            space: 'glass'
         })
 
         updateCurrentIndex(currentIndex + 1)
@@ -209,7 +228,6 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({ paymentTypes, currentIn
             handleEmployeeSelection,
             handleRegisterDate,
             handleSubmit,
-            setPaymentType,
             setCurrentClinic,
             setCurrentAuthorizer,
             setNotes,
