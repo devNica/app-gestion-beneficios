@@ -27,6 +27,15 @@ const deathSlice = createSlice({
     initialState,
     reducers: {
 
+        resetDeathReq: (state) => {
+            return {
+                ...state,
+                relativesList: initialState.relativesList,
+                generalInfoReq: initialState.generalInfoReq,
+                additionalInfo: initialState.additionalInfo
+            }
+        },
+
         setRelativeList: (state, action) => {
             return {
                 ...state,
@@ -64,6 +73,11 @@ const deathSlice = createSlice({
     }
 })
 
-export const { setGeneralInfoReq, setRelativeList, setAdditionalInfoReq, resetAdditionalInfoReq } = deathSlice.actions
+export const {
+    resetDeathReq,
+    setGeneralInfoReq,
+    setRelativeList,
+    setAdditionalInfoReq,
+    resetAdditionalInfoReq } = deathSlice.actions
 
 export default deathSlice.reducer

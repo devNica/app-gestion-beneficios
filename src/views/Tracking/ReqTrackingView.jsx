@@ -1,5 +1,9 @@
 import { useTrackingProps } from '../../hooks/useTracking'
 import './req-tracking-view.css'
+import CustomNotification from "../../Components/Notification/CustomNotification.jsx";
+import {useDispatch} from "react-redux";
+import {setNotification} from "../../redux/notification.slice.js";
+import {useNavigate} from "react-router-dom";
 
 export default function RequestTrackingView({
     isOpen,
@@ -8,19 +12,48 @@ export default function RequestTrackingView({
 
     if (!isOpen) return null
 
-    const { states: { recordTracking } } = useTrackingProps()
+    CustomNotification()
+    const dispatch = useDispatch()
+    const { states: { recordTracking }, actions: trackingAct } = useTrackingProps()
+    const navigate = useNavigate()
+
+    function onRemoveTrack(data) {
+
+        trackingAct.removeTrack({
+            procIdentity: data.procIdentity,
+            space: data.space
+        })
+
+        dispatch(setNotification({
+            message: `Track ${data.procIdentity} Eliminado Correctamente!`,
+            type: 'success',
+            delay: 1500
+        }))
+
+        setTimeout(()=>{
+            onClose()
+            navigate('/home')
+            }, 1100)
+    }
 
     const renderRow = recordTracking.map((row, index) => (
         <tr key={`trk-${index}`} className='row-data'>
             <td>{index + 1}</td>
-            <td>{row.space}</td>
-            <td>{row.mode}</td>
+            <td>{String(row.space).toUpperCase()}</td>
+            <td>{String(row.mode).toUpperCase()}</td>
             <td>{row.procIdentity}</td>
             <td>
-                <button className={'btn-remove'}>Remover</button>
+                <button className={'btn-remove'} onClick={()=>onRemoveTrack(row)}>Remover</button>
             </td>
         </tr>
     ))
+
+    const renderEmpty = (
+        <tr className="row-data">
+            <td style={{ width: '100%' }}>
+                No hay procesos en seguimiento
+            </td>
+        </tr>)
 
     return (
         <div className="req__tracking__view">
@@ -45,7 +78,9 @@ export default function RequestTrackingView({
                         </tr>
                     </thead>
                     <tbody className='tracking-body'>
-                        {renderRow}
+                        {
+                        recordTracking.length > 0 ?
+                        renderRow : renderEmpty }
                     </tbody>
                 </table>
             </div>

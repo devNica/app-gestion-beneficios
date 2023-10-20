@@ -32,6 +32,15 @@ const maternitySlice = createSlice({
     name: 'maternity',
     initialState,
     reducers: {
+
+        resetMaternityReq: (state) => {
+            return {
+                ...state,
+                generalInfoReq: initialState.generalInfoReq,
+                newBornInfoReq: initialState.newBornInfoReq
+            }
+        },
+
         setGeneralInfoReq: (state, action) =>{
             return {
                 ...state,
@@ -49,6 +58,9 @@ const maternitySlice = createSlice({
     }
 })
 
-export const { setGeneralInfoReq, setNewBornInfoReq } = maternitySlice.actions
+export const {
+    setGeneralInfoReq,
+    setNewBornInfoReq,
+    resetMaternityReq } = maternitySlice.actions
 
 export default maternitySlice.reducer
