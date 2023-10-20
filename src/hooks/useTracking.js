@@ -10,12 +10,8 @@ export const useTrackingProps = () => {
 
     const dispatch = useDispatch()
 
-    function findTrack(identity) {
-        return recordTracking.some(track => track.procIdentity === identity)
-    }
-
     function trackingUpdate({ typeAction, data, space = '', procIdentity = '' }) {
-
+        console.log('data: ', data)
         if (typeAction === 'add') {
             /** si aun no hay un tipo de proceso especifico, permite agregarlo */
             if (!findTrack(data.procIdentity)){
@@ -33,14 +29,9 @@ export const useTrackingProps = () => {
         }
     }
 
-    function glassSpace({ mode = 'register' }) {
+    function findTrack({ procIdentity }) {
         if (recordTracking.length > 0) {
-            if (mode === 'register') {
-                return recordTracking.some(track => track.procIdentity === 'GL-REG')
-
-            } else if (mode === 'edit') {
-                return recordTracking.some(track => track.procIdentity === 'GL-EDIT')
-            }
+            return recordTracking.some(track => track.procIdentity === procIdentity)
         } else return false
     }
 
@@ -51,7 +42,7 @@ export const useTrackingProps = () => {
         },
         actions: {
             trackingUpdate,
-            glassSpace, findTrack
+            findTrack,
         }
     }
 }

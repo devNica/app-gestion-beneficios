@@ -11,13 +11,19 @@ import './maternity-gnral-info-form.css'
 
 
 const MaternityGeneralInfoForm = ({
+    mode,
     paymentTypes,
     authorizers,
     currentIndex,
     updateCurrentIndex
 }) => {
 
-    const { states, actions } = useGeneralInfoForm({ updateCurrentIndex, currentIndex, paymentTypes })
+    const { states, actions } = useGeneralInfoForm({
+        updateCurrentIndex,
+        currentIndex,
+        paymentTypes,
+        mode
+    })
 
     const {
         beneficiary, currentAuthorizer, employeeList, genderSelected,

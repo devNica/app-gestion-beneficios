@@ -13,13 +13,17 @@ import './death-gnral-info-form.css'
 
 export default function DeathGeneralInfoForm
     ({
+        mode,
         updateCurrentIndex,
         currentIndex,
         authorizers,
         paymentTypes
     }) {
 
-    const { states, actions } = useGeneralInfoForm({ updateCurrentIndex, currentIndex, paymentTypes })
+    const { states, actions } = useGeneralInfoForm({
+        updateCurrentIndex,
+        currentIndex,
+        mode })
 
     const { beneficiary, currentAuthorizer, employeeList, isModalOpen,
         notes, paymentType, registerDate, typeRegister,

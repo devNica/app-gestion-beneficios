@@ -9,9 +9,10 @@ import CustomNotification from "../../../Components/Notification/CustomNotificat
 import { isNull } from "../../../utils/object.util"
 import { setNotification } from "../../../redux/notification.slice"
 import { resetAdditionalInfoReq, setRelativeList } from "../../../redux/death.slice"
+import {useTrackingProps} from "../../useTracking.js";
 
 
-export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, paymentTypes }) {
+export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, mode }) {
 
     const dispatch = useDispatch()
     
@@ -20,6 +21,7 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, p
 
     const { getDeathBeneficiaries, calcBenefitAmountPerRelative } = useEmployeeProps()
     const { states: { generalInfoReq: gnral, relativesList }, actions } = useDeathRequestManagement()
+    const { actions: trackingAct } = useTrackingProps()
 
     const logger = useGetUserInfo()
 
@@ -138,6 +140,18 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, p
             authorizer: currentAuthorizer,
             memoRef,
         })
+
+        trackingAct.trackingUpdate({
+            typeAction: 'add',
+            data: {
+                message: '',
+                space: 'death',
+                mode,
+                procIdentity: mode === 'register' ? 'DAH-REG' : 'DAH-EDIT'
+            },
+            space: 'death'
+        })
+
         updateCurrentIndex(currentIndex + 1)
     }
 
