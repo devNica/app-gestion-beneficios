@@ -37,7 +37,7 @@ export default function RequestTrackingView({
                 <table className={'tracking-table'}>
                     <thead className={'tracking-header'}>
                         <tr className={'row-header'}>
-                            <th>Track</th>
+                            <th>Ticket</th>
                             <th>Modulo</th>
                             <th>Modo</th>
                             <th>Identificador</th>

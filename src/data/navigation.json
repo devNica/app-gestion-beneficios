@@ -39,11 +39,6 @@
                 "title": "Nuevo",
                 "icon": "bi bi-file-earmark-plus-fill",
                 "path": "/death/register"
-            },
-            {
-                "title": "Editar",
-                "icon": "bi bi-pen",
-                "path": "/glasses/edit"
             }
         ]
     },

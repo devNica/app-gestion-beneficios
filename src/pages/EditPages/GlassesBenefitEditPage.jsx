@@ -33,9 +33,9 @@ export default function GlassesBenefitEditPage() {
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        const ownTrack = trackingAct.glassSpace({ mode: 'edit' })
+        const ownTrack = trackingAct.findTrack({ procIdentity: 'GL-REG' })
 
-        if (!ownTrack && trackingSts.recordTracking.length > 0) {
+        if (ownTrack) {
             setIsOpen(true)
         }
     }, [])

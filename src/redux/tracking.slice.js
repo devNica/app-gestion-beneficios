@@ -33,7 +33,7 @@ export const addTracking = (data) => (dispatch, getState) => {
     let updTracks = []
 
     if(currentTracks.length > 0) {
-        updTracks = currentTracks.push(data)
+        updTracks = [...currentTracks, data]
     } else {
         updTracks.push(data)
     }

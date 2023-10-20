@@ -19,7 +19,7 @@ export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
-    const { states: trackingSts, actions: trackingAct } = useTrackingProps()
+    const { actions: trackingAct } = useTrackingProps()
     
     const {
         serializedClinics,
@@ -32,10 +32,10 @@ export default function GlassesBenefitPage() {
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        /** true --> si hay una solicitud de nuevo registro en seguimiento */
-        const ownTrack = trackingAct.glassSpace({ mode: 'register' })
+        /** true --> si hay una solicitud de edicion en seguimiento */
+        const ownTrack = trackingAct.findTrack({ procIdentity: 'GL-EDIT' })
         
-        if (!ownTrack && trackingSts.recordTracking.length > 0) {
+        if (ownTrack) {
             setIsOpen(true)
         }
 

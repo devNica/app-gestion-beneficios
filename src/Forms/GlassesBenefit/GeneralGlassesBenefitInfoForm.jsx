@@ -12,7 +12,7 @@ import { useHandleGeneralGlassesBenefitInfoForm } from "../../hooks/forms/glasse
 import './glasses-benefit-form.css'
 
 export const GeneralGlassesBenefitInfoForm = ({
-    mode = '',
+    mode,
     clinics,
     paymentTypes,
     authorizers,

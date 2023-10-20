@@ -8,9 +8,15 @@ import { isNull } from "../../../utils/object.util"
 import { setNotification } from "../../../redux/notification.slice"
 import { getCurrentDateString } from "../../../utils/date.util"
 import { isEmpty } from "lodash"
+import {useTrackingProps} from "../../useTracking.js";
 
 
-export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, paymentTypes }) {
+export default function useGeneralInfoForm({
+    updateCurrentIndex,
+    currentIndex,
+    paymentTypes,
+    mode
+}) {
 
     const dispatch = useDispatch()
     /** Notifications Controller */
@@ -20,7 +26,7 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, p
     const logger = useGetUserInfo()
 
     const { states: { generalInfoReq: gnrl }, actions } = useMaternityRequestManagement()
-
+    const { actions: trackingAct} =useTrackingProps()
 
     const [registerDate, setRegisterDate] = useState(new Date().toISOString().slice(0, 10))
     const [paymentType, setPaymentType] = useState(paymentTypes[0])
@@ -161,6 +167,17 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, p
             authorizer: currentAuthorizer,
             memoRef,
             partner
+        })
+
+        trackingAct.trackingUpdate({
+            typeAction: 'add',
+            data: {
+                message: '',
+                space: 'maternity',
+                mode,
+                procIdentity: mode === 'register' ? 'MTN-REG' : 'MTN-EDIT'
+            },
+            space: 'maternity'
         })
 
         updateCurrentIndex(currentIndex + 1)

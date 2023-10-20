@@ -69,7 +69,7 @@ export default function GlasesReqHistoryView({ data }) {
                 delay: 1500
             }))
         } else {
-            if (trackingAct.findTrack('GL-REG')) {
+            if (trackingAct.findTrack({ procIdentity: 'GL-REG'})) {
                 setIsOpen(true)
             } else {
                 goToEdit()
