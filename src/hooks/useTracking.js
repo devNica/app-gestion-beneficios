@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { addTracking, removeTracking, updateTrackingSpace } from "../redux/tracking.slice"
 import { resetGlassReq } from "../redux/glass.slice"
+import {resetMaternityReq} from "../redux/maternity.slice.js";
+import {resetDeathReq} from "../redux/death.slice.js";
 
 export const useTrackingProps = () => {
     const {
@@ -10,8 +12,14 @@ export const useTrackingProps = () => {
 
     const dispatch = useDispatch()
 
+    function removeTrack({space,  procIdentity}) {
+        if (space === 'glass') dispatch(resetGlassReq())
+        if (space === 'maternity') dispatch(resetMaternityReq())
+        if (space === 'death') dispatch(resetDeathReq())
+        dispatch(removeTracking(procIdentity))
+    }
+
     function trackingUpdate({ typeAction, data, space = '', procIdentity = '' }) {
-        console.log('data: ', data)
         if (typeAction === 'add') {
             /** si aun no hay un tipo de proceso especifico, permite agregarlo */
             if (!findTrack(data.procIdentity)){
@@ -43,6 +51,7 @@ export const useTrackingProps = () => {
         actions: {
             trackingUpdate,
             findTrack,
+            removeTrack
         }
     }
 }
