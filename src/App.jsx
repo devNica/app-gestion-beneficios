@@ -16,7 +16,7 @@ import GlassesBenefitEditPage from "./pages/EditPages/GlassesBenefitEditPage"
 import { useManageCredential } from "./hooks/useAuth"
 
 import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
 
@@ -32,7 +32,7 @@ function App() {
         <Route path="/" element={<PrivateRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
-            <Route path="/glasses/insert" element={<GlassesBenefitPage mode={'create'}/>}/>
+            <Route path="/glasses/insert" element={<GlassesBenefitPage/>}/>
             <Route path="/glasses/edit/:id" element={<GlassesBenefitEditPage/>}/>
             <Route path="/glasses/history" element={<GlassesRequestHistoryPage/>}/>
             <Route path="/maternity/insert" element={<MaternityBenefitPage/>}/>
