@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
+
 import Stepper from "../../Components/Stepper/Stepper"
+import CustomDialog from "../../Components/Dialog/Dialog"
 
 import GeneralGlassesBenefitInfoForm from "../../Forms/GlassesBenefit/GeneralGlassesBenefitInfoForm"
 import OphthalmicForm from '../../Forms/GlassesBenefit/OphthalmicForm'
@@ -9,7 +11,6 @@ import { useGlassProps } from "../../hooks/useGlass"
 import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
 
-import CustomDialog from "../../Components/Dialog/Dialog"
 import { useNavigate } from "react-router-dom"
 
 import '../main-page.css'
@@ -30,7 +31,6 @@ export default function GlassesBenefitEditPage() {
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
-    const [isLoading, setIsloading] = useState(true)
 
     useEffect(() => {
         const ownTrack = trackingAct.glassSpace({ mode: 'edit' })

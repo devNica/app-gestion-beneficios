@@ -4,12 +4,18 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useManageCredential } from '../../hooks/useAuth'
 import { useTrackingProps } from '../../hooks/useTracking'
+import RequestTrackingView from '../../views/Tracking/ReqTrackingView'
 
 export default function Navbar() {
 
     const [isMenuOpen, setMenuOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const { clearCredentials } = useManageCredential()
     const { states } = useTrackingProps()
+
+    function onClose(){
+        setIsOpen(false)
+    }
 
     return (
         <nav className="navbar__container">
@@ -23,7 +29,7 @@ export default function Navbar() {
             </ul>
 
             <ul className="nav__items right">
-                <li className='nav__link badge'>
+                <li className='nav__link badge' onClick={()=>setIsOpen(true)}>
                     <i className="bi bi-pin-angle-fill"></i>
                     {
                         states.spool > 0 ?
@@ -56,6 +62,8 @@ export default function Navbar() {
                     </div>
                 </li>
             </ul>
+
+            <RequestTrackingView isOpen={isOpen} onClose={onClose}/>
         </nav>
     )
 }

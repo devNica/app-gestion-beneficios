@@ -70,7 +70,6 @@ export default function GlasesReqHistoryView({ data }) {
             }))
         } else {
             if (trackingAct.findTrack('GL-REG')) {
-                console.log('entro aqui')
                 setIsOpen(true)
             } else {
                 goToEdit()

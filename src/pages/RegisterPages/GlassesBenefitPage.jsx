@@ -1,28 +1,26 @@
 import { useEffect, useState } from "react"
-import Stepper from "../../Components/Stepper/Stepper"
 
+import Stepper from "../../Components/Stepper/Stepper"
+import CustomDialog from "../../Components/Dialog/Dialog"
 import GeneralGlassesBenefitInfoForm from "../../Forms/GlassesBenefit/GeneralGlassesBenefitInfoForm"
 import OphthalmicForm from '../../Forms/GlassesBenefit/OphthalmicForm'
 import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSupportsForm"
 
-import { useGlassProps, useGlassesRequestManagement } from "../../hooks/useGlass"
 import { useAdminProps } from "../../hooks/useProps"
+import { useTrackingProps } from "../../hooks/useTracking"
+import { useGlassProps } from "../../hooks/useGlass"
 
-import CustomDialog from "../../Components/Dialog/Dialog"
 import { useNavigate } from "react-router-dom"
 
 import '../main-page.css'
-import { useTrackingProps } from "../../hooks/useTracking"
 
 
-export default function GlassesBenefitPage({ mode }) {
+export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
     const { states: trackingSts, actions: trackingAct } = useTrackingProps()
-    const { states: glassSts, actions: glassAct } = useGlassesRequestManagement()
-
-
+    
     const {
         serializedClinics,
         serializedDiagnosis,
