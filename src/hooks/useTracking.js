@@ -22,7 +22,7 @@ export const useTrackingProps = () => {
     function trackingUpdate({ typeAction, data, space = '', procIdentity = '' }) {
         if (typeAction === 'add') {
             /** si aun no hay un tipo de proceso especifico, permite agregarlo */
-            if (!findTrack(data.procIdentity)){
+            if (!findTrack({ procIdentity: data.procIdentity })){
                 dispatch(addTracking(data))
             }
         }
