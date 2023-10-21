@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './custom-textarea.css'
 
 const CustomTextArea = ({
@@ -33,3 +34,19 @@ const CustomTextArea = ({
 }
 
 export default CustomTextArea
+
+CustomTextArea.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    key: PropTypes.any,
+    cols: PropTypes.string,
+    rows: PropTypes.string,
+    styles: PropTypes.arrayOf(PropTypes.string),
+    editable: PropTypes.bool,
+    placeHolder: PropTypes.string,
+    label: PropTypes.string,
+    orientation: PropTypes.oneOf(['row', 'column']),
+    children: PropTypes.oneOfType([PropTypes.elementType, PropTypes.any]),
+    value: PropTypes.any,
+    onChange: PropTypes.func
+}

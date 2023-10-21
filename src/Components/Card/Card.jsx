@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './card.css'
 
 export default function Card({
@@ -28,4 +29,12 @@ export default function Card({
             </div>
         </div>
     )
+}
+
+Card.propTypes = {
+    Component: PropTypes.elementType,
+    mageneticIcon: PropTypes.bool,
+    urlIcon: PropTypes.string,
+    title: PropTypes.string,
+    handleOnSubmit: PropTypes.func
 }

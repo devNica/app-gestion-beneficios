@@ -4,8 +4,10 @@ import CustomInput from '../../Components/CustomInput/CustomInput'
 import { useDeathRequestManagement } from '../../hooks/useDeath'
 import FamilyDetail from './FamilyDetail'
 
-import './additional-death-info-form.css'
+import PropTypes from "prop-types"
 import { formatNumberWithCommas } from '../../utils/number.util'
+
+import './additional-death-info-form.css'
 
 export default function AdditionalDeathInfoForm({
     updateCurrentIndex,
@@ -180,4 +182,9 @@ export default function AdditionalDeathInfoForm({
 
         </div>
     )
+}
+
+AdditionalDeathInfoForm.propTypes ={
+    updateCurrentIndex: PropTypes.func,
+    currentIndex: PropTypes.number
 }

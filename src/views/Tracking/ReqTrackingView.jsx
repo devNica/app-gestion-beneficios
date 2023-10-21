@@ -4,6 +4,7 @@ import CustomNotification from "../../Components/Notification/CustomNotification
 import {useDispatch} from "react-redux";
 import {setNotification} from "../../redux/notification.slice.js";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
 export default function RequestTrackingView({
     isOpen,
@@ -43,7 +44,9 @@ export default function RequestTrackingView({
             <td>{String(row.mode).toUpperCase()}</td>
             <td>{row.procIdentity}</td>
             <td>
-                <button className={'btn-remove'} onClick={()=>onRemoveTrack(row)}>Remover</button>
+                <button className={'btn-remove'} onClick={()=>onRemoveTrack(row)}>
+                    <i className="bi bi-trash-fill"></i>
+                </button>
             </td>
         </tr>
     ))
@@ -86,4 +89,9 @@ export default function RequestTrackingView({
             </div>
         </div>
     )
+}
+
+RequestTrackingView.propTypes = {
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func
 }

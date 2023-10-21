@@ -4,6 +4,7 @@ import CustomTextArea from "../../Components/CustomTextArea/CustomTextArea"
 import Modal from "../../Components/Modal/Modal"
 import InvokeModal from "../../Components/Modal/InvokeModal"
 import DataTable from "../../Components/DataTable/DataTable"
+import PropTypes from "prop-types"
 
 import { useEmployeeProps } from '../../hooks/useEmployee'
 
@@ -209,3 +210,21 @@ export const GeneralGlassesBenefitInfoForm = ({
 }
 
 export default GeneralGlassesBenefitInfoForm
+
+GeneralGlassesBenefitInfoForm.propTypes = {
+    mode: PropTypes.string,
+    clinics: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    authorizers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        value: PropTypes.string
+    })),
+    currentIndex: PropTypes.number,
+    updateCurrentIndex: PropTypes.func
+}

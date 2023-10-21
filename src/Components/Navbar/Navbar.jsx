@@ -18,6 +18,7 @@ export default function Navbar() {
     }
 
     return (
+        <>
         <nav className="navbar__container">
             <ul className="nav__items left">
                 <li className='nav__link__brand'>
@@ -51,9 +52,8 @@ export default function Navbar() {
                             <li>
                                 <button
                                     className='link'
-                                    to={'/logout'}
                                     onClick={() => clearCredentials()}
-                                >
+                                    >
                                     <i className="bi bi-box-arrow-right"></i>
                                     Salir
                                 </button>
@@ -63,7 +63,9 @@ export default function Navbar() {
                 </li>
             </ul>
 
-            <RequestTrackingView isOpen={isOpen} onClose={onClose}/>
+
         </nav>
+        <RequestTrackingView isOpen={isOpen} onClose={onClose}/>
+        </>
     )
 }

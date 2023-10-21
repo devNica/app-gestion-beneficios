@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import './dialog.css'
 
 
@@ -43,4 +44,14 @@ export default function CustomDialog({
             </div>
         </div>
     )
+}
+
+CustomDialog.propTypes = {
+    isOpen: PropTypes.bool,
+    onDialog: PropTypes.func,
+    message: PropTypes.string,
+    question: PropTypes.string,
+    positiveActionTitle: PropTypes.string,
+    negativeActionTitle: PropTypes.string,
+    showIcons: PropTypes.bool
 }

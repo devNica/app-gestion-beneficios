@@ -3,6 +3,7 @@ import SelectTags from '../../Components/Select/SelectTags'
 
 import OphthalmicResultEntryCells from './OpthalmicResultEntryCells'
 import { useHandleOphthalmicForm } from '../../hooks/forms/glasses/useOphthalmicForm'
+import PropTypes from "prop-types";
 
 import './ophthalmic-form.css'
 
@@ -97,3 +98,24 @@ const OphthalmicForm = ({
 }
 
 export default OphthalmicForm
+
+OphthalmicForm.propTypes = {
+    diagnosis: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        value: PropTypes.string
+    })),
+    lensMaterial: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    lensDetail: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    lensType: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    currentIndex: PropTypes.number,
+    updateCurrentIndex: PropTypes.func
+}

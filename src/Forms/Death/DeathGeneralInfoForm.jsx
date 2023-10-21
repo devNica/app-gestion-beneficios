@@ -7,6 +7,7 @@ import DataTable from "../../Components/DataTable/DataTable";
 import CustomTextArea from "../../Components/CustomTextArea/CustomTextArea";
 
 import useGeneralInfoForm from "../../hooks/forms/death/useGeneralInfoForm";
+import PropTypes from "prop-types"
 
 import './death-gnral-info-form.css'
 
@@ -177,4 +178,18 @@ export default function DeathGeneralInfoForm
             />
         </form>
     )
+}
+
+DeathGeneralInfoForm.propTypes = {
+    mode: PropTypes.string,
+    updateCurrentIndex: PropTypes.func,
+    currentIndex: PropTypes.number,
+    authorizers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        value: PropTypes.string
+    })),
+    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    }))
 }
