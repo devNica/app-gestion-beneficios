@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './custom-check-option.css'
 
 const CustomCheckOption = ({
@@ -40,3 +41,15 @@ const CustomCheckOption = ({
 }
 
 export default CustomCheckOption
+
+CustomCheckOption.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    currentValue: PropTypes.any,
+    value: PropTypes.any,
+    checked: PropTypes.bool,
+    onChange: PropTypes.func,
+    label: PropTypes.string,
+    orientation: PropTypes.oneOf(['row', 'column']),
+    isCheckBox: PropTypes.bool,
+}

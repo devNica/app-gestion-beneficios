@@ -10,6 +10,8 @@ import CustomNotification from '../../Components/Notification/CustomNotification
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../../redux/notification.slice'
 
+import PropTypes from "prop-types"
+
 import './glasses-req-history-view.css'
 
 export default function GlasesReqHistoryView({ data }) {
@@ -118,4 +120,16 @@ export default function GlasesReqHistoryView({ data }) {
             />
         </div>
     )
+}
+
+
+GlasesReqHistoryView.propTypes={
+    data: PropTypes.arrayOf(PropTypes.shape({
+        benefitId: PropTypes.number,
+        fullname: PropTypes.string,
+        employeeNumber: PropTypes.string,
+        registeredAt: PropTypes.string,
+        approvedAt: PropTypes.string,
+        statusDesc: PropTypes.string
+    }))
 }

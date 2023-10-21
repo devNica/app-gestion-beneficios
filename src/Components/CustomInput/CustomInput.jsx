@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './custom-input.css'
 
 const CustomInput = ({
@@ -62,3 +63,21 @@ const CustomInput = ({
 }
 
 export default CustomInput
+
+CustomInput.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    key: PropTypes.any,
+    type: PropTypes.oneOf(['text', 'checkbox', 'radio', 'date', 'search']),
+    editable: PropTypes.bool,
+    placeHolder: PropTypes.string,
+    label: PropTypes.string,
+    orientation: PropTypes.oneOf(['row', 'column']),
+    value: PropTypes.any,
+    defaultValue: PropTypes.any,
+    autoComplete: PropTypes.string,
+    onChange: PropTypes.func,
+    handleKeyDown: PropTypes.func,
+    customStyles: PropTypes.oneOfType([ PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+    attachmentElement: PropTypes.oneOfType([PropTypes.elementType, PropTypes.any])
+}

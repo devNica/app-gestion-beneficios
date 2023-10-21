@@ -2,6 +2,7 @@ import { useState } from 'react'
 import CustomNotification from '../../Components/Notification/CustomNotification'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../../redux/notification.slice'
+import PropTypes from "prop-types"
 
 import './form.css'
 
@@ -76,4 +77,8 @@ export default function LoginForm({ handleOnSubmit }) {
             </button>
         </form>
     )
+}
+
+LoginForm.propTypes ={
+    handleOnSubmit: PropTypes.func
 }

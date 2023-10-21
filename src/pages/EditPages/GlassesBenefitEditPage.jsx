@@ -18,7 +18,7 @@ import '../main-page.css'
 export default function GlassesBenefitEditPage() {
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
-    const { states: trackingSts, actions: trackingAct } = useTrackingProps()
+    const { actions: trackingAct } = useTrackingProps()
 
     const navigate = useNavigate()
 

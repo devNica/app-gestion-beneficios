@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './stepper.css'
 
 function StepHeader({ step, isActive }) {
@@ -9,6 +10,11 @@ function StepHeader({ step, isActive }) {
             </div>
         </li>
     )
+}
+
+StepHeader.propTypes = {
+    step: PropTypes.string,
+    isActive: PropTypes.bool
 }
 
 function StepButtons({ currentIndex, numberStep, setCurrentIndex, handleSubmit }) {
@@ -55,10 +61,18 @@ function StepButtons({ currentIndex, numberStep, setCurrentIndex, handleSubmit }
     }
 }
 
+StepButtons.propTypes = {
+    currentIndex: PropTypes.number,
+    numberStep: PropTypes.number,
+    setCurrentIndex: PropTypes.func,
+    handleSubmit: PropTypes.func
+}
+
 export default function Stepper(props) {
 
     const {
         steps = ["A", "B", "C"],
+        showNavigation = false,
         CurrenComponent,
         setIndex,
         currentIndex } = props
@@ -72,7 +86,7 @@ export default function Stepper(props) {
                             <StepHeader
                                 step={s}
                                 key={index}
-                                isActive={index <= currentIndex ? true : false}
+                                isActive={index <= currentIndex }
                             />
                         )
                     }
@@ -83,15 +97,27 @@ export default function Stepper(props) {
                 {CurrenComponent}
             </div>
 
-            {/* <div className="stepper__buttons">
-                {
+            {
+            showNavigation ?
+                 <div className="stepper__buttons">
+                     {
                     <StepButtons
                         currentIndex={currentIndex}
                         numberStep={steps.length}
                         setCurrentIndex={setIndex}
                     />
                 }
-            </div> */}
+                 </div> : <></>
+            }
+
         </div>
     )
+}
+
+Stepper.propTypes = {
+    steps: PropTypes.arrayOf(PropTypes.string),
+    showNavigation: PropTypes.bool,
+    CurrenComponent: PropTypes.element,
+    setIndex: PropTypes.func,
+    currentIndex: PropTypes.number
 }

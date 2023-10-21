@@ -5,9 +5,12 @@ import FakeInput from "../../Components/FakeInput/FakeInput"
 import CustomCheckOption from "../../Components/CustomCheckOption/CustomCheckOption"
 
 import { useHandleApplicationSupportForm } from "../../hooks/forms/glasses/useApplicationSupportsForm"
+import { formatNumberWithCommas } from "../../utils/number.util"
+
+import PropTypes from "prop-types"
 
 import './application-supports-form.css'
-import { formatNumberWithCommas } from "../../utils/number.util"
+
 
 const options = [
     { id: 1, value: 'C$', },
@@ -16,20 +19,19 @@ const options = [
 
 const ApplicationSupportsForm = ({
     currentIndex,
-    updateCurrentIndex,
-    handleOnSubmit
+    updateCurrentIndex
 }) => {
 
     const { states, actions } = useHandleApplicationSupportForm({ updateCurrentIndex, currentIndex, options })
 
-    const { invoiceAmountInCS, invoiceCurrency, invoiceDate, invoiceAmount, 
+    const { invoiceAmountInCS, invoiceCurrency, invoiceDate, invoiceAmount,
         invoiceExchangeRate, invoiceNumber,
-        proformaAmountInCS, proformaCurrency, proformaDate, proformaAmount, 
+        proformaAmountInCS, proformaCurrency, proformaDate, proformaAmount,
         proformaExchangeRate, proformaNumber, mode
     } = states
 
     const { handleAmount, handleBackStep, handleExchangeRate, handleNextStep,
-        setInvoiceCurrency, setInvoiceDate, setInvoiceNumber, setInvoiceAmountInCS, 
+        setInvoiceCurrency, setInvoiceDate, setInvoiceNumber, setInvoiceAmountInCS,
         setProformaCurrency, setProformaNumber, setproformaDate, setproformaAmountInCS,
         setMode
     } = actions
@@ -237,7 +239,7 @@ const ApplicationSupportsForm = ({
                 <div className={`hide-element ${mode === 'OPF' ? 'right' : mode === 'OIV' ? 'left' : 'none'}`}></div>
 
             </div>
-            
+
             <div className="form__group-actions">
                 <div className="prev"
                     onClick={handleBackStep}
@@ -256,3 +258,8 @@ const ApplicationSupportsForm = ({
 }
 
 export default React.memo(ApplicationSupportsForm)
+
+ApplicationSupportsForm.propTypes = {
+    currentIndex: PropTypes.number,
+    updateCurrentIndex: PropTypes.func
+}

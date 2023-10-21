@@ -3,6 +3,7 @@ import SelectTags from '../../Components/Select/SelectTags'
 import Select from '../../Components/Select/Select'
 import _ from 'lodash'
 
+import PropTypes from "prop-types"
 import useNewBornInfoForm from '../../hooks/forms/maternity/useNewBornInfoForm'
 
 import './newborn-info-form.css'
@@ -174,4 +175,22 @@ export default function NewbornInfoForm
             </div>
         </div>
     )
+}
+
+NewbornInfoForm.propTypes ={
+    typesBirth: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    maternitySupports: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    authorizedAmountsMathernity: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.number
+    })),
+    updateCurrentIndex: PropTypes.func,
+    currentIndex: PropTypes.number,
+    internalExchange: PropTypes.number
 }

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -49,4 +50,17 @@ export default function SidebarItem({ item }) {
             </Link>
         </li>
     )
+}
+
+SidebarItem.propTypes = {
+    item: PropTypes.shape({
+        title: PropTypes.string,
+        path: PropTypes.string,
+        icon: PropTypes.string,
+        childrens: PropTypes.arrayOf(PropTypes.shape({
+            title: PropTypes.string,
+            path: PropTypes.string,
+            icon: PropTypes.string,
+        }))
+    })
 }

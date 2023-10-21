@@ -20,7 +20,7 @@ export default function GlassesBenefitPage() {
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
-    
+
     const {
         serializedClinics,
         serializedDiagnosis,
@@ -34,7 +34,7 @@ export default function GlassesBenefitPage() {
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
         const ownTrack = trackingAct.findTrack({ procIdentity: 'GL-EDIT' })
-        
+
         if (ownTrack) {
             setIsOpen(true)
         }

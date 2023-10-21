@@ -7,8 +7,8 @@ import CustomTextArea from "../../Components/CustomTextArea/CustomTextArea"
 import CustomCheckOption from '../../Components/CustomCheckOption/CustomCheckOption'
 import useGeneralInfoForm from "../../hooks/forms/maternity/useGeneralInfoForm"
 
+import PropTypes from "prop-types"
 import './maternity-gnral-info-form.css'
-
 
 const MaternityGeneralInfoForm = ({
     mode,
@@ -197,3 +197,17 @@ const MaternityGeneralInfoForm = ({
 }
 
 export default MaternityGeneralInfoForm
+
+MaternityGeneralInfoForm.propTypes = {
+    mode: PropTypes.string,
+    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        value: PropTypes.string
+    })),
+    authorizers: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        value: PropTypes.string
+    })),
+    currentIndex: PropTypes.number,
+    updateCurrentIndex: PropTypes.func
+}

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import './modal.css'
 
 const Modal = ({ isOpen, onClose, children, title = 'Modal Title' }) => {
@@ -19,6 +20,11 @@ const Modal = ({ isOpen, onClose, children, title = 'Modal Title' }) => {
         </div>
     )
 }
-
-
 export default Modal
+
+Modal.propTypes = {
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+    children: PropTypes.element,
+    title: PropTypes.string
+}
