@@ -1,12 +1,10 @@
 [
     {
         "id": 1,
-        "first_name": "Alexander",
-        "last_name": "Rosales",
+        "firstName": "Alexander",
+        "lastName": "Rosales",
         "email": "arosales@gmail.com",
         "gender": "M",
-        "hasFamilyRecord": true,
-        "couple": "Maria Luisa Zeledon",
         "familyRecord": [
             {
                 "id": 1,
@@ -29,28 +27,14 @@
                 "sex": "F",
                 "status": false
             }
-        ],
-        "status": true
-    },
-    {
-        "id": 2,
-        "first_name": "Dayana Lucia",
-        "last_name": "Lopez",
-        "email": "dayanna.lopez@google.es",
-        "gender": "F",
-        "hasFamilyRecord": false,
-        "couple": "",
-        "familyRecord": [],
-        "status": false
+        ]
     },
     {
         "id": 3,
-        "first_name": "Jessica Aleyda",
-        "last_name": "Alvarez",
+        "firstName": "Jessica Aleyda",
+        "lastName": "Alvarez",
         "email": "jaleyda@telcor.com",
         "gender": "F",
-        "hasFamilyRecord": true,
-        "couple": "",
         "familyRecord": [
             {
                 "id": 1,
@@ -66,17 +50,14 @@
                 "sex": "M",
                 "status": false
             }
-        ],
-        "status": true
+        ]
     },
     {
         "id": 4,
-        "first_name": "Shelsy Amaranta",
-        "last_name": "Llanes",
+        "firstName": "Shelsy Amaranta",
+        "lastName": "Llanes",
         "email": "shelsy.llanes89@mtv.com",
         "gender": "F",
-        "hasFamilyRecord": true,
-        "couple": "Jose Antonio Ruiz",
         "familyRecord": [
             {
                 "id": 1,
@@ -92,17 +73,14 @@
                 "sex": "M",
                 "status": true
             }
-        ],
-        "status": true
+        ]
     },
     {
         "id": 5,
-        "first_name": "Julia",
-        "last_name": "Tellez Paz",
+        "firstName": "Julia",
+        "lastName": "Tellez Paz",
         "email": "jtellez@corp.com",
         "gender": "F",
-        "hasFamilyRecord": true,
-        "couple": "",
         "familyRecord": [
             {
                 "id": 1,
@@ -132,39 +110,14 @@
                 "sex": "M",
                 "status": true
             }
-        ],
-        "status": true
-    },
-    {
-        "id": 6,
-        "first_name": "Ramon de Leon",
-        "last_name": "Sanchez",
-        "email": "ramonleon90@tigo.com",
-        "gender": "M",
-        "hasFamilyRecord": false,
-        "couple": "",
-        "familyRecord": [],
-        "status": false
-    },
-    {
-        "id": 7,
-        "first_name": "Augustin",
-        "last_name": "Martinez",
-        "email": "amartinez@claro.com",
-        "gender": "M",
-        "hasFamilyRecord": false,
-        "couple": "",
-        "familyRecord": [],
-        "status": true
+        ]
     },
     {
         "id": 8,
-        "first_name": "Lucresia",
-        "last_name": "Milch",
+        "firstName": "Lucresia",
+        "lastName": "Milch",
         "email": "lukresia.milch@usa.com",
         "gender": "F",
-        "hasFamilyRecord": true,
-        "couple": "",
         "familyRecord": [
             {
                 "id": 1,
@@ -180,17 +133,14 @@
                 "sex": "M",
                 "status": true
             }
-        ],
-        "status": true
+        ]
     },
     {
         "id": 9,
-        "first_name": "Nicolas",
-        "last_name": "Mora",
+        "firstName": "Nicolas",
+        "lastName": "Mora",
         "email": "nicolasmora@ecomoda.com",
         "gender": "M",
-        "hasFamilyRecord": true,
-        "couple": "Beatriz Pinzon Solano",
         "familyRecord": [
             {
                 "id": 1,
@@ -199,28 +149,14 @@
                 "sex": "F",
                 "status": false
             }
-        ],
-        "status": false
-    },
-    {
-        "id": 10,
-        "first_name": "Elmer Jose",
-        "last_name": "Pereira",
-        "email": "e.jose.pereira@munkell.com",
-        "gender": "M",
-        "hasFamilyRecord": false,
-        "couple": "",
-        "familyRecord": [],
-        "status": false
+        ]
     },
     {
         "id": 11,
-        "first_name": "Lucas Alejandro",
-        "last_name": "Estrada",
+        "firstName": "Lucas Alejandro",
+        "lastName": "Estrada",
         "email": "laest@nic.com",
         "gender": "M",
-        "hasFamilyRecord": true,
-        "couple": "",
         "familyRecord": [
             {
                 "id": 1,
@@ -229,7 +165,6 @@
                 "sex": "F",
                 "status": true
             }
-        ],
-        "status": true
+        ]
     }
 ]

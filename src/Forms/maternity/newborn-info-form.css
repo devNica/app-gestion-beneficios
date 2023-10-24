@@ -44,7 +44,7 @@
 
                 .row-headers{
                     display: grid;
-                    grid-template-columns: 1fr 1fr 60px 1fr;
+                    grid-template-columns: 80px 80px 1fr 110px 60px;
                     grid-template-rows: 1fr;
                     width: 100%;
                     gap: 10px;
@@ -52,7 +52,7 @@
 
                 .row-form {
                     display: grid;
-                    grid-template-columns: 1fr 1fr 60px 1fr;
+                    grid-template-columns: 80px 80px 1fr 110px 60px;
                     grid-template-rows: 1fr;
                     width: 100%;
                     gap: 10px;
@@ -60,7 +60,7 @@
 
                 .row-options{
                     display: grid;
-                    grid-template-columns: 1fr 1fr 60px 1fr;
+                    grid-template-columns: 80px 80px 1fr 110px 60px;
                     grid-template-rows: 1fr;
                     width: 100%;
                     gap: 10px;

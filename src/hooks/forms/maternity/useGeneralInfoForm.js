@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useEmployeeProps } from "../../useEmployee"
 import { useGetUserInfo } from "../../useAuth"
 import { useMaternityRequestManagement } from "../../useMaternity"
 import { useDispatch } from "react-redux"
@@ -9,6 +8,7 @@ import { setNotification } from "../../../redux/notification.slice"
 import { getCurrentDateString } from "../../../utils/date.util"
 import { isEmpty } from "lodash"
 import {useTrackingProps} from "../../useTracking.js";
+import {useBeneficiaryProps} from "../../useBeneficiary.js";
 
 
 export default function useGeneralInfoForm({
@@ -22,7 +22,8 @@ export default function useGeneralInfoForm({
     /** Notifications Controller */
     CustomNotification()
 
-    const { getMaternityBeneficiaries, getPartnerBeneficiary } = useEmployeeProps()
+    const {  actions: beneficiaryAct  } = useBeneficiaryProps()
+
     const logger = useGetUserInfo()
 
     const { states: { generalInfoReq: gnrl }, actions } = useMaternityRequestManagement()
@@ -38,6 +39,8 @@ export default function useGeneralInfoForm({
     const [genderSelected, setGender] = useState('F')
     const [memoRef, setMemoRef] = useState('')
     const [hashDate, setHashDate] = useState(getCurrentDateString('', gnrl.registerDate || new Date().toISOString().slice(0, 10)))
+
+    const [childrenOfBeneficiary, setChildrenOfBeneficiary] = useState([])
 
     useEffect(() => {
         if (gnrl.registerDate !== null) {
@@ -66,12 +69,6 @@ export default function useGeneralInfoForm({
         }
     }, [])
 
-    const employeeList = getMaternityBeneficiaries({
-        queryFields: [{ gender: genderSelected }],
-        returnFields: ['id', 'first_name', 'last_name', 'email'],
-        gender: genderSelected
-    })
-
     function updateGenderSelected(value) {
         setGender(value)
         setBeneficiary(null)
@@ -83,12 +80,15 @@ export default function useGeneralInfoForm({
         setBeneficiary(data)
 
         if (genderSelected === 'M') {
-            setPartner(getPartnerBeneficiary({
-                beneficiaryName: `${data.first_name} ${data.last_name}`
+            setPartner(beneficiaryAct.getCoupleName({
+                beneficiaryName: `${data.firstName} ${data.lastName}`
             }))
         } else {
             setPartner(null)
         }
+
+        setChildrenOfBeneficiary(beneficiaryAct.getChildren({ employeeId: data.id }))
+
     }
 
     function handleRegisterDate(value) {
@@ -167,7 +167,7 @@ export default function useGeneralInfoForm({
             authorizer: currentAuthorizer,
             memoRef,
             partner
-        })
+        }, childrenOfBeneficiary)
 
         trackingAct.trackingUpdate({
             typeAction: 'add',
@@ -195,7 +195,7 @@ export default function useGeneralInfoForm({
             registerDate,
             memoRef,
             notes,
-            employeeList,
+            employeeList: beneficiaryAct.getBeneficiaryListBySex({ sex: genderSelected  }),
             logger
         },
         actions: {

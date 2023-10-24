@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    paymentTypes: [{ id: 1, type: 'Reembolso' }, { id: 2, type: 'Cheque' }, { id: 3, type: 'Transferencia'}],
+    paymentTypes: [
+        { id: 1, type: 'Reembolso' },
+        { id: 2, type: 'Cheque' },
+        { id: 3, type: 'Transferencia'}
+    ],
     userAuthorizers: [
         { id: '1', empleado: 'Juana Maria Mendez' },
         { id: '2', empleado: 'Juan Antonio Perez Celedon' }

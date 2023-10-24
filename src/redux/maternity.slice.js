@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    newUnSavedRequest: false,
+    childrenOfBeneficiary: [],
     generalInfoReq: {
         gender: null,
         registerDate: null,
@@ -18,13 +18,14 @@ const initialState = {
         typeBirth: null,
         amountInUS: null,
         amountInCS: null,
-        childrens: [{
+        /*childrens: [{
             id: 0,
             firstname: '--',
             lastname: '--',
             sex: 'M',
             birthdate: ''
-        }]
+        }]*/
+        confirmedChildren: null
     }
 }
 
@@ -36,6 +37,7 @@ const maternitySlice = createSlice({
         resetMaternityReq: (state) => {
             return {
                 ...state,
+                childrenOfBeneficiary: initialState.childrenOfBeneficiary,
                 generalInfoReq: initialState.generalInfoReq,
                 newBornInfoReq: initialState.newBornInfoReq
             }
@@ -44,8 +46,8 @@ const maternitySlice = createSlice({
         setGeneralInfoReq: (state, action) =>{
             return {
                 ...state,
-                newUnSavedRequest: true,
-                generalInfoReq: action.payload
+                childrenOfBeneficiary: action.payload.children,
+                generalInfoReq: action.payload.info
             }
         },
 

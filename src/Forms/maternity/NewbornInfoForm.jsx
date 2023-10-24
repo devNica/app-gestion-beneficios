@@ -7,6 +7,7 @@ import PropTypes from "prop-types"
 import useNewBornInfoForm from '../../hooks/forms/maternity/useNewBornInfoForm'
 
 import './newborn-info-form.css'
+import BeneficiaryFamilyItemForm from './BeneficiaryFamilyItemForm'
 
 
 export default function NewbornInfoForm
@@ -18,95 +19,24 @@ export default function NewbornInfoForm
         currentIndex,
         internalExchange
     }) {
-        
+
 
     const { states, actions } = useNewBornInfoForm({
-        updateCurrentIndex, currentIndex, authorizedAmountsMathernity, 
-        typesBirth, internalExchange
+        authorizedAmountsMathernity,
+        internalExchange,
+        typesBirth,
+        currentIndex,
+        updateCurrentIndex
     })
 
-    const { support, typeBirth, childrensInfo,
-        amountInCS, amountInUS, authorizedAmount
-    } = states
+    const { amountInCS, amountInUS, support, typeBirth, confirmedChildren } = states
+    const { handleBackStep, handleSelectItem, setSupport } = actions
 
-    const { 
-        handleAddChild, handleBackStep, handleNewBornInfo, handleRemoveChild,
-        handleSubmit, handleTypeBirth, setSupport 
-    } = actions
-    
-    
-    const renderRows = childrensInfo.map((_nb, index) => (
-        <tr key={index} className='row-form'>
-            <td>
-                <input
-                    autoComplete='off'
-                    type="text"
-                    name={`${index}-firstname`}
-                    className='td-input'
-                    onChange={handleNewBornInfo}
-                    value={childrensInfo[index]?.firstname ?? '?'}
-                />
-            </td>
-            <td>
-                <input
-                    autoComplete='off'
-                    type="text"
-                    name={`${index}-lastname`}
-                    className='td-input'
-                    onChange={handleNewBornInfo}
-                    value={childrensInfo[index]?.lastname ?? '?'}
-                />
-            </td>
-            <td>
-                <select
-                    name={`${index}-sex`}
-                    className='td-select'
-                    onChange={handleNewBornInfo}
-                    value={childrensInfo[index].sex}
-                >
-                    <option value="M">M</option>
-                    <option value="F">F</option>
-                </select>
-            </td>
-            <td>
-                <input
-                    type="date"
-                    name={`${index}-birthdate`}
-                    className='td-input'
-                    onChange={handleNewBornInfo}
-                    value={childrensInfo[index]?.birthdate}
-                />
-            </td>
-        </tr>
-    ))
-
-    const renderTableOptions = (
-
-        typeBirth.id === 3 ?
-            <>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td className="td-options">
-                    <button className='btn add-row' onClick={handleAddChild}>
-                        <i className="bi bi-plus-lg"></i>
-                    </button>
-                    {
-                        childrensInfo.length > 3 ?
-                            <button className='btn remove-row' onClick={handleRemoveChild}>
-                                <i className="bi bi-dash"></i>
-                            </button> : <></>
-                    }
-                </td>
-            </> :
-            <></>
-
-    )
 
     return (
         <div className="newborn__info__form">
             <div className="form__title">
-                <h2>Informacion de Neonato</h2>
+                <h2>Informacion Familiar a Detalle</h2>
             </div>
 
             <div className="form__group-top">
@@ -121,11 +51,13 @@ export default function NewbornInfoForm
 
             <div className="form__group-middle">
                 <div className="row-1">
-                    <Select
+                    <CustomInput
+                        name={'typeBirth'}
+                        id={'typeBirth'}
                         label='Tipo de Parto:'
-                        options={typesBirth}
-                        currentValue={typeBirth}
-                        onChange={handleTypeBirth}
+                        defaultValue={typeBirth.value}
+                        customStyles={'disabled'}
+                        editable={false}
                     />
                     <CustomInput
                         label='Monto Autorizado U$:'
@@ -149,17 +81,20 @@ export default function NewbornInfoForm
                     <table className='newborn__table'>
                         <thead>
                             <tr className='row-headers'>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Sexo</th>
+                                <th>Confirmacion</th>
+                                <th>Parentezco</th>
+                                <th>Nombre Completo</th>
                                 <th>Nacimiento</th>
+                                <th>Sexo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {renderRows}
-                            <tr className='row-options'>
-                                {renderTableOptions}
-                            </tr>
+                            {
+                                <BeneficiaryFamilyItemForm
+                                    data={confirmedChildren}
+                                    onChange={handleSelectItem}
+                                />
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -169,7 +104,7 @@ export default function NewbornInfoForm
                 <div className="prev" onClick={handleBackStep} >
                     <button type='button' className='btn btn__prev'>Atras</button>
                 </div>
-                <div className="netx" onClick={handleSubmit}>
+                <div className="netx">
                     <button type='button' className='btn btn__done'>Listo</button>
                 </div>
             </div>
@@ -177,7 +112,7 @@ export default function NewbornInfoForm
     )
 }
 
-NewbornInfoForm.propTypes ={
+NewbornInfoForm.propTypes = {
     typesBirth: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         value: PropTypes.string

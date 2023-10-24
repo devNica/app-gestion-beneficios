@@ -11,10 +11,15 @@ import { useAdminProps } from "../../hooks/useProps"
 
 import '../main-page.css'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
+import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 export default function MaternityBenefitPage() {
 
     const navigate = useNavigate()
     const { actions: trackingAct } = useTrackingProps()
+
+    const { actions: beneficiaryAct} = useBeneficiaryProps()
+
+
 
     const { serializedPaymentTypes, serializedAuthorizers,
         authorizedAmountsMathernity, internalExchange, maternitySupports, typesBirth
@@ -30,6 +35,9 @@ export default function MaternityBenefitPage() {
         if (ownTrack) {
             setIsOpen(true)
         }
+
+        /* establecer lista de empleados con hijos*/
+        beneficiaryAct.setAsyncEmployeeWithChildrens()
 
     }, [])
 

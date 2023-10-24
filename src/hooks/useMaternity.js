@@ -4,11 +4,14 @@ import { setGeneralInfoReq, setNewBornInfoReq } from '../redux/maternity.slice'
 
 export const useMaternityRequestManagement = () => {
     const dispatch = useDispatch()
-    const generalInfoReq = useSelector(state => state.maternity.generalInfoReq)
-    const newBornInfoReq = useSelector(state => state.maternity.newBornInfoReq)
+    const {
+        childrenOfBeneficiary,
+        generalInfoReq,
+        newBornInfoReq
+    } = useSelector(state => state.maternity)
 
-    function setGnralInfo(data) {
-        dispatch(setGeneralInfoReq(data))
+    function setGnralInfo(data, children) {
+        dispatch(setGeneralInfoReq({ info: data, children }))
     }
 
     function setNewBornInfo(data) {
@@ -18,6 +21,7 @@ export const useMaternityRequestManagement = () => {
 
     return {
         states: {
+            childrenOfBeneficiary,
             generalInfoReq,
             newBornInfoReq,
         },

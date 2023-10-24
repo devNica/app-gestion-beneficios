@@ -9,6 +9,7 @@ import useGeneralInfoForm from "../../hooks/forms/maternity/useGeneralInfoForm"
 
 import PropTypes from "prop-types"
 import './maternity-gnral-info-form.css'
+import {filterData} from "../../utils/object.util.js";
 
 const MaternityGeneralInfoForm = ({
     mode,
@@ -36,6 +37,7 @@ const MaternityGeneralInfoForm = ({
         setNotes, setPaymentType, updateGenderSelected
     } = actions
 
+    const payloadData = filterData([], ['id', 'firstName', 'lastName', 'employeeNumber'], employeeList)
 
     return (
         <form className="maternity__gnral__info-form">
@@ -83,7 +85,7 @@ const MaternityGeneralInfoForm = ({
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.first_name} ${beneficiary.last_name}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -180,9 +182,9 @@ const MaternityGeneralInfoForm = ({
                 onClose={() => setIsModalOpen(false)}
                 children={
                     <DataTable
-                        dataSource={employeeList}
+                        dataSource={payloadData}
                         columnSizes={[10, 30, 30, 30]}
-                        labels={['Id', 'Nombre', 'Apellido', 'Email']}
+                        labels={['Id', 'Nombre', 'Apellido', 'N Emp']}
                         sortColumn={[0, 2, 3, 4]}
                         entries={[5, 10, 20]}
                         enableSearch={true}

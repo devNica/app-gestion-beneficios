@@ -9,11 +9,14 @@ import AdditionalDeathInfoForm from '../../Forms/Death/AdditionalDeathInfoForm'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 import {useNavigate} from "react-router-dom";
 import {useTrackingProps} from "../../hooks/useTracking.js";
+import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 export default function DeathBenefitPage() {
 
     const navigate = useNavigate()
     const { actions: trackingAct } = useTrackingProps()
+
+    const { actions: beneficiaryAct} = useBeneficiaryProps()
 
 
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -30,6 +33,8 @@ export default function DeathBenefitPage() {
         if (ownTrack) {
             setIsOpen(true)
         }
+
+        beneficiaryAct.setAsyncEmployeeWithRelatives()
 
     }, [])
 

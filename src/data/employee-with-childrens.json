@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "firstName": "Alexander",
+        "lastName": "Rosales",
+        "sex": "M",
+        "couple": "Alejandra Esmeralda Lopez",
+        "employeeNumber": "NE-0001",
+        "children": [
+            {
+                "id": 1,
+                "fullname": "Gabriela Alejandra Rosales",
+                "relationShip": "hijo/a",
+                "sex": "F",
+                "birthdate": "2017-07-21",
+                "status": true
+            },
+            {
+                "id": 2,
+                "fullname": "Maria Isabel Rosales",
+                "relationShip": "hijo/a",
+                "sex": "F",
+                "birthdate": "2023-08-26",
+                "status": true
+            },
+            {
+                "id": 3,
+                "fullname": "Jonathan Josue Rosales Lopez",
+                "relationShip": "hijo/a",
+                "sex": "M",
+                "birthdate": "2023-08-26",
+                "status": false
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "firstName": "Leana Gioconda",
+        "lastName": "Sanchez",
+        "sex": "F",
+        "couple": "Juan Antonio Guillen",
+        "employeeNumber": "NE-0002",
+        "children": [
+            {
+                "id": 1,
+                "fullname": "Angel de Jesus Lopez Sanchez",
+                "relationShip": "hijo/a",
+                "sex": "M",
+                "birthdate": "2023-09-01",
+                "status": true
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "firstName": "Rosa Argentina",
+        "lastName": "Flores",
+        "sex": "F",
+        "couple": "Luis Alberto Rivas",
+        "employeeNumber": "NE-0003",
+        "children": [
+            {
+                "id": 1,
+                "fullname": "Raul Flores Mejia",
+                "relationShip": "hijo/a",
+                "sex": "M",
+                "birthdate": "2023-01-31",
+                "status": true
+            },
+            {
+                "id": 2,
+                "fullname": "Paula Mejia Flores",
+                "relationShip": "hijo/a",
+                "sex": "F",
+                "birthdate": "2023-02-01",
+                "status": true
+            }
+        ]
+    }        
+]

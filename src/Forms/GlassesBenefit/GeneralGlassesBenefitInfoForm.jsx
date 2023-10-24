@@ -6,11 +6,11 @@ import InvokeModal from "../../Components/Modal/InvokeModal"
 import DataTable from "../../Components/DataTable/DataTable"
 import PropTypes from "prop-types"
 
-import { useEmployeeProps } from '../../hooks/useEmployee'
-
 import { useHandleGeneralGlassesBenefitInfoForm } from "../../hooks/forms/glasses/useGeneralInforForm"
 
 import './glasses-benefit-form.css'
+import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
+import {filterData} from "../../utils/object.util.js";
 
 export const GeneralGlassesBenefitInfoForm = ({
     mode,
@@ -26,11 +26,9 @@ export const GeneralGlassesBenefitInfoForm = ({
         paymentTypes, currentIndex, updateCurrentIndex, mode
     })
 
-    const { getEmployeeList } = useEmployeeProps()
-    const employeeList = getEmployeeList({
-        queryFields: [{ gender: 'M' }],
-        returnFields: ['id', 'first_name', 'last_name', 'email']
-    })
+    const { states: { employeeList } } = useBeneficiaryProps()
+
+    const dataPayload = filterData([], ['id','firstName', 'lastName', 'email'], employeeList)
 
     const {
         beneficiary, currentAuthorizer, currentClinic,
@@ -71,7 +69,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.first_name} ${beneficiary.last_name}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -192,7 +190,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                 onClose={() => setIsModalOpen(false)}
                 children={
                     <DataTable
-                        dataSource={employeeList}
+                        dataSource={dataPayload}
                         columnSizes={[10, 30, 30, 30]}
                         labels={['Id', 'Nombre', 'Apellido', 'Email']}
                         sortColumn={[0, 2, 3, 4]}
