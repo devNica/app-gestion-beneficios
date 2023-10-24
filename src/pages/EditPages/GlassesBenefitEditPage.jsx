@@ -14,11 +14,13 @@ import { useTrackingProps } from "../../hooks/useTracking"
 import { useNavigate } from "react-router-dom"
 
 import '../main-page.css'
+import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 export default function GlassesBenefitEditPage() {
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
+    const { actions: beneficiaryAct } = useBeneficiaryProps()
 
     const navigate = useNavigate()
 
@@ -38,6 +40,10 @@ export default function GlassesBenefitEditPage() {
         if (ownTrack) {
             setIsOpen(true)
         }
+
+        /*establecer lista de empleados */
+        beneficiaryAct.setAsyncEmployeeList()
+
     }, [])
 
     const multipleComponent = [

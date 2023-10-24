@@ -13,6 +13,7 @@ import { useGlassProps } from "../../hooks/useGlass"
 import { useNavigate } from "react-router-dom"
 
 import '../main-page.css'
+import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 
 export default function GlassesBenefitPage() {
@@ -20,6 +21,7 @@ export default function GlassesBenefitPage() {
 
     const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
+    const { actions: beneficiaryAct } = useBeneficiaryProps()
 
     const {
         serializedClinics,
@@ -38,6 +40,9 @@ export default function GlassesBenefitPage() {
         if (ownTrack) {
             setIsOpen(true)
         }
+
+        /*establecer lista de empleados */
+        beneficiaryAct.setAsyncEmployeeList()
 
     }, [])
 

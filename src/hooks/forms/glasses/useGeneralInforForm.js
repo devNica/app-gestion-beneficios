@@ -57,9 +57,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
     }
 
     function handleSetPaymentType(value) {
-        if (paymentType.id === value.id) {
-            
-        } else if (paymentType.id !== value.id && value.id === 1) {
+        if (paymentType.id !== value.id && value.id === 1) {
             setPaymentType(value)
             setMemoRef('')
         } else if (paymentType.id !== value.id && value.id === 2) {
