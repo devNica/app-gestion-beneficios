@@ -6,7 +6,7 @@ export default function ExtendedToCollaborator({
     handleDate,
 }) {
 
-    const renderRows = data.map((nb, index) => (
+    return data.map((nb, index) => (
         <tr key={index} className='row-form'>
             <td>
                 <input
@@ -66,6 +66,4 @@ export default function ExtendedToCollaborator({
 
         </tr>
     ))
-
-    return renderRows
 }

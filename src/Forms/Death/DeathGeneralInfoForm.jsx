@@ -26,7 +26,7 @@ export default function DeathGeneralInfoForm
         currentIndex,
         mode })
 
-    const { beneficiary, currentAuthorizer, employeeList, isModalOpen,
+    const { beneficiary, currentAuthorizer, relativesOfEmployee, isModalOpen,
         notes, paymentType, registerDate, typeRegister,
         logger, memoRef
     } = states
@@ -83,7 +83,7 @@ export default function DeathGeneralInfoForm
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.first_name} ${beneficiary.last_name}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -165,7 +165,7 @@ export default function DeathGeneralInfoForm
                 onClose={() => setIsModalOpen(false)}
                 children={
                     <DataTable
-                        dataSource={employeeList}
+                        dataSource={relativesOfEmployee}
                         columnSizes={[20, 40, 40]}
                         labels={['Id', 'Nombre', 'Apellido']}
                         sortColumn={[0, 2, 3]}

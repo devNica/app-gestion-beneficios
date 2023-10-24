@@ -11,10 +11,11 @@ const CustomCheckOption = ({
     label = '',
     orientation = 'row',
     isCheckBox = true,
+    justified = 'center'
 }) => {
     
     return (
-        <div className={`custom__check__option ${orientation}`}>
+        <div className={`custom__check__option ${orientation} ${justified}`}>
             {label !== '' ? <label htmlFor={id} className='form__label'>{label}</label> : null}
             {
                 isCheckBox ?
@@ -52,4 +53,5 @@ CustomCheckOption.propTypes = {
     label: PropTypes.string,
     orientation: PropTypes.oneOf(['row', 'column']),
     isCheckBox: PropTypes.bool,
+    justified: PropTypes.oneOf(['center', 'flex-end', 'flex-start'])
 }
