@@ -1,8 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    newUnSavedRequest: false,
     relativesList: null,
+    requiredSupports: {
+        forEmployee: [
+            { name: 'minsaDeathCertificate', label: 'Certificado defuncion MINSA', selected: false},
+            { name: 'deathRegistration', label: 'Registro defuncion Alcaldia', selected: false},
+            { name: 'employeeBirthCertificate', label: 'Partida Nac. del Colaborador', selected: false},
+            { name: 'employeeDocId', label: 'Doc Identidad del Colaborador', selected: false}
+        ],
+        forFamilyMember: [
+            { name: 'minsaDeathCertificate', label: 'Certificado defuncion MINSA', selected: false},
+            { name: 'deathRegistration', label: 'Registro defuncion Alcaldia', selected: false},
+            { name: 'employeeBirthCertificate', label: 'Partida Nac. del Colaborador', selected: false},
+            { name: 'familyMemberBirthCertificate', label: 'Partida Nac. del Familiar', selected: false },
+            { name: 'employeeDocId', label: 'Doc Identidad del Colaborador', selected: false },
+            { name: 'familyMemberDocId', label: 'Doc Identidad del Familiar', selected: false }
+        ]
+    },
     generalInfoReq: {
         typeRegister: 'F',
         registerDate: '',
@@ -15,10 +30,10 @@ const initialState = {
         memoRef: '',
     },
     additionalInfo: {
-        relativesSelected: null,
-        hasSupport: false,
+        relativesConfirmed: null,
         amountInCS: 'C$ 0.00',
-        amountInUS: 'U$ 0.00'
+        amountInUS: 'U$ 0.00',
+        supportsConfirmed: null
     }
 }
 
@@ -46,7 +61,6 @@ const deathSlice = createSlice({
         setGeneralInfoReq: (state, action) => {
             return {
                 ...state,
-                newUnSavedRequest: true,
                 generalInfoReq: action.payload
             }
         },
@@ -61,12 +75,7 @@ const deathSlice = createSlice({
         resetAdditionalInfoReq: (state) => {
             return {
                 ...state,
-                additionalInfo: {
-                    relativesSelected: null,
-                    hasSupport: false,
-                    amountInCS: 'C$ 0.00',
-                    amountInUS: 'U$ 0.00'
-                }
+                additionalInfo: initialState.additionalInfo
             }
         }
 

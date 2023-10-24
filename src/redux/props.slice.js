@@ -16,8 +16,8 @@ const initialState = {
         { id: 3, value: 600 }
     ],
     amountAuthorizedForDeath: {
-        collaborator: [{ id: 1, amount: 600.00 }],
-        family: [
+        amountForDeathEmployee: [{ id: 1, amount: 600.00 }],
+        amountForDeathFamilyMember: [
             { id: 1, relative: 'padre', amount: 325.00 },
             { id: 2, relative: 'madre', amount: 325.00 },
             { id: 3, relative: 'hijo/a', amount: 600.00 },
