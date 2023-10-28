@@ -1,16 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
-import clinicMockup from '../data/clinics.json'
-import diagnosisMockup from '../data/diagnosis.json'
-import glassSpec from '../data/glass-spec.json'
 
 const initialState = {
     history: [],
 
-    clinics: clinicMockup,
-    lensDetail: glassSpec.details,
-    lensMaterial: glassSpec.material,
-    lensType: glassSpec.lens,
-    diagnosis: diagnosisMockup,
+    clinics: [],
+    lensDetail: [],
+    lensMaterial: [],
+    lensType: [],
+    diagnosis: [],
 
     memoryFlag: false,
 
@@ -80,6 +77,17 @@ const glassSlice = createSlice({
     initialState,
     reducers: {
 
+        setProps: (state, action) => {
+          return {
+              ...state,
+              clinics: action.payload.clinics,
+              lensDetail: action.payload.details,
+              lensMaterial: action.payload.material,
+              lensType: action.payload.types,
+              diagnosis: action.payload.diag
+          }
+        },
+
         setMemoryFlag: (state, action) => {
             return {
                 ...state,
@@ -129,71 +137,16 @@ const glassSlice = createSlice({
             return {
                 ...state,
                 memoryFlag: false,
-                generalInfoReq: {
-                    registerDate: null,
-                    beneficiary: null,
-                    paymentType: null,
-                    clinic: null,
-                    amountApproved: 0,
-                    notes: '',
-                    logger: '',
-                    authorizer: null,
-                    letterRef: '',
-                    memoRef: ''
-                },
-                ophthalmicInfoReq: {
-                    rightEye: [
-                        { erEsf: '-' },
-                        { erCil: '-' },
-                        { erAxis: '-' },
-                        { erDip: '-' },
-                        { erPrisma: '-' },
-                        { erBase: '-' },
-                        { erAddition: '-' },
-                        { erAv: '-' }
-                    ],
-                    leftEye: [
-                        { elEsf: '-' },
-                        { elCil: '-' },
-                        { elAxis: '-' },
-                        { elDip: '-' },
-                        { elPrisma: '-' },
-                        { elBase: '-' },
-                        { elAddition: '-' },
-                        { elAv: '-' }
-                    ],
-                    lenMaterial: null,
-                    lenDetail: null,
-                    lenType: null,
-                    diagnosis: []
-                },
-                applicationSupports: {
-                    currentMode: 'OPF',
-                    hasProforma: false,
-                    proforma: {
-                        date: null,
-                        serie: '',
-                        amount: '',
-                        currency: null,
-                        amountInCS: '',
-                        exchangeRate: null
-                    },
-                    hasInvoice: false,
-                    invoice: {
-                        date: null,
-                        serie: '',
-                        amount: '',
-                        currency: null,
-                        amountInCS: '',
-                        exchangeRate: null
-                    }
-                }
+                generalInfoReq: initialState.generalInfoReq,
+                ophthalmicInfoReq: initialState.ophthalmicInfoReq,
+                applicationSupports: initialState.applicationSupports
             }
         }
     }
 })
 
 export const {
+    setProps,
     setMemoryFlag,
     loadHistory,
     loadRecord,

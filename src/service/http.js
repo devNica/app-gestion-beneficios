@@ -19,6 +19,7 @@ axiosInstance.interceptors.request.use(config => {
     config.headers = {
         ...config.headers
     }
+    return config
 })
 
 axiosInstance.interceptors.response.use(response => {

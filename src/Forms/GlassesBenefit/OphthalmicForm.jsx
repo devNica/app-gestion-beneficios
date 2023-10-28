@@ -101,7 +101,7 @@ export default OphthalmicForm
 
 OphthalmicForm.propTypes = {
     diagnosis: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         value: PropTypes.string
     })),
     lensMaterial: PropTypes.arrayOf(PropTypes.shape({

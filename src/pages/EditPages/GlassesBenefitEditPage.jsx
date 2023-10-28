@@ -25,11 +25,11 @@ export default function GlassesBenefitEditPage() {
     const navigate = useNavigate()
 
     const {
-        serializedClinics,
-        serializedDiagnosis,
-        serializedLensDetail,
-        serializedLensMaterial,
-        serializedLensType } = useGlassProps()
+        clinics,
+        diagnosis,
+        lensDetail,
+        lensMaterial,
+        lensType } = useGlassProps()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
@@ -49,17 +49,17 @@ export default function GlassesBenefitEditPage() {
     const multipleComponent = [
         <GeneralGlassesBenefitInfoForm
             mode="edit"
-            clinics={serializedClinics}
+            clinics={clinics}
             paymentTypes={serializedPaymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
         <OphthalmicForm
-            diagnosis={serializedDiagnosis}
-            lensDetail={serializedLensDetail}
-            lensMaterial={serializedLensMaterial}
-            lensType={serializedLensType}
+            diagnosis={diagnosis}
+            lensDetail={lensDetail}
+            lensMaterial={lensMaterial}
+            lensType={lensType}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
