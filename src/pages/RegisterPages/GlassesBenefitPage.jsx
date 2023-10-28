@@ -8,7 +8,7 @@ import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSuppo
 
 import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
-import { useGlassProps } from "../../hooks/useGlass"
+import {useFetchGlassesProps, useGlassProps} from "../../hooks/useGlass"
 
 import { useNavigate } from "react-router-dom"
 
@@ -23,12 +23,14 @@ export default function GlassesBenefitPage() {
     const { actions: trackingAct } = useTrackingProps()
     const { actions: beneficiaryAct } = useBeneficiaryProps()
 
+    useFetchGlassesProps()
+
     const {
-        serializedClinics,
-        serializedDiagnosis,
-        serializedLensDetail,
-        serializedLensMaterial,
-        serializedLensType } = useGlassProps()
+        clinics,
+        diagnosis,
+        lensDetail,
+        lensMaterial,
+        lensType } = useGlassProps()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
@@ -44,22 +46,24 @@ export default function GlassesBenefitPage() {
         /*establecer lista de empleados */
         beneficiaryAct.setAsyncEmployeeList()
 
+
+
     }, [])
 
     const multipleComponent = [
         <GeneralGlassesBenefitInfoForm
             mode="register"
-            clinics={serializedClinics}
+            clinics={clinics}
             paymentTypes={serializedPaymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
         <OphthalmicForm
-            diagnosis={serializedDiagnosis}
-            lensDetail={serializedLensDetail}
-            lensMaterial={serializedLensMaterial}
-            lensType={serializedLensType}
+            diagnosis={diagnosis}
+            lensDetail={lensDetail}
+            lensMaterial={lensMaterial}
+            lensType={lensType}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
