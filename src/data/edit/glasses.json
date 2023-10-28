@@ -3,8 +3,8 @@
         "registerDate": "2023-10-09",
         "beneficiary": {
             "id": 1,
-            "first_name": "Alexander",
-            "last_name": "Rosales",
+            "firstName": "Alexander",
+            "lastName": "Rosales",
             "email": "arosales@gmail.com"
         },
         "paymentType": {
