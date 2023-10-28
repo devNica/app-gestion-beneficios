@@ -25,12 +25,6 @@ export const useGlassProps = () => {
         lensType,
     } = useSelector(state => state.glass)
 
-//    const serializedClinics = clinics.map(c => ({ id: c.id, value: c.name }))
-//    const serializedLensDetail = lensDetail.map(ld => ({ id: ld.id, value: ld.type }))
-//    const serializedLensMaterial = lensMaterial.map(lm => ({ id: lm.id, value: lm.type }))
-//    const serializedLensType = lensType.map(lt => ({ id: lt.id, value: lt.type }))
-//    const serializedDiagnosis = diagnosis.map(dg => ({ id: dg.id, value: dg.type }))
-
     function serializedHistory({ queryFields, returnFields }) {
         return filterData(queryFields, returnFields, history)
     }

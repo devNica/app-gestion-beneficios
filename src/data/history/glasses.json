@@ -1,6 +1,6 @@
 [
     {
-        "benefitId": 1,
+        "recordId": 1,
         "fullname": "Alexander Rosales",
         "employeeNumber": "NE-0001",
         "employeeSex": "M",
@@ -12,7 +12,7 @@
         "statusDesc": "Aprobado"
     },
     {
-        "benefitId": 2,
+        "recordId": 2,
         "fullname": "Dayana Lucia Lopez",
         "employeeNumber": "NE-0002",
         "employeeSex": "F",
@@ -24,7 +24,7 @@
         "statusDesc": "Rechazado"
     },
     {
-        "benefitId": 3,
+        "recordId": 3,
         "fullname": "Jessica Aleyda Alvarez",
         "employeeNumber": "NE-0003",
         "employeeSex": "F",

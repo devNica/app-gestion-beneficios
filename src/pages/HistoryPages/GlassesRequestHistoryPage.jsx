@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import GlasesReqHistoryView from "../../views/glasses/GlassesReqHistoryView"
+import RequestHistoryView from "../../views/glasses/RequestHistoryView.jsx";
 import { useGlassProps, useGlassesRequestManagement } from "../../hooks/useGlass"
 
 import './glasses-req-history.css'
@@ -10,14 +10,20 @@ const GlassesRequestHistoryPage = () => {
 
     const { serializedHistory } = useGlassProps()
 
+    const nameSpace = {
+        navigationPath: 'glasses',
+        slice: 'glass',
+        process: [
+            { type: 'edit', procIdentity: 'GL-EDIT'},
+            { type: 'register', procIdentity: 'GL-REG'}
+        ]
+    }
     
     const data = serializedHistory({
         queryFields: [],
-        returnFields: ["benefitId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
+        returnFields: ["recordId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
     })
-
     
-
     useEffect(() => {
         actions.fetchAsyncGlassesHistory()
     }, [])
@@ -25,9 +31,13 @@ const GlassesRequestHistoryPage = () => {
     return (
         <div className="history__page">
             <h3 className="bread__crum">Historico de Beneficio de Lentes</h3>
-            {
+           {
                 data.length > 0 ?
-                    <GlasesReqHistoryView data={data} /> : <></>
+                    <RequestHistoryView
+                        data={data}
+                        nameSpace={nameSpace}
+                        fetchRequestById={actions.fetchGlassesRequestRecordById}
+                    /> : <></>
             }
         </div>
     )
