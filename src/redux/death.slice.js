@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    history: [],
     relativesList: null,
     requiredSupports: {
         forEmployee: [
@@ -41,6 +42,13 @@ const deathSlice = createSlice({
     name: 'death',
     initialState,
     reducers: {
+
+       loadHistory: (state, action)=>{
+            return {
+                ...state,
+                history: action.payload
+            }
+       },
 
         resetDeathReq: (state) => {
             return {
@@ -83,6 +91,7 @@ const deathSlice = createSlice({
 })
 
 export const {
+    loadHistory,
     resetDeathReq,
     setGeneralInfoReq,
     setRelativeList,

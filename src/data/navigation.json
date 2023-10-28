@@ -20,6 +20,11 @@
         "icon": "bi bi-person-heart",
         "childrens": [
             {
+                "title": "Historicos",
+                "icon": "bi bi-hourglass-split",
+                "path": "/maternity/history"
+            },
+            {
                 "title": "Nuevo",
                 "icon": "bi bi-file-earmark-plus-fill",
                 "path": "/maternity/insert"

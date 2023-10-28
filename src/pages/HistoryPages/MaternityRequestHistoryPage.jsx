@@ -1,27 +1,26 @@
 import { useEffect } from "react"
 import RequestHistoryView from "../../views/history/RequestHistoryView.jsx";
-import { useGlassProps, useGlassesRequestManagement } from "../../hooks/useGlass"
 
-const GlassesRequestHistoryPage = () => {
+import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
 
-    const { actions } = useGlassesRequestManagement()
+const MaternityRequestHistoryPage = () => {
 
-    const { serializedHistory } = useGlassProps()
-
+    const { actions } = useMaternityRequestManagement()
+   
     const nameSpace = {
-        navigationPath: 'glasses',
-        slice: 'glass',
+        navigationPath: 'maternity',
+        slice: 'maternity',
         process: [
-            { type: 'edit', procIdentity: 'GL-EDIT'},
-            { type: 'register', procIdentity: 'GL-REG'}
+            { type: 'edit', procIdentity: 'MTN-EDIT'},
+            { type: 'register', procIdentity: 'MTN-REG'}
         ]
     }
-    
-    const data = serializedHistory({
+
+    const data = actions.serializedHistory({
         queryFields: [],
         returnFields: ["recordId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
     })
-    
+
     useEffect(() => {
         actions.fetchAsyncGlassesHistory()
     }, [])
@@ -29,16 +28,16 @@ const GlassesRequestHistoryPage = () => {
     return (
         <div className="history__page">
             <h3 className="bread__crum">Historico de Beneficio de Lentes</h3>
-           {
+            {
                 data.length > 0 ?
                     <RequestHistoryView
                         data={data}
                         nameSpace={nameSpace}
-                        fetchRequestById={actions.fetchGlassesRequestRecordById}
+                        fetchRequestById={actions.fetchMaternityRequestRecordById}
                     /> : <></>
             }
         </div>
-    )
+        )
 }
 
-export default GlassesRequestHistoryPage
+export default MaternityRequestHistoryPage
