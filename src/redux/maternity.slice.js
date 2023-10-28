@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+    history: [],
     childrenOfBeneficiary: [],
     generalInfoReq: {
         gender: null,
@@ -34,6 +35,13 @@ const maternitySlice = createSlice({
     initialState,
     reducers: {
 
+        loadHistory: (state, action) => {
+            return {
+                ...state,
+                history: action.payload
+            }
+        },
+
         resetMaternityReq: (state) => {
             return {
                 ...state,
@@ -61,6 +69,7 @@ const maternitySlice = createSlice({
 })
 
 export const {
+    loadHistory,
     setGeneralInfoReq,
     setNewBornInfoReq,
     resetMaternityReq } = maternitySlice.actions

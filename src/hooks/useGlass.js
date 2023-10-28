@@ -9,7 +9,7 @@ import {
     setMemoryFlag,
     setProps
 } from '../redux/glass.slice'
-import mockupHistory from '../data/history/glasses.json'
+import mockupHistory from '../data/history/generic-history.json'
 import mockupRecord from '../data/edit/glasses.json'
 import { filterData } from "../utils/object.util"
 import {fetchGlassesPropsFromAPI} from "../service/api.js";
