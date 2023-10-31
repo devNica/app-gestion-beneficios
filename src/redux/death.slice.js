@@ -3,22 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     history: [],
     relativesList: null,
-    requiredSupports: {
-        forEmployee: [
-            { name: 'minsaDeathCertificate', label: 'Certificado defuncion MINSA', selected: false},
-            { name: 'deathRegistration', label: 'Registro defuncion Alcaldia', selected: false},
-            { name: 'employeeBirthCertificate', label: 'Partida Nac. del Colaborador', selected: false},
-            { name: 'employeeDocId', label: 'Doc Identidad del Colaborador', selected: false}
-        ],
-        forFamilyMember: [
-            { name: 'minsaDeathCertificate', label: 'Certificado defuncion MINSA', selected: false},
-            { name: 'deathRegistration', label: 'Registro defuncion Alcaldia', selected: false},
-            { name: 'employeeBirthCertificate', label: 'Partida Nac. del Colaborador', selected: false},
-            { name: 'familyMemberBirthCertificate', label: 'Partida Nac. del Familiar', selected: false },
-            { name: 'employeeDocId', label: 'Doc Identidad del Colaborador', selected: false },
-            { name: 'familyMemberDocId', label: 'Doc Identidad del Familiar', selected: false }
-        ]
-    },
+    requiredSupports: null,
     generalInfoReq: {
         typeRegister: 'F',
         registerDate: '',
@@ -42,6 +27,13 @@ const deathSlice = createSlice({
     name: 'death',
     initialState,
     reducers: {
+
+       loadSupport: (state, action) => {
+           return {
+               ...state,
+               requiredSupports: action.payload
+           }
+       },
 
        loadHistory: (state, action)=>{
             return {
@@ -91,6 +83,7 @@ const deathSlice = createSlice({
 })
 
 export const {
+    loadSupport,
     loadHistory,
     resetDeathReq,
     setGeneralInfoReq,

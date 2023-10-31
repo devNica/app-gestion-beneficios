@@ -9,10 +9,11 @@ import './additional-death-info-form.css'
 
 export default function AdditionalDeathInfoForm({
     updateCurrentIndex,
-    currentIndex
+    currentIndex,
+    internalExchange
 }) {
 
-    const { states, actions } = useAdditionalInfoForm({ updateCurrentIndex, currentIndex })
+    const { states, actions } = useAdditionalInfoForm({ updateCurrentIndex, currentIndex, internalExchange })
 
     const { typeRegister, amountInCS, amountInUS, relativesConfirmed, supportsConfirmed } = states
     const { handleBackStep, handleDate, handleSelectItem, handleSupportConfirmation } = actions
@@ -98,5 +99,6 @@ export default function AdditionalDeathInfoForm({
 
 AdditionalDeathInfoForm.propTypes = {
     updateCurrentIndex: PropTypes.func,
-    currentIndex: PropTypes.number
+    currentIndex: PropTypes.number,
+    internalExchange: PropTypes.number
 }

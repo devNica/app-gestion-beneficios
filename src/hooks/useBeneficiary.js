@@ -14,9 +14,7 @@ export const useBeneficiaryProps = () => {
         employeeList
     } = useSelector(state => state.beneficiary)
     
-    const {
-        amountForDeathEmployee,
-        amountForDeathFamilyMember } = useSelector(state => state.props.amountAuthorizedForDeath)
+    const { authorizedAmounts } = useSelector(state => state.props)
 
     function setAsyncEmployeeList() {
         dispatch(setEmployeeList(employeeListMockup))
@@ -66,14 +64,14 @@ export const useBeneficiaryProps = () => {
             results = records.map(item => ({
                 ...item,
                 date: '',
-                amount: amountForDeathFamilyMember.find(element => element.relative === item.relationShip).amount
+                amount: authorizedAmounts.find(element => element.relative === item.relationShip && element.typeBenefitId === 3).amount_usd
             }))
 
         } else {
             results = records.map(item => ({
                 ...item,
                 date: '',
-                amount: amountForDeathEmployee[0].amount
+                amount: authorizedAmounts.find(ele => ele.typeBenefitId === 3 && ele.relative === 'Colaborador').amount_usd
             }))
         }
 

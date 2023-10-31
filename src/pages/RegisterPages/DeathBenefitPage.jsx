@@ -10,6 +10,7 @@ import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 import {useNavigate} from "react-router-dom";
 import {useTrackingProps} from "../../hooks/useTracking.js";
 import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
+import {useDeathRequestManagement} from "../../hooks/useDeath.js";
 
 export default function DeathBenefitPage() {
 
@@ -17,13 +18,14 @@ export default function DeathBenefitPage() {
     const { actions: trackingAct } = useTrackingProps()
 
     const { actions: beneficiaryAct} = useBeneficiaryProps()
-
+    const { actions: deathAct} = useDeathRequestManagement()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
 
-    const { 
-        serializedPaymentTypes, 
+    const {
+        internalExchange,
+        paymentTypes,
         serializedAuthorizers } = useAdminProps()
 
     useEffect(() => {
@@ -34,6 +36,7 @@ export default function DeathBenefitPage() {
             setIsOpen(true)
         }
 
+        deathAct.setRequiredSupport()
         beneficiaryAct.setAsyncEmployeeWithRelatives()
 
     }, [])
@@ -41,12 +44,13 @@ export default function DeathBenefitPage() {
     const MultipleComponent = [
         <DeathGeneralInfoForm
             mode={'register'}
-            paymentTypes={serializedPaymentTypes}
+            paymentTypes={paymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
         <AdditionalDeathInfoForm
+            internalExchange={internalExchange}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />

@@ -13,13 +13,13 @@ import MaternityRequestHistoryPage from "./pages/HistoryPages/MaternityRequestHi
 import DeathBenefitPage from "./pages/RegisterPages/DeathBenefitPage"
 import GlassesRequestHistoryPage from "./pages/HistoryPages/GlassesRequestHistoryPage"
 import GlassesBenefitEditPage from "./pages/EditPages/GlassesBenefitEditPage"
+import MaternityEditPage from "./pages/EditPages/MaternityEditPage.jsx";
+import DeathRequestHistoryPage from "./pages/HistoryPages/DeathRequestHistoryPage.jsx";
 
 import { useManageCredential } from "./hooks/useAuth"
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import MaternityEditPage from "./pages/EditPages/MaternityEditPage.jsx";
-import DeathRequestHistoryPage from "./pages/HistoryPages/DeathRequestHistoryPage.jsx";
 
 function App() {
 

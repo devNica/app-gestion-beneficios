@@ -10,3 +10,14 @@ export const fetchGlassesPropsFromAPI = async () => {
     
     return response.data
 }
+
+export const fetchAdminPropsFromAPI = async () => {
+    const response = await axiosInstance('/telcor/beneficios/v1/props/admin')
+
+    if ([404, 500].some(codes => codes === response.status)) {
+        console.log('error detectado: ')
+        throw new Error(response.data)
+    }
+
+    return response.data
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDeathRequestManagement } from "../../useDeath.js"
 import { formatNumberWithCommas } from "../../../utils/number.util.js"
 
-export const useAdditionalInfoForm = ({ updateCurrentIndex, currentIndex }) => {
+export const useAdditionalInfoForm = ({ updateCurrentIndex, currentIndex, internalExchange }) => {
     
     const {
         states: {
@@ -39,7 +39,7 @@ export const useAdditionalInfoForm = ({ updateCurrentIndex, currentIndex }) => {
             }
         }
 
-        const amountInCs = accAmountInUs * 36.78
+        const amountInCs = accAmountInUs * Number(internalExchange.toFixed(2))
 
         setAmountInUS(`U$ ${formatNumberWithCommas(accAmountInUs)}`)
         setAmountInCS(`C$ ${formatNumberWithCommas(amountInCs)}`)

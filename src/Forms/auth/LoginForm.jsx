@@ -2,12 +2,12 @@ import { useState } from 'react'
 import CustomNotification from '../../Components/Notification/CustomNotification'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../../redux/notification.slice'
-import PropTypes from "prop-types"
 
 import './form.css'
+import {asyncLoginThunk} from "../../redux/auth.slice.js";
 
 
-export default function LoginForm({ handleOnSubmit }) {
+export default function LoginForm() {
 
     CustomNotification()
     const dispatch = useDispatch()
@@ -35,11 +35,10 @@ export default function LoginForm({ handleOnSubmit }) {
             return
         }
 
-
-        handleOnSubmit({
+        dispatch(asyncLoginThunk({
             username,
             password
-        })
+        }))
     }
 
     return (
@@ -77,8 +76,4 @@ export default function LoginForm({ handleOnSubmit }) {
             </button>
         </form>
     )
-}
-
-LoginForm.propTypes ={
-    handleOnSubmit: PropTypes.func
 }
