@@ -19,10 +19,8 @@ export default function MaternityBenefitPage() {
 
     const { actions: beneficiaryAct} = useBeneficiaryProps()
 
-
-
-    const { serializedPaymentTypes, serializedAuthorizers,
-        authorizedAmountsMathernity, internalExchange, maternitySupports, typesBirth
+    const { paymentTypes, serializedAuthorizers, maternityAmounts,
+         internalExchange, maternitySupports, typesBirth
     } = useAdminProps()
 
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -44,13 +42,13 @@ export default function MaternityBenefitPage() {
     const MultipleComponent = [
         <MaternityGeneralInfoForm
             mode={'register'}
-            paymentTypes={serializedPaymentTypes}
+            paymentTypes={paymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
         <NewbornInfoForm
-            authorizedAmountsMathernity={authorizedAmountsMathernity}
+            authorizedAmountsMathernity={maternityAmounts}
             maternitySupports={maternitySupports}
             typesBirth={typesBirth}
             internalExchange={internalExchange}

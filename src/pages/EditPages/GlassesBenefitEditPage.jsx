@@ -18,7 +18,7 @@ import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 export default function GlassesBenefitEditPage() {
 
-    const { serializedPaymentTypes, serializedAuthorizers } = useAdminProps()
+    const { paymentTypes, serializedAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: beneficiaryAct } = useBeneficiaryProps()
 
@@ -50,7 +50,7 @@ export default function GlassesBenefitEditPage() {
         <GeneralGlassesBenefitInfoForm
             mode="edit"
             clinics={clinics}
-            paymentTypes={serializedPaymentTypes}
+            paymentTypes={paymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

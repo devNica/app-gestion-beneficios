@@ -44,17 +44,17 @@ export default function useNewBornInfoForm({
         const confirmed = current.filter(child => child.selected === true)
 
         if(confirmed.length === 1 ) {
-            authAmountInUs = authorizedAmountsMathernity[0].value
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Normal').amount_usd
             setTypeBirth(typesBirth[0])
         } else if (confirmed.length === 2 ){
-            authAmountInUs = authorizedAmountsMathernity[1].value
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Gemelar').amount_usd
             setTypeBirth(typesBirth[1])
         } else if (confirmed.length > 2) {
             setTypeBirth(typesBirth[2])
-            authAmountInUs = authorizedAmountsMathernity[2].value
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Multiple').amount_usd
         }
 
-        const authAmountInCs = authAmountInUs * internalExchange
+        const authAmountInCs = authAmountInUs * Number(internalExchange.toFixed(2))
 
         setAmountInUS(`U$ ${formatNumberWithCommas(authAmountInUs)}`)
         setAmountInCS(`C$ ${formatNumberWithCommas(authAmountInCs)}`)

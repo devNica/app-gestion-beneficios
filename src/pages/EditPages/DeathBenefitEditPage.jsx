@@ -11,6 +11,7 @@ import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 import { useAdminProps } from '../../hooks/useProps'
 
 import '../main-page.css'
+import {useDeathRequestManagement} from "../../hooks/useDeath.js";
 
 export default function DeathBenefitEditPage() {
 
@@ -18,13 +19,13 @@ export default function DeathBenefitEditPage() {
     const { actions: trackingAct } = useTrackingProps()
 
     const { actions: beneficiaryAct} = useBeneficiaryProps()
-
+    const { actions: deathAct} = useDeathRequestManagement()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
 
     const { 
-        serializedPaymentTypes, 
+        paymentTypes,
         serializedAuthorizers } = useAdminProps()
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function DeathBenefitEditPage() {
             setIsOpen(true)
         }
 
+        deathAct.setRequiredSupport()
         beneficiaryAct.setAsyncEmployeeWithRelatives()
 
     }, [])
@@ -42,7 +44,7 @@ export default function DeathBenefitEditPage() {
     const MultipleComponent = [
         <DeathGeneralInfoForm
             mode={'edit'}
-            paymentTypes={serializedPaymentTypes}
+            paymentTypes={paymentTypes}
             authorizers={serializedAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

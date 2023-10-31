@@ -9,21 +9,21 @@
             {
                 "id": 1,
                 "fullname": "Maria Luisa Zeledon",
-                "relationShip": "esposo/a",
+                "relationShip": "Esposa",
                 "sex": "F",
                 "status": true
             },
             {
                 "id": 2,
                 "fullname": "Maria Isabel Rosales Zeledon",
-                "relationShip": "hijo/a",
+                "relationShip": "Hija",
                 "sex": "M",
                 "status": true
             },
             {
                 "id": 3,
                 "fullname": "Juana del Carmen Rocha",
-                "relationShip": "madre",
+                "relationShip": "Madre",
                 "sex": "F",
                 "status": false
             }
@@ -39,14 +39,14 @@
             {
                 "id": 1,
                 "fullname": "Antonio Alvarez",
-                "relationShip": "padre",
+                "relationShip": "Padre",
                 "sex": "M",
                 "status": false
             },
             {
                 "id": 2,
                 "fullname": "Carlos Aleman Alvarez",
-                "relationShip": "hijo/a",
+                "relationShip": "Hijo",
                 "sex": "M",
                 "status": false
             }
@@ -62,14 +62,14 @@
             {
                 "id": 1,
                 "fullname": "Ali Mendoza",
-                "relationShip": "suegro/a",
+                "relationShip": "Padre",
                 "sex": "M",
                 "status": true
             },
             {
                 "id": 2,
                 "fullname": "Jose Antonio Ruiz",
-                "relationShip": "esposo/a",
+                "relationShip": "Esposo",
                 "sex": "M",
                 "status": true
             }
@@ -85,28 +85,14 @@
             {
                 "id": 1,
                 "fullname": "Patronila de Calderon",
-                "relationShip": "madre",
+                "relationShip": "Madre",
                 "sex": "F",
                 "status": false
             },
             {
                 "id": 2,
                 "fullname": "Lutencio Calderon",
-                "relationShip": "padre",
-                "sex": "M",
-                "status": true
-            },
-            {
-                "id": 3,
-                "fullname": "Ana Margarita Rosales",
-                "relationShip": "sobrino/a",
-                "sex": "F",
-                "status": false
-            },
-            {
-                "id": 4,
-                "fullname": "Michael Steven Rosales Calderon",
-                "relationShip": "sobrino/a",
+                "relationShip": "Padre",
                 "sex": "M",
                 "status": true
             }
@@ -122,14 +108,14 @@
             {
                 "id": 1,
                 "fullname": "Lucrecia Flores Willhem",
-                "relationShip": "abuelo/a",
+                "relationShip": "Madre",
                 "sex": "F",
                 "status": true
             },
             {
                 "id": 2,
                 "fullname": "Moises Petronilo Saenz",
-                "relationShip": "tio/a",
+                "relationShip": "Padre",
                 "sex": "M",
                 "status": true
             }
@@ -145,7 +131,7 @@
             {
                 "id": 1,
                 "fullname": "Beatriz Pinzon Solano",
-                "relationShip": "esposo/a",
+                "relationShip": "Esposo",
                 "sex": "F",
                 "status": false
             }
@@ -161,7 +147,7 @@
             {
                 "id": 1,
                 "fullname": "Estela Ramirez",
-                "relationShip": "madre",
+                "relationShip": "Madre",
                 "sex": "F",
                 "status": true
             }

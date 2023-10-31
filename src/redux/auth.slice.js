@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
+import {fetchAdminPropsFromAPI} from "../service/api.js";
+import {setProps} from "./props.slice.js";
 
 const initialState = {
     isAuth: false,
@@ -55,5 +57,29 @@ const authSlice = createSlice({
 })
 
 export const { loginSuccess, loginFailed, logout, reload } = authSlice.actions
+
+export const asyncLoginThunk = payload => async dispatch => {
+    try {
+        dispatch(loginSuccess({
+            user: {
+                username: payload.username,
+                password: payload.password
+            },
+            token: 'eby123'
+        }))
+
+        const {data} = await fetchAdminPropsFromAPI()
+
+        dispatch(setProps({
+            paymentTypes: data.paymentTypes,
+            internalExchange: data.internalExchange,
+            supports: data.requiredSupports,
+            authorizedAmounts: data.authorizedAmounts
+        }))
+
+    } catch (err) {
+        throw new Error(err)
+    }
+}
 
 export default authSlice.reducer
