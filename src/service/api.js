@@ -21,3 +21,14 @@ export const fetchAdminPropsFromAPI = async () => {
 
     return response.data
 }
+
+export const fetchGlassesApplicants = async () => {
+    const response = await axiosInstance('/telcor/beneficios/v1/glasses/applicants')
+
+    if ([404, 500].some(codes => codes === response.status)) {
+        console.log('error detectado: ')
+        throw new Error(response.data)
+    }
+
+    return response.data
+}
