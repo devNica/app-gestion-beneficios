@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import {fetchGlassesApplicants} from "../service/api.js";
 
 const initialState = {
     employeeWithChildrens: [],
@@ -38,3 +39,14 @@ export const { setEmployeeList,
     setEmployeeWithRelatives} = beneficiarySlice.actions
 
 export default beneficiarySlice.reducer
+
+
+export const asyncFetchGlassApplicantThunk = () => async dispatch => {
+    try {
+        const { data } = await fetchGlassesApplicants()
+        console.log('this data:', data)
+        dispatch(setEmployeeList(data))
+    } catch (e) {
+        console.log('error in fetch glasses applicants: ', e)
+    }
+}

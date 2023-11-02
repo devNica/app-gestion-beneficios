@@ -44,10 +44,7 @@ export default function GlassesBenefitPage() {
         }
 
         /*establecer lista de empleados */
-        beneficiaryAct.setAsyncEmployeeList()
-
-
-
+        beneficiaryAct.setGlassesApplicants()
     }, [])
 
     const multipleComponent = [

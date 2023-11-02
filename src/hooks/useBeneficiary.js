@@ -1,5 +1,10 @@
 import {useDispatch, useSelector} from "react-redux"
-import {setEmployeeWithChildrens , setEmployeeWithRelatives, setEmployeeList} from "../redux/beneficiary.slice.js";
+import {
+    setEmployeeWithChildrens,
+    setEmployeeWithRelatives,
+    setEmployeeList,
+    asyncFetchGlassApplicantThunk
+} from "../redux/beneficiary.slice.js";
 import employeeWithChildrensMockup from '../data/employee-with-childrens.json'
 import employeeWithRelativesMockup from '../data/employee-with-relatives.json'
 import employeeListMockup from '../data/employee-list.json'
@@ -20,6 +25,10 @@ export const useBeneficiaryProps = () => {
         dispatch(setEmployeeList(employeeListMockup))
     }
     
+    function setGlassesApplicants(){
+        dispatch(asyncFetchGlassApplicantThunk())
+    }
+
     function setAsyncEmployeeWithChildrens() {
         dispatch(setEmployeeWithChildrens(employeeWithChildrensMockup))
     }
@@ -90,6 +99,7 @@ export const useBeneficiaryProps = () => {
         },
         
         actions: {
+            setGlassesApplicants,
             setAsyncEmployeeList,
             setAsyncEmployeeWithChildrens,
             setAsyncEmployeeWithRelatives,

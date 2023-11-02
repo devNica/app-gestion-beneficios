@@ -28,7 +28,7 @@ export const GeneralGlassesBenefitInfoForm = ({
 
     const { states: { employeeList } } = useBeneficiaryProps()
 
-    const dataPayload = filterData([], ['id','firstName', 'lastName', 'email'], employeeList)
+    const dataPayload = filterData([], ['employeeNumber','name', 'surname', 'secondSurname', 'dni'], employeeList)
 
     const {
         beneficiary, currentAuthorizer, currentClinic,
@@ -69,7 +69,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.name} ${beneficiary.surname}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -191,8 +191,8 @@ export const GeneralGlassesBenefitInfoForm = ({
                 children={
                     <DataTable
                         dataSource={dataPayload}
-                        columnSizes={[10, 30, 30, 30]}
-                        labels={['Id', 'Nombre', 'Apellido', 'Email']}
+                        columnSizes={[10, 25, 25, 25, 15]}
+                        labels={['Emp', 'Nombre', 'P Apellido', 'S Apellido', 'Cedula']}
                         sortColumn={[0, 2, 3, 4]}
                         entries={[5, 10, 20]}
                         enableSearch={true}
