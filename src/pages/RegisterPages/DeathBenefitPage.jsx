@@ -26,7 +26,7 @@ export default function DeathBenefitPage() {
     const {
         internalExchange,
         paymentTypes,
-        serializedAuthorizers } = useAdminProps()
+        userAuthorizers } = useAdminProps()
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -45,7 +45,7 @@ export default function DeathBenefitPage() {
         <DeathGeneralInfoForm
             mode={'register'}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,

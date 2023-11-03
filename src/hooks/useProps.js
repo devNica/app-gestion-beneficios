@@ -10,14 +10,14 @@ export const useAdminProps = () => {
         internalExchange
     } = useSelector(state => state.props)
 
-    const serializedAuthorizers = userAuthorizers.map(user => ({ id: user.id, value: user.empleado }))
-
+    const authorizedAmoutForGlassBenefit = authorizedAmounts.find(ele => ele.typeBenefit === 'Lentes')
     const maternityAmounts = authorizedAmounts.filter(ele => ele.typeBenefitId === 2)
     const maternitySupports = supports.find(ele => ele.typeBenefitId === 2).supports
    
     return {
+        authorizedAmoutForGlassBenefit,
         maternityAmounts,
-        serializedAuthorizers,
+        userAuthorizers,
         paymentTypes,
         authorizedAmounts,
         maternitySupports,

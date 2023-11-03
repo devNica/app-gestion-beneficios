@@ -1,34 +1,32 @@
-import http from "./http.js"
 
 export const httpHandler = async ({
-                                      prefix = `${import.meta.env.VITE_API_PREFIX}`,
-                                      url,
-                                      method = http.get,
-                                      body = null,
-                                      headers = null,
-                                      httpConfig = null,
-                                      schema = null
-                                  }) => {
+    instance,
+    headers,
+    token = '',
+    method = 'GET',
+    endpoint,
+    body,
+    params,
+    abort
+}) => {
     try {
-
-        const config = {
+        const response = await instance.request({
             headers: {
-                'Accep-Language': 'es',
                 'Content-Type': 'application/json',
-                withCredentials: true,
+                Authorization: `Bearer ${token}`,
                 ...headers
             },
-            ...httpConfig
-        }
-
-        const response = body
-            ? await method(`${prefix}${url}`, body, config)
-            : await method(`${prefix}${url}`, config)
-        
+            method,
+            url: endpoint,
+            params,
+            data: body,
+            signal: abort?.signal,
+            timeout: 5000
+        })
         return response.data
-
-    } catch(error) {
+    } catch (error) {
         console.log('handlerError', error)
+        throw new Error(error)
     }
 }
 

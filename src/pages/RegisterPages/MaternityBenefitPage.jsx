@@ -19,7 +19,7 @@ export default function MaternityBenefitPage() {
 
     const { actions: beneficiaryAct} = useBeneficiaryProps()
 
-    const { paymentTypes, serializedAuthorizers, maternityAmounts,
+    const { paymentTypes, userAuthorizers, maternityAmounts,
          internalExchange, maternitySupports, typesBirth
     } = useAdminProps()
 
@@ -43,7 +43,7 @@ export default function MaternityBenefitPage() {
         <MaternityGeneralInfoForm
             mode={'register'}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,

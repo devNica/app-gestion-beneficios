@@ -17,7 +17,8 @@ import { useTrackingProps } from '../../useTracking'
 export const useHandleGeneralGlassesBenefitInfoForm = ({ 
     paymentTypes, 
     currentIndex, 
-    updateCurrentIndex, 
+    updateCurrentIndex,
+    authorizedAmount, 
     mode
 }) => {
 
@@ -185,7 +186,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
             beneficiary,
             paymentType,
             clinic: currentClinic,
-            amountApproved: 'C$ 1,200.00',
+            authorizedAmount: authorizedAmount,
             notes,
             logger: logger.username,
             authorizer: currentAuthorizer,

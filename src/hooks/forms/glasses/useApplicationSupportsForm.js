@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom'
 
 import { useGlassesRequestManagement } from "../../useGlass"
 
@@ -6,20 +7,25 @@ import CustomNotification from "../../../Components/Notification/CustomNotificat
 import { setNotification } from "../../../redux/notification.slice"
 
 import { useDispatch } from "react-redux"
+import { useTrackingProps } from '../../useTracking'
 
 import { formatNumberWithCommas } from "../../../utils/number.util"
 import { isNull } from "../../../utils/object.util"
+import { registerGlassesRequestThunk } from "../../../redux/glass.slice"
 
 
 export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options }) => {
 
     const { actions, states: glassStates } = useGlassesRequestManagement()
+    const { actions: trackingAct } = useTrackingProps()
 
     const { supportsReq: { proforma, invoice, currentMode } } = glassStates
 
     const dispatch = useDispatch()
     /** Notifications Controller */
     CustomNotification()
+
+    const navigate = useNavigate()
 
     const [invoiceDate, setInvoiceDate] = useState('')
     const [proformaDate, setproformaDate] = useState('')
@@ -199,7 +205,32 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             }
         })
 
-        actions.resetGlassRequest()
+        try {
+            dispatch(registerGlassesRequestThunk())
+            
+            dispatch(setNotification({
+                message: 'Registro Exitoso',
+                type: 'success',
+                delay: 1500
+            }))
+
+            trackingAct.removeTrack({
+                procIdentity: 'GL-REG',
+                space: 'glass'
+            })
+            
+            setTimeout(() => {
+                navigate('/home')
+            }, 1700);
+
+
+        } catch (error) {
+            dispatch(setNotification({
+                message: 'Registro Fallido',
+                type: 'danger',
+                delay: 1500
+            }))
+        }        
     }
 
 
