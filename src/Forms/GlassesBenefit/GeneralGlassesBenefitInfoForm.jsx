@@ -18,12 +18,13 @@ export const GeneralGlassesBenefitInfoForm = ({
     paymentTypes,
     authorizers,
     currentIndex,
-    updateCurrentIndex
+    updateCurrentIndex,
+    authorizedAmount
 
 }) => {
 
     const { states, actions } = useHandleGeneralGlassesBenefitInfoForm({
-        paymentTypes, currentIndex, updateCurrentIndex, mode
+        paymentTypes, currentIndex, updateCurrentIndex, authorizedAmount, mode
     })
 
     const { states: { employeeList } } = useBeneficiaryProps()
@@ -108,7 +109,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                         label="Monto:"
                         orientation="row"
                         editable={false}
-                        defaultValue={'C$ 1,200.00'}
+                        defaultValue={`U$ ${authorizedAmount.amount_usd}`}
                         customStyles="disabled"
                     />
 
@@ -188,6 +189,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                 title='Busqueda de Empleado'
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                // eslint-disable-next-line react/no-children-prop
                 children={
                     <DataTable
                         dataSource={dataPayload}
@@ -220,9 +222,14 @@ GeneralGlassesBenefitInfoForm.propTypes = {
         value: PropTypes.string
     })),
     authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         value: PropTypes.string
     })),
+    authorizedAmount: PropTypes.shape({
+        id: PropTypes.number,
+        relative: PropTypes.string,
+        amount_usd: PropTypes.number
+    }),
     currentIndex: PropTypes.number,
     updateCurrentIndex: PropTypes.func
 }

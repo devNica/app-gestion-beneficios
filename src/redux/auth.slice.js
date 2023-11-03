@@ -74,7 +74,8 @@ export const asyncLoginThunk = payload => async dispatch => {
             paymentTypes: data.paymentTypes,
             internalExchange: data.internalExchange,
             supports: data.requiredSupports,
-            authorizedAmounts: data.authorizedAmounts
+            authorizedAmounts: data.authorizedAmounts,
+            userAuthorizers: data.authorizers
         }))
 
     } catch (err) {

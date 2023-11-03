@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react"
 
 import Stepper from "../../Components/Stepper/Stepper"
@@ -19,7 +20,7 @@ import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
-    const { paymentTypes, serializedAuthorizers } = useAdminProps()
+    const { paymentTypes, userAuthorizers, authorizedAmoutForGlassBenefit } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: beneficiaryAct } = useBeneficiaryProps()
 
@@ -52,9 +53,10 @@ export default function GlassesBenefitPage() {
             mode="register"
             clinics={clinics}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            authorizedAmount={authorizedAmoutForGlassBenefit}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

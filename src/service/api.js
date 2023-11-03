@@ -1,7 +1,9 @@
 import axiosInstance from "./http.js"
 
+import { httpHandler } from "./http.handler.js"
+
 export const fetchGlassesPropsFromAPI = async () => {
-    const response = await axiosInstance.get('/telcor/beneficios/v1/props/glasses')
+    const response = await axiosInstance.get('/props/glasses')
     
     if ([404, 500].some(codes => codes === response.status)) {
         console.log('error detectado: ')
@@ -12,7 +14,7 @@ export const fetchGlassesPropsFromAPI = async () => {
 }
 
 export const fetchAdminPropsFromAPI = async () => {
-    const response = await axiosInstance('/telcor/beneficios/v1/props/admin')
+    const response = await axiosInstance('/props/admin')
 
     if ([404, 500].some(codes => codes === response.status)) {
         console.log('error detectado: ')
@@ -23,7 +25,7 @@ export const fetchAdminPropsFromAPI = async () => {
 }
 
 export const fetchGlassesApplicants = async () => {
-    const response = await axiosInstance('/telcor/beneficios/v1/glasses/applicants')
+    const response = await axiosInstance('/glasses/applicants')
 
     if ([404, 500].some(codes => codes === response.status)) {
         console.log('error detectado: ')
@@ -31,4 +33,13 @@ export const fetchGlassesApplicants = async () => {
     }
 
     return response.data
+}
+
+export const createNewGlassesRequest = async (payload) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: '/glasses',
+        body: payload,
+        method: 'POST'
+    })
 }

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { createNewGlassesRequest } from "../service/api"
 
 const initialState = {
     history: [],
@@ -16,7 +17,7 @@ const initialState = {
         beneficiary: null,
         paymentType: null,
         clinic: null,
-        amountApproved: 0,
+        authorizedAmount: null,
         notes: '',
         logger: '',
         authorizer: null,
@@ -78,14 +79,14 @@ const glassSlice = createSlice({
     reducers: {
 
         setProps: (state, action) => {
-          return {
-              ...state,
-              clinics: action.payload.clinics,
-              lensDetail: action.payload.details,
-              lensMaterial: action.payload.material,
-              lensType: action.payload.types,
-              diagnosis: action.payload.diag
-          }
+            return {
+                ...state,
+                clinics: action.payload.clinics,
+                lensDetail: action.payload.details,
+                lensMaterial: action.payload.material,
+                lensType: action.payload.types,
+                diagnosis: action.payload.diag
+            }
         },
 
         setMemoryFlag: (state, action) => {
@@ -106,7 +107,7 @@ const glassSlice = createSlice({
             return {
                 ...state,
                 generalInfoReq: action.payload.gnral,
-                ophthalmicInfoReq: action.payload.oph, 
+                ophthalmicInfoReq: action.payload.oph,
                 applicationSupports: action.payload.sup
             }
         },
@@ -154,6 +155,40 @@ export const {
     setOphthalmicInfoReq,
     setSupportsReq,
     resetGlassReq } = glassSlice.actions
+
+export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
+    try {
+
+        const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
+
+        await createNewGlassesRequest({
+            registerDate: generalInfoReq.registerDate,
+            memoRef: generalInfoReq.memoRef,
+            letterRef: generalInfoReq.letterRef,
+            notes: generalInfoReq.notes,
+            diagnosis: ophthalmicInfoReq.diagnosis,
+            rEye: ophthalmicInfoReq.rightEye,
+            lEye: ophthalmicInfoReq.leftEye,
+            proforma: applicationSupports.proforma,
+            invoice: applicationSupports.invoice,
+            lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
+            lendDetailId: ophthalmicInfoReq.lenDetail.id,
+            lenTypeId: ophthalmicInfoReq.lenType.id,
+            clinicId: generalInfoReq.clinic.id,
+            beneficiaryId: generalInfoReq.beneficiary.employeeNumber,
+            loggerId: 1, // corregir esto cuando se implemente la api de auth
+            authorizerId: generalInfoReq.authorizer.id,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            authorizedAmountId: generalInfoReq.authorizedAmount.id,
+            supportType: applicationSupports.currentMode
+        })
+
+        dispatch(resetGlassReq())
+        
+    } catch (error) {
+        throw new Error(String(error))
+    }
+}
 
 
 export default glassSlice.reducer
