@@ -10,7 +10,7 @@ const notificationSlice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-        resetNotification (state) {
+        resetNotification () {
             return {
                 type: null,
                 message: null,

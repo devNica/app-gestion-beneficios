@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {fetchAdminPropsFromAPI} from "../service/api.js";
+import {fetchAdminPropsFromAPI, loginUserDM} from "../service/api.js";
 import {setProps} from "./props.slice.js";
+import {setNotification} from "./notification.slice.js";
 
 const initialState = {
     isAuth: false,
@@ -60,12 +61,30 @@ export const { loginSuccess, loginFailed, logout, reload } = authSlice.actions
 
 export const asyncLoginThunk = payload => async dispatch => {
     try {
+
+        const { data: meta } = await loginUserDM({
+            username: payload.username,
+            password: payload.password
+        })
+
+        if (meta?.error) {
+            dispatch(setNotification({
+                type: 'error',
+                delay: 1500,
+                message: meta.message
+            }))
+
+            return
+        }
+
         dispatch(loginSuccess({
             user: {
-                username: payload.username,
-                password: payload.password
+                id: meta.id,
+                username: meta.username,
+                email:meta.username,
+                isAuthorizer: meta.isAuthorizer
             },
-            token: 'eby123'
+            token: meta.token
         }))
 
         const {data} = await fetchAdminPropsFromAPI()
