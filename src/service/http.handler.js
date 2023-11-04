@@ -9,7 +9,7 @@ export const httpHandler = async ({
     params,
     abort
 }) => {
-    try {
+
         const response = await instance.request({
             headers: {
                 'Content-Type': 'application/json',
@@ -23,10 +23,19 @@ export const httpHandler = async ({
             signal: abort?.signal,
             timeout: 5000
         })
+
+        if ([404, 500, 400].some(codes => codes === response.status)) {
+
+            const data = {
+                error: true,
+                message: response.data.message,
+                code: response.status
+            }
+
+            return {
+                data
+            }
+        }
         return response.data
-    } catch (error) {
-        console.log('handlerError', error)
-        throw new Error(error)
-    }
 }
 

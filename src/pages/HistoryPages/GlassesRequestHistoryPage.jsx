@@ -19,7 +19,7 @@ const GlassesRequestHistoryPage = () => {
     
     const data = serializedHistory({
         queryFields: [],
-        returnFields: ["recordId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
+        returnFields: ["recordId", "fullname", "beneficiaryId", "registeredAt", "approvedAt", "state"]
     })
     
     useEffect(() => {

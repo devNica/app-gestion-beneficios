@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-// recordTracking: [{
-//     message: '',  // anything
-//     space: '', // employee, glass, death ...
-//     mode: '', // edit or register,
-//     procIdentity: '', //GL-EDIT, GL-REG 
-// }],
-
 const initialState = {
     recordTracking: [],
     spool: 0
@@ -24,8 +17,6 @@ const trackingSlice = createSlice({
         }
     }
 })
-
-//export const { addTracking, updateTrackingSpace, removeTracking } = trackingSlice.actions
 
 export const addTracking = (data) => (dispatch, getState) => {
     const currentTracks = getState().tracking.recordTracking

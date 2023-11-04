@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createNewGlassesRequest } from "../service/api"
+import {createNewGlassesRequest, fetchShortHistoryGlassesReq} from "../service/api"
 
 const initialState = {
     history: [],
@@ -155,6 +155,16 @@ export const {
     setOphthalmicInfoReq,
     setSupportsReq,
     resetGlassReq } = glassSlice.actions
+
+
+export const fetchHistoryGlassesReqThunk = () => async dispatch => {
+    try {
+       const {data} = await fetchShortHistoryGlassesReq()
+        dispatch(loadHistory(data))
+    }catch(err) {
+        throw new Error(String(err))
+    }
+}
 
 export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
     try {

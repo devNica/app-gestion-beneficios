@@ -7,13 +7,12 @@ import {
     loadHistory,
     loadRecord,
     setMemoryFlag,
-    setProps
+    setProps, fetchHistoryGlassesReqThunk
 } from '../redux/glass.slice'
-import mockupHistory from '../data/history/generic-history.json'
 import mockupRecord from '../data/edit/glasses.json'
-import { filterData } from "../utils/object.util"
 import {fetchGlassesPropsFromAPI} from "../service/api.js";
 import {useQuery} from "react-query";
+import {filterData} from "../utils/object.util.js";
 
 export const useGlassProps = () => {
     const {
@@ -30,6 +29,7 @@ export const useGlassProps = () => {
     }
 
     return {
+        history,
         clinics,
         diagnosis,
         lensDetail,
@@ -68,7 +68,7 @@ export const useGlassesRequestManagement = () => {
     } = useSelector(state => state.glass)
 
     function fetchAsyncGlassesHistory() {
-        dispatch(loadHistory(mockupHistory))
+        dispatch(fetchHistoryGlassesReqThunk())
     }
 
     function fetchGlassesRequestRecordById() {
