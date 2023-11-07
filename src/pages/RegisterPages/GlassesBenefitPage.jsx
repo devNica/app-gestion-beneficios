@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom"
 
 import '../main-page.css'
 import {fetchGlassesApplicants, fetchGlassesPropsFromAPI} from "../../service/api.js";
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 
 
 export default function GlassesBenefitPage() {
@@ -106,7 +107,7 @@ export default function GlassesBenefitPage() {
 
             {
                 !isOpen ?
-                    loading ? <h1>...cargando</h1> :
+                    loading ? <CustomLoader/> :
                 <Stepper
                     CurrenComponent={multipleComponent.at(currentIndex)}
                     currentIndex={currentIndex}

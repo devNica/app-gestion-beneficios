@@ -18,6 +18,7 @@ import {fetchGlassesApplicants, fetchGlassesPropsFromAPI, fetchGlassesRequestDet
 
 
 import '../main-page.css'
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 
 export default function GlassesBenefitEditPage() {
 
@@ -113,7 +114,7 @@ export default function GlassesBenefitEditPage() {
             <h3 className="bread__crum">Beneficios de Lentes - Edicion</h3>
             {
                 !isOpen ?
-                    loading ? <h1>...loading</h1> :
+                    loading ? <CustomLoader/> :
                         <Stepper
                             CurrenComponent={multipleComponent.at(currentIndex)}
                             currentIndex={currentIndex}
