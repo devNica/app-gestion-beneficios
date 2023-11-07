@@ -12,6 +12,8 @@ const DeathBenefitRegisterPageL = lazy(()=> import('./pages/RegisterPages/DeathB
 const DeathBenefitEditPageL = lazy(()=>import('./pages/EditPages/DeathBenefitEditPage.jsx'))
 const DeathRequestHistoryPageL = lazy(()=>import('./pages/HistoryPages/DeathRequestHistoryPage.jsx'))
 
+const ScholarPeriodPageL = lazy(()=>import('./pages/RegisterPages/ScholarshipPeriodPage.jsx'))
+
 export {
     GlassesBenefitRegisterPageL,
     GlassesBenefiEditPageL,
@@ -21,5 +23,6 @@ export {
     MaternityRequestHistoryPageL,
     DeathBenefitRegisterPageL,
     DeathBenefitEditPageL,
-    DeathRequestHistoryPageL
+    DeathRequestHistoryPageL,
+    ScholarPeriodPageL
 }
