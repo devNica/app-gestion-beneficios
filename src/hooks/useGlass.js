@@ -3,16 +3,10 @@ import {
     setGeneralInfoReq,
     setOphthalmicInfoReq,
     setSupportsReq,
-    resetGlassReq,
-    loadHistory,
-    loadRecord,
-    setMemoryFlag,
-    setProps, fetchHistoryGlassesReqThunk
+    fetchHistoryGlassesReqThunk, loadRecord, setGlassesProps
 } from '../redux/glass.slice'
-import mockupRecord from '../data/edit/glasses.json'
-import {fetchGlassesPropsFromAPI} from "../service/api.js";
-import {useQuery} from "react-query";
 import {filterData} from "../utils/object.util.js";
+import {setEmployeeList} from "../redux/beneficiary.slice.js";
 
 export const useGlassProps = () => {
     const {
@@ -39,23 +33,6 @@ export const useGlassProps = () => {
     }
 }
 
-export const useFetchGlassesProps = () => {
-    const dispatch = useDispatch()
-    useQuery('glasses', fetchGlassesPropsFromAPI, {
-        onSuccess: ({data}) => {
-            dispatch(setProps({
-                clinics: data.clinica,
-                details: data.detalleLente,
-                material: data.materialLente,
-                types: data.tipoLente,
-                diag: data.diagnostico
-            }))
-        },
-        onError: err => {
-            console.log('error: ', err)
-        }
-    })
-}
 
 export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
@@ -71,13 +48,25 @@ export const useGlassesRequestManagement = () => {
         dispatch(fetchHistoryGlassesReqThunk())
     }
 
-    function fetchGlassesRequestRecordById() {
-        dispatch(setMemoryFlag(true))
-        dispatch(loadRecord({
-            gnral: mockupRecord.gnralInfoReq,
-            oph: mockupRecord.opthalmicInfo,
-            sup: mockupRecord.applicationSupports
+    function initialDataLoading(applicants, props, request, mode='register') {
+
+        dispatch(setGlassesProps({
+            clinics: props.data.clinica,
+            details: props.data.detalleLente,
+            material: props.data.materialLente,
+            types: props.data.tipoLente,
+            diag: props.data.diagnostico
         }))
+
+        dispatch(setEmployeeList(applicants.data))
+
+        if (mode==='edit'){
+           dispatch(loadRecord({
+                gnral: request.data.gnralInfoReq,
+                oph: request.data.opthalmicInfo,
+                sup: request.data.applicationSupports
+            }))
+        }
     }
 
     function setGnralInfo(data) {
@@ -92,14 +81,6 @@ export const useGlassesRequestManagement = () => {
         dispatch(setSupportsReq(data))
     }
 
-    function saveRequest() {
-        dispatch(resetGlassReq())
-    }
-
-    function clearRequestData() {
-        dispatch(resetGlassReq())
-    }
-
     return {
         states: {
             memoryFlag,
@@ -109,12 +90,10 @@ export const useGlassesRequestManagement = () => {
         },
         actions: {
             fetchAsyncGlassesHistory,
-            fetchGlassesRequestRecordById,
+            initialDataLoading,
             setGnralInfo,
             setOphthalmicInfo,
             setApplicationSupports,
-            saveRequest,
-            clearRequestData
         }
     }
 }

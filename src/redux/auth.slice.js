@@ -97,6 +97,7 @@ export const asyncLoginThunk = payload => async dispatch => {
             userAuthorizers: data.authorizers
         }))
 
+
     } catch (err) {
         throw new Error(err)
     }

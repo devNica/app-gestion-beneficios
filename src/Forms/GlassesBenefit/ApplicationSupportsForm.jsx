@@ -19,21 +19,22 @@ const options = [
 
 const ApplicationSupportsForm = ({
     currentIndex,
-    updateCurrentIndex
+    updateCurrentIndex,
+    mode
 }) => {
 
-    const { states, actions } = useHandleApplicationSupportForm({ updateCurrentIndex, currentIndex, options })
+    const { states, actions } = useHandleApplicationSupportForm({ updateCurrentIndex, currentIndex, options, mode })
 
     const { invoiceAmountInCS, invoiceCurrency, invoiceDate, invoiceAmount,
         invoiceExchangeRate, invoiceNumber,
         proformaAmountInCS, proformaCurrency, proformaDate, proformaAmount,
-        proformaExchangeRate, proformaNumber, mode
+        proformaExchangeRate, proformaNumber, supportMode
     } = states
 
     const { handleAmount, handleBackStep, handleExchangeRate, handleNextStep,
         setInvoiceCurrency, setInvoiceDate, setInvoiceNumber, setInvoiceAmountInCS,
         setProformaCurrency, setProformaNumber, setproformaDate, setproformaAmountInCS,
-        setMode
+        setSupportMode
     } = actions
 
     return (
@@ -48,8 +49,8 @@ const ApplicationSupportsForm = ({
                     name={'onlyProform'}
                     isCheckBox={false}
                     value={'OPF'}
-                    currentValue={mode}
-                    onChange={(v) => setMode(v)}
+                    currentValue={supportMode}
+                    onChange={(v) => setSupportMode(v)}
                     label="Proforma:"
                 />
                 <CustomCheckOption
@@ -57,8 +58,8 @@ const ApplicationSupportsForm = ({
                     name={'onlyInvoice'}
                     isCheckBox={false}
                     value={'OIV'}
-                    currentValue={mode}
-                    onChange={(v) => setMode(v)}
+                    currentValue={supportMode}
+                    onChange={(v) => setSupportMode(v)}
                     label="Factura:"
                 />
                 <CustomCheckOption
@@ -66,8 +67,8 @@ const ApplicationSupportsForm = ({
                     name={'proformWithInvoice'}
                     isCheckBox={false}
                     value={'PWI'}
-                    currentValue={mode}
-                    onChange={(v) => setMode(v)}
+                    currentValue={supportMode}
+                    onChange={(v) => setSupportMode(v)}
                     label="Proforma | Factura:"
                 />
             </div>
@@ -236,7 +237,7 @@ const ApplicationSupportsForm = ({
 
 
                 {/* this element is a fake layer on others component.*/}
-                <div className={`hide-element ${mode === 'OPF' ? 'right' : mode === 'OIV' ? 'left' : 'none'}`}></div>
+                <div className={`hide-element ${supportMode === 'OPF' ? 'right' : supportMode === 'OIV' ? 'left' : 'none'}`}></div>
 
             </div>
 
@@ -261,5 +262,6 @@ export default React.memo(ApplicationSupportsForm)
 
 ApplicationSupportsForm.propTypes = {
     currentIndex: PropTypes.number,
-    updateCurrentIndex: PropTypes.func
+    updateCurrentIndex: PropTypes.func,
+    mode: PropTypes.string
 }

@@ -14,12 +14,11 @@ import PropTypes from "prop-types"
 
 import './request-history-view.css'
 
-export default function RequestHistoryView({ data, nameSpace, fetchRequestById }) {
+export default function RequestHistoryView({ data, nameSpace }) {
 
     CustomNotification()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const { actions } = useGlassesRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
 
     const [currentRecord, serCurrentRecord] = useState(null)
@@ -52,9 +51,8 @@ export default function RequestHistoryView({ data, nameSpace, fetchRequestById }
             space: 'glass'
         })
 
-        /** recuperar solicitud por Id */
-        //actions.fetchGlassesRequestRecordById()
-        fetchRequestById(currentRecord.recordId)
+
+        // fetchRequestById(currentRecord.recordId)
         /** navegar hasta el formulario en modo edicion */
         navigate(`/${nameSpace.navigationPath}/edit/${currentRecord.recordId}`)
 
@@ -66,7 +64,7 @@ export default function RequestHistoryView({ data, nameSpace, fetchRequestById }
     }
 
     function handleEditRecord() {
-        if (currentRecord.statusDesc !== 'En Revision') {
+        if (currentRecord.state !== 'Solicitud Pendiente') {
             dispatch(setNotification({
                 message: 'Este registro no admite edicion',
                 type: 'info',
@@ -132,7 +130,7 @@ RequestHistoryView.propTypes={
         employeeNumber: PropTypes.string,
         registeredAt: PropTypes.string,
         approvedAt: PropTypes.string,
-        statusDesc: PropTypes.string
+        state: PropTypes.string
     })),
     nameSpace: PropTypes.shape({
         navigationPath: PropTypes.oneOf(['glasses', 'death', 'maternity']),
@@ -141,6 +139,5 @@ RequestHistoryView.propTypes={
             type: PropTypes.oneOf(['edit', 'register']),
             procIdentity: PropTypes.oneOf(['GL-EDIT', 'GL-REG', 'MTN-EDIT', 'MTN-REG', 'DAH-EDIT', 'DAH-REG'])
         }))
-    }),
-    fetchRequestById: PropTypes.func
+    })
 }

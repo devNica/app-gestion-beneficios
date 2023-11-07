@@ -34,14 +34,10 @@ export const fetchAdminPropsFromAPI = async () => {
 }
 
 export const fetchGlassesApplicants = async () => {
-    const response = await axiosInstance('/glasses/applicants')
-
-    if ([404, 500].some(codes => codes === response.status)) {
-        console.log('error detectado: ')
-        throw new Error(response.data)
-    }
-
-    return response.data
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: '/glasses/applicants'
+    })
 }
 
 export const createNewGlassesRequest = async (payload) => {
@@ -58,5 +54,13 @@ export const fetchShortHistoryGlassesReq = async () => {
     return await httpHandler({
         instance: axiosInstance,
         endpoint: '/glasses'
+    })
+}
+
+
+export const fetchGlassesRequestDetail = async (orderId) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/glasses/${orderId}`
     })
 }

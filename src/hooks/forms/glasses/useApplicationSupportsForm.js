@@ -14,7 +14,7 @@ import { isNull } from "../../../utils/object.util"
 import { registerGlassesRequestThunk } from "../../../redux/glass.slice"
 
 
-export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options }) => {
+export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options, mode }) => {
 
     const { actions, states: glassStates } = useGlassesRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
@@ -44,7 +44,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     const [proformaAmountInCS, setproformaAmountInCS] = useState('')
     const [invoiceAmountInCS, setInvoiceAmountInCS] = useState('')
 
-    const [mode, setMode] = useState(currentMode)
+    const [supportMode, setSupportMode] = useState(currentMode)
 
 
     /**Se garantiza que los datos obtenidos del store solo se seteen una unica vez */
@@ -71,8 +71,8 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     function handleBackStep() {
         updateCurrentIndex(currentIndex - 1)
         actions.setApplicationSupports({
-            currentMode: mode,
-            hasProforma: mode !== 'OIV' ? true : false,
+            currentMode: supportMode,
+            hasProforma: supportMode !== 'OIV' ? true : false,
             proforma: {
                 date: proformaDate,
                 serie: proformaNumber,
@@ -81,7 +81,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 amountInCS: proformaAmountInCS,
                 exchangeRate: proformaExchangeRate
             },
-            hasInvoice: mode !== 'OPF' ? true : false,
+            hasInvoice: supportMode !== 'OPF' ? true : false,
             invoice: {
                 date: invoiceDate,
                 serie: invoiceNumber,
@@ -93,9 +93,37 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         })
     }
 
+    function registerNewRequets(){
+        dispatch(registerGlassesRequestThunk())
+
+        dispatch(setNotification({
+            message: 'Registro Exitoso',
+            type: 'success',
+            delay: 1500
+        }))
+
+        trackingAct.removeTrack({
+            procIdentity: 'GL-REG',
+            space: 'glass'
+        })
+    }
+
+    function editRequest(){
+        dispatch(setNotification({
+            message: 'Edicion Exitosa',
+            type: 'success',
+            delay: 1500
+        }))
+
+        trackingAct.removeTrack({
+            procIdentity: 'GL-EDIT',
+            space: 'glass'
+        })
+    }
+
     function handleNextStep() {
 
-        if (mode === 'OPF') {
+        if (supportMode === 'OPF') {
             if (!isNull(proformaNumber) || proformaNumber === '') {
                 dispatch(setNotification({
                     message: 'No se ha digitado el numero de la proforma',
@@ -119,7 +147,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
 
         }
 
-        if (mode === 'OIV') {
+        if (supportMode === 'OIV') {
             if (!isNull(invoiceNumber)) {
                 dispatch(setNotification({
                     message: 'No se ha digitado el numero de la factura',
@@ -141,7 +169,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             }
         }
 
-        if (mode === 'PWI') {
+        if (supportMode === 'PWI') {
             if (!isNull(proformaNumber)) {
                 dispatch(setNotification({
                     message: 'No se ha digitado el numero de la proforma',
@@ -184,8 +212,8 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         }
 
         actions.setApplicationSupports({
-            currentMode: mode,
-            hasProforma: mode !== 'OIV' ? true : false,
+            currentMode: supportMode,
+            hasProforma: supportMode !== 'OIV' ? true : false,
             proforma: {
                 date: proformaDate,
                 serie: proformaNumber,
@@ -194,7 +222,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 amountInCS: proformaAmountInCS,
                 exchangeRate: proformaExchangeRate
             },
-            hasInvoice: mode !== 'OPF' ? true : false,
+            hasInvoice: supportMode !== 'OPF' ? true : false,
             invoice: {
                 date: invoiceDate,
                 serie: invoiceNumber,
@@ -206,18 +234,13 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         })
 
         try {
-            dispatch(registerGlassesRequestThunk())
-            
-            dispatch(setNotification({
-                message: 'Registro Exitoso',
-                type: 'success',
-                delay: 1500
-            }))
 
-            trackingAct.removeTrack({
-                procIdentity: 'GL-REG',
-                space: 'glass'
-            })
+            if (mode === 'register'){
+                registerNewRequets()
+            } else if (mode === 'edit'){
+                editRequest()
+            }
+
             
             setTimeout(() => {
                 navigate('/home')
@@ -226,7 +249,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
 
         } catch (error) {
             dispatch(setNotification({
-                message: 'Registro Fallido',
+                message: mode === 'register' ? 'Registro Fallido' : 'Edicion Fallida',
                 type: 'danger',
                 delay: 1500
             }))
@@ -282,7 +305,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             invoiceAmount,
             proformaAmountInCS,
             invoiceAmountInCS,
-            mode
+            supportMode
         },
         actions: {
             handleNextStep,
@@ -297,7 +320,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             setInvoiceNumber,
             setproformaAmountInCS,
             setInvoiceAmountInCS,
-            setMode
+            setSupportMode
 
         }
     }
