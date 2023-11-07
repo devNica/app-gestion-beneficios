@@ -78,7 +78,7 @@ const glassSlice = createSlice({
     initialState,
     reducers: {
 
-        setProps: (state, action) => {
+        setGlassesProps: (state, action) => {
             return {
                 ...state,
                 clinics: action.payload.clinics,
@@ -86,13 +86,6 @@ const glassSlice = createSlice({
                 lensMaterial: action.payload.material,
                 lensType: action.payload.types,
                 diagnosis: action.payload.diag
-            }
-        },
-
-        setMemoryFlag: (state, action) => {
-            return {
-                ...state,
-                memoryFlag: action.payload
             }
         },
 
@@ -147,8 +140,7 @@ const glassSlice = createSlice({
 })
 
 export const {
-    setProps,
-    setMemoryFlag,
+    setGlassesProps,
     loadHistory,
     loadRecord,
     setGeneralInfoReq,

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useEffect, useState } from "react"
+import {useCallback, useEffect, useState} from "react"
 
 import Stepper from "../../Components/Stepper/Stepper"
 import CustomDialog from "../../Components/Dialog/Dialog"
@@ -9,12 +9,13 @@ import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSuppo
 
 import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
-import {useFetchGlassesProps, useGlassProps} from "../../hooks/useGlass"
+import {useGlassesRequestManagement, useGlassProps} from "../../hooks/useGlass"
 
 import { useNavigate } from "react-router-dom"
 
+
 import '../main-page.css'
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
+import {fetchGlassesApplicants, fetchGlassesPropsFromAPI} from "../../service/api.js";
 
 
 export default function GlassesBenefitPage() {
@@ -22,9 +23,8 @@ export default function GlassesBenefitPage() {
 
     const { paymentTypes, userAuthorizers, authorizedAmoutForGlassBenefit } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
-    const { actions: beneficiaryAct } = useBeneficiaryProps()
+    const { actions: glassesAct} = useGlassesRequestManagement()
 
-    useFetchGlassesProps()
 
     const {
         clinics,
@@ -35,6 +35,20 @@ export default function GlassesBenefitPage() {
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+
+    const fetching = useCallback(async()=>{
+       try {
+           const [applicants, props] =  await Promise.all([
+                    fetchGlassesApplicants(),
+                    fetchGlassesPropsFromAPI() ])
+           glassesAct.initialDataLoading(applicants, props, null)
+           setLoading(false)
+       } catch (err){
+           console.log(err)
+       }
+    },[])
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -44,8 +58,10 @@ export default function GlassesBenefitPage() {
             setIsOpen(true)
         }
 
-        /*establecer lista de empleados */
-        beneficiaryAct.setGlassesApplicants()
+        setLoading(true)
+        fetching()
+
+
     }, [])
 
     const multipleComponent = [
@@ -69,6 +85,7 @@ export default function GlassesBenefitPage() {
         <ApplicationSupportsForm
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode='register'
         />
     ]
 
@@ -88,7 +105,9 @@ export default function GlassesBenefitPage() {
             <h3 className="bread__crum">Beneficios de Lentes - Registro</h3>
 
             {
-                !isOpen ? <Stepper
+                !isOpen ?
+                    loading ? <h1>...cargando</h1> :
+                <Stepper
                     CurrenComponent={multipleComponent.at(currentIndex)}
                     currentIndex={currentIndex}
                 /> : <></>

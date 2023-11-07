@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+/* eslint-disable react/jsx-key */
+import { useState, useEffect, useCallback } from "react"
 
 import Stepper from "../../Components/Stepper/Stepper"
 import CustomDialog from "../../Components/Dialog/Dialog"
@@ -7,22 +8,29 @@ import GeneralGlassesBenefitInfoForm from "../../Forms/GlassesBenefit/GeneralGla
 import OphthalmicForm from '../../Forms/GlassesBenefit/OphthalmicForm'
 import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSupportsForm"
 
-import { useGlassProps } from "../../hooks/useGlass"
+import { useGlassProps, useGlassesRequestManagement } from "../../hooks/useGlass"
 import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+
+import {fetchGlassesApplicants, fetchGlassesPropsFromAPI, fetchGlassesRequestDetail} from "../../service/api.js"
+
 
 import '../main-page.css'
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 export default function GlassesBenefitEditPage() {
 
-    const { paymentTypes, serializedAuthorizers } = useAdminProps()
-    const { actions: trackingAct } = useTrackingProps()
-    const { actions: beneficiaryAct } = useBeneficiaryProps()
 
     const navigate = useNavigate()
+    const { id } = useParams()
+
+    const { paymentTypes, userAuthorizers, authorizedAmoutForGlassBenefit } = useAdminProps()
+    const { actions: trackingAct } = useTrackingProps()
+    const { actions: glassesAct } = useGlassesRequestManagement()
+
+    const [loading, setLoading] = useState(true)
+
 
     const {
         clinics,
@@ -34,6 +42,24 @@ export default function GlassesBenefitEditPage() {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
 
+    const fetching = useCallback(async () => {
+
+      try {
+          const [applicants, props, request] = await Promise.all([
+              fetchGlassesApplicants(),
+              fetchGlassesPropsFromAPI(),
+              fetchGlassesRequestDetail(id)
+          ])
+
+          glassesAct.initialDataLoading(applicants,props, request, 'edit')
+
+          setLoading(false)
+
+      } catch (err){
+          console.log(err)
+      }
+    }, [id, glassesAct])
+
     useEffect(() => {
         const ownTrack = trackingAct.findTrack({ procIdentity: 'GL-REG' })
 
@@ -41,8 +67,9 @@ export default function GlassesBenefitEditPage() {
             setIsOpen(true)
         }
 
-        /*establecer lista de empleados */
-        beneficiaryAct.setAsyncEmployeeList()
+        setLoading(true)
+
+        fetching()
 
     }, [])
 
@@ -51,9 +78,10 @@ export default function GlassesBenefitEditPage() {
             mode="edit"
             clinics={clinics}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            authorizedAmount={authorizedAmoutForGlassBenefit}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}
@@ -66,6 +94,7 @@ export default function GlassesBenefitEditPage() {
         <ApplicationSupportsForm
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode='edit'
         />
     ]
 
@@ -84,10 +113,11 @@ export default function GlassesBenefitEditPage() {
             <h3 className="bread__crum">Beneficios de Lentes - Edicion</h3>
             {
                 !isOpen ?
-                    <Stepper
-                        CurrenComponent={multipleComponent.at(currentIndex)}
-                        currentIndex={currentIndex}
-                    /> : <></>
+                    loading ? <h1>...loading</h1> :
+                        <Stepper
+                            CurrenComponent={multipleComponent.at(currentIndex)}
+                            currentIndex={currentIndex}
+                        /> : <></>
             }
             <CustomDialog
                 isOpen={isOpen}
