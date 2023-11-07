@@ -22,7 +22,9 @@ import {
   GlassesRequestHistoryPageL, 
   MaternityBenefitEditPageL, 
   MaternityBenefitRegisterPageL, 
-  MaternityRequestHistoryPageL } from "./LazyComponents.jsx"
+  MaternityRequestHistoryPageL, 
+  ScholarPeriodPageL} from "./LazyComponents.jsx"
+
 
 function App() {
 
@@ -50,6 +52,10 @@ function App() {
             <Route path="/death/register" element={<DeathBenefitRegisterPageL/>}/>
             <Route path="/death/edit/:id" element={<DeathBenefitEditPageL/>}/>
             <Route path="/death/history" element={<DeathRequestHistoryPageL/>}/>
+
+
+            <Route path="/study/period" element={<ScholarPeriodPageL/>}/>
+
           </Route>
         </Route>
         <Route element={<SharedRoute />}>

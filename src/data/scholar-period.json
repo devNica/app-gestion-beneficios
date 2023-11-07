@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "initDate": "01/02/2018",
+        "evalDate": "31/07/2018",
+        "endDate": "31/12/2018",
+        "reference": "001-2018",
+        "status": "Cerrado"
+    },
+    {
+        "id": 2,
+        "initDate": "01/02/2019",
+        "evalDate": "31/07/2019",
+        "endDate": "31/12/2019",
+        "reference": "001-2019",
+        "status": "Cerrado"
+    },
+    {
+        "id": 3,
+        "initDate": "01/02/2020",
+        "evalDate": "31/07/2020",
+        "endDate": "31/12/2020",
+        "reference": "001-2020",
+        "status": "Cerrado"
+    },
+    {
+        "id": 4,
+        "initDate": "01/02/2021",
+        "evalDate": "31/07/2021",
+        "endDate": "31/12/2021",
+        "reference": "001-2021",
+        "status": "Cerrado"
+    },
+    {
+        "id": 5,
+        "initDate": "01/02/2022",
+        "evalDate": "31/07/2022",
+        "endDate": "31/12/2022",
+        "reference": "001-2022",
+        "status": "Cerrado"
+    },
+    {
+        "id": 6,
+        "initDate": "01/02/2023",
+        "evalDate": "31/07/2023",
+        "endDate": "31/12/2023",
+        "reference": "001-2023",
+        "status": "Abierto"
+    }
+]

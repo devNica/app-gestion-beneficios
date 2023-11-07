@@ -48,26 +48,16 @@
         ]
     },
     {
-        "title": "Ayuda",
-        "icon": "bi bi-person-raised-hand",
-        "path": "/helping",
-        "childrens": [
-            {
-                "title": "En efectivo",
-                "icon": "bi bi-cash",
-                "path": "/helping/cash"
-            },
-            {
-                "title": "Deposito",
-                "icon": "bi bi-wallet2",
-                "path": "/helping/deposit"
-            }
-        ]
-    },
-    {
         "title": "Becas",
         "icon": "bi bi-mortarboard-fill",
-        "path": "/study"
+        "path": "/study",
+        "childrens": [
+            {
+                "title": "Periodos",
+                "icon": "bi bi-calendar2-week",
+                "path": "/study/period"
+            }
+        ]
     },
     {
         "title": "Viaticos",
