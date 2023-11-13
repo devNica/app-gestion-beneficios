@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "course": "1er Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 2,
+        "course": "2do Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 3,
+        "course": "3er Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 4,
+        "course": "4to Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 5,
+        "course": "5to Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 6,
+        "course": "6to Grado",
+        "degree": "Primaria"
+    },
+    {
+        "id": 7,
+        "course": "7mo Grado",
+        "degree": "Secundaria"
+    },
+    {
+        "id": 8,
+        "course": "8vo Grado",
+        "degree": "Secundaria"
+    },
+    {
+        "id": 9,
+        "course": "9no Grado",
+        "degree": "Secundaria"
+    },
+    {
+        "id": 10,
+        "course": "10mo Grado",
+        "degree": "Secundaria"
+    },
+    {
+        "id": 11,
+        "course": "11vo Grado",
+        "degree": "Secundaria"
+    },
+    {
+        "id": 12,
+        "course": "I año Universidad",
+        "degree": "Universidad"
+    },
+    {
+        "id": 13,
+        "course": "II año Universidad",
+        "degree": "Universidad"
+    },
+    {
+        "id": 14,
+        "course": "III año Universidad",
+        "degree": "Universidad"
+    },
+    {
+        "id": 15,
+        "course": "IV año Universidad",
+        "degree": "Universidad"
+    },
+    {
+        "id": 16,
+        "course": "V año Universidad",
+        "degree": "Universidad"
+    },
+    {
+        "id": 17,
+        "course": "I año Postgrado/Maestria",
+        "degree": "Postgrado"
+    },
+    {
+        "id": 18,
+        "course": "II año Postgrado/Maestria",
+        "degree": "Postgrado"
+    }
+]

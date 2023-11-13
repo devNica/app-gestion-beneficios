@@ -56,7 +56,13 @@
                 "title": "Periodos",
                 "icon": "bi bi-calendar2-week",
                 "path": "/study/period"
+            },
+            {
+                "title": "Nuevo",
+                "icon": "bi bi-file-earmark-plus-fill",
+                "path": "/study/insert"
             }
+
         ]
     },
     {

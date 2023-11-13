@@ -64,3 +64,19 @@ export const fetchGlassesRequestDetail = async (orderId) => {
         endpoint: `/glasses/${orderId}`
     })
 }
+
+
+export const fetchAuthorizedAmountsForMaternity = async () => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity/authorized-amount`
+    })
+}
+
+export const fetchMaternityApplicants = async () => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity/applicants`
+    })
+}
+

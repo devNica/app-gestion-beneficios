@@ -13,17 +13,18 @@ import { useManageCredential } from "./hooks/useAuth"
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { 
-  DeathBenefitEditPageL, 
-  DeathBenefitRegisterPageL, 
-  DeathRequestHistoryPageL, 
-  GlassesBenefiEditPageL, 
-  GlassesBenefitRegisterPageL, 
-  GlassesRequestHistoryPageL, 
-  MaternityBenefitEditPageL, 
-  MaternityBenefitRegisterPageL, 
-  MaternityRequestHistoryPageL, 
-  ScholarPeriodPageL} from "./LazyComponents.jsx"
+import {
+    DeathBenefitEditPageL,
+    DeathBenefitRegisterPageL,
+    DeathRequestHistoryPageL,
+    GlassesBenefiEditPageL,
+    GlassesBenefitRegisterPageL,
+    GlassesRequestHistoryPageL,
+    MaternityBenefitEditPageL,
+    MaternityBenefitRegisterPageL,
+    MaternityRequestHistoryPageL,
+    ScholarPeriodPageL, ScholarshipBenefitPageL
+} from "./LazyComponents.jsx"
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
 
 
             <Route path="/study/period" element={<ScholarPeriodPageL/>}/>
+            <Route path="/study/insert" element={<ScholarshipBenefitPageL/>}/>
 
           </Route>
         </Route>

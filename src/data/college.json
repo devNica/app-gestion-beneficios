@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "instituteName": "Miguel de Cervantes Saavedra",
+        "degree": ["Primaria", "Secundaria"]
+    },
+    {
+        "id": 2,
+        "instituteName": "Miguel Larreynaga",
+        "degree": ["Secundaria"]
+    },
+    {
+        "id": 3,
+        "instituteName": "Instituto Nacional Autonomo Maestro Gabriel",
+        "degree": ["Secundaria"]
+    },
+    {
+        "id": 4,
+        "instituteName": "Universidad Nacional Autonoma de Nicaragua (UNAN)",
+        "degree": ["Universidad"]
+    },
+    {
+        "id": 5,
+        "instituteName": "Universidad Nacional de Ingenieria (UNI)",
+        "degree": ["Universidad"]
+    }
+]

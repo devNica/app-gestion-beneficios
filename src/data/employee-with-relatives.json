@@ -7,13 +7,6 @@
         "gender": "M",
         "familyRecord": [
             {
-                "id": 1,
-                "fullname": "Maria Luisa Zeledon",
-                "relationShip": "Esposa",
-                "sex": "F",
-                "status": true
-            },
-            {
                 "id": 2,
                 "fullname": "Maria Isabel Rosales Zeledon",
                 "relationShip": "Hija",
