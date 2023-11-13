@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
 
 import {useNavigate} from "react-router-dom";
 
@@ -11,20 +11,36 @@ import { useAdminProps } from "../../hooks/useProps"
 
 import '../main-page.css'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
+import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
+import {fetchAuthorizedAmountsForMaternity, fetchMaternityApplicants} from "../../service/api.js";
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx";
 export default function MaternityBenefitPage() {
 
     const navigate = useNavigate()
     const { actions: trackingAct } = useTrackingProps()
+    const { states: maternitySts, actions: maternityAct } = useMaternityRequestManagement()
 
-    const { actions: beneficiaryAct} = useBeneficiaryProps()
-
-    const { paymentTypes, userAuthorizers, maternityAmounts,
-         internalExchange, maternitySupports, typesBirth
+    const { paymentTypes, userAuthorizers,
+         exchangeRate, maternitySupports, typesBirth
     } = useAdminProps()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    const fetching = useCallback(async()=>{
+        try{
+            const [applicants, amounts] = await Promise.all([
+                fetchMaternityApplicants(),
+                fetchAuthorizedAmountsForMaternity()
+            ])
+
+            maternityAct.initialDataLoading(applicants, amounts)
+            setLoading(false)
+        }catch(err){
+            console.log(err)
+        }
+    }, [])
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -34,8 +50,8 @@ export default function MaternityBenefitPage() {
             setIsOpen(true)
         }
 
-        /* establecer lista de empleados con hijos*/
-        beneficiaryAct.setAsyncEmployeeWithChildrens()
+        setLoading(true)
+        fetching()
 
     }, [])
 
@@ -48,10 +64,10 @@ export default function MaternityBenefitPage() {
             updateCurrentIndex={setCurrentIndex}
         />,
         <NewbornInfoForm
-            authorizedAmountsMathernity={maternityAmounts}
+            authorizedAmountsMathernity={maternitySts.authorizedAmount}
             maternitySupports={maternitySupports}
             typesBirth={typesBirth}
-            internalExchange={internalExchange}
+            exchangeRate={exchangeRate}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />
@@ -74,6 +90,7 @@ export default function MaternityBenefitPage() {
 
             {
             !isOpen ?
+                loading ? <CustomLoader/> :
                 <Stepper
                     CurrenComponent={MultipleComponent.at(currentIndex)}
                     steps={["1", "2"]}

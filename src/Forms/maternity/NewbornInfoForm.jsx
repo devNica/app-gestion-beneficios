@@ -15,13 +15,13 @@ export default function NewbornInfoForm
         authorizedAmountsMathernity,
         updateCurrentIndex,
         currentIndex,
-        internalExchange
+        exchangeRate
     }) {
 
 
     const { states, actions } = useNewBornInfoForm({
         authorizedAmountsMathernity,
-        internalExchange,
+        exchangeRate,
         typesBirth,
         currentIndex,
         updateCurrentIndex
@@ -121,10 +121,14 @@ NewbornInfoForm.propTypes = {
     })),
     authorizedAmountsMathernity: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
-        amount_usd: PropTypes.number,
-        relative: PropTypes.string
+        amount: PropTypes.number,
+        symbol: PropTypes.string,
+        amountInCurrency: PropTypes.string
     })),
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
-    internalExchange: PropTypes.number
+    exchangeRate: PropTypes.shape({
+        id: PropTypes.string,
+        value: PropTypes.number
+    })
 }

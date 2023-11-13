@@ -22,12 +22,13 @@ import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
-    const { paymentTypes, userAuthorizers, authorizedAmoutForGlassBenefit } = useAdminProps()
+    const { paymentTypes, userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct} = useGlassesRequestManagement()
 
 
     const {
+        authorizedAmount,
         clinics,
         diagnosis,
         lensDetail,
@@ -73,7 +74,7 @@ export default function GlassesBenefitPage() {
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
-            authorizedAmount={authorizedAmoutForGlassBenefit}
+            authorizedAmount={authorizedAmount}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

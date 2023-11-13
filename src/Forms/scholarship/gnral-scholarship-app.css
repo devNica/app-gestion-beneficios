@@ -1,0 +1,32 @@
+.gnral__scholarship__application-form{
+    
+    .form__group-top{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    
+    .form__group-middle {
+        grid-row: 2;
+        grid-column: 1 / 5;
+
+        display: flex;
+        gap: 30px;
+
+        .form__group-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 30px;
+            width: 50%;
+        }
+
+        .form__group-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 30px;
+            width: 50%;
+        }
+    }
+}

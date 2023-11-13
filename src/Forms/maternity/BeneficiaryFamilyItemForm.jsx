@@ -21,7 +21,7 @@ export default function BeneficiaryFamilyItemForm({
                     name={`${nb.id}-relationship`}
                     className='td-input'
                     readOnly
-                    defaultValue={nb.relationShip ?? '?'}
+                    defaultValue={nb.relationship ?? '?'}
                 />
             </td>
             <td>

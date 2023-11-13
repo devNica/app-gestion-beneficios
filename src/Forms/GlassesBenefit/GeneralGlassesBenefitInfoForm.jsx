@@ -34,13 +34,14 @@ export const GeneralGlassesBenefitInfoForm = ({
     const {
         beneficiary, currentAuthorizer, currentClinic,
         isModalOpen, letterRef, memoRef, notes, paymentType, registerDate,
-        logger
+        logger, amountSelected
     } = states
 
     const {
         handleEmployeeSelection, handleRegisterDate, handleSubmit,
         setCurrentAuthorizer, setCurrentClinic, setNotes,
-        setIsModalOpen, updateDocumentRefs, handleKeyDown, handleSetPaymentType
+        setIsModalOpen, updateDocumentRefs, handleKeyDown, handleSetPaymentType,
+        setAuthorizedAmount
     } = actions
 
 
@@ -103,14 +104,15 @@ export const GeneralGlassesBenefitInfoForm = ({
 
                 <div className="form__group-right">
 
-                    <CustomInput
-                        id="amount"
-                        name="amount"
-                        label="Monto:"
+
+                    <Select
+                        id={'amount'}
+                        name={'amount'}
+                        options={authorizedAmount}
+                        currentValue={amountSelected}
+                        onChange={(v) => setAuthorizedAmount(v)}
                         orientation="row"
-                        editable={false}
-                        defaultValue={`U$ ${authorizedAmount.amount_usd}`}
-                        customStyles="disabled"
+                        label="Monto:"
                     />
 
                     <CustomTextArea
@@ -225,11 +227,11 @@ GeneralGlassesBenefitInfoForm.propTypes = {
         id: PropTypes.number,
         value: PropTypes.string
     })),
-    authorizedAmount: PropTypes.shape({
+    authorizedAmount: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
-        relative: PropTypes.string,
-        amount_usd: PropTypes.number
-    }),
+        amount: PropTypes.number,
+        symbol: PropTypes.string
+    })),
     currentIndex: PropTypes.number,
     updateCurrentIndex: PropTypes.func
 }

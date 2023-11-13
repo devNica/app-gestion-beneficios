@@ -26,7 +26,7 @@ export default function GlassesBenefitEditPage() {
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const { paymentTypes, userAuthorizers, authorizedAmoutForGlassBenefit } = useAdminProps()
+    const { paymentTypes, userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct } = useGlassesRequestManagement()
 
@@ -34,6 +34,7 @@ export default function GlassesBenefitEditPage() {
 
 
     const {
+        authorizedAmount,
         clinics,
         diagnosis,
         lensDetail,
@@ -82,7 +83,7 @@ export default function GlassesBenefitEditPage() {
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
-            authorizedAmount={authorizedAmoutForGlassBenefit}
+            authorizedAmount={authorizedAmount}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

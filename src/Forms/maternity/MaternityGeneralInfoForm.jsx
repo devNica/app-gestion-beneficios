@@ -37,7 +37,7 @@ const MaternityGeneralInfoForm = ({
         setNotes, setPaymentType, updateGenderSelected
     } = actions
 
-    const payloadData = filterData([], ['id', 'firstName', 'lastName', 'employeeNumber'], employeeList)
+    const payloadData = filterData([], ['employeeId', 'employeeName', 'surname', 'secondSurname'], employeeList)
 
     return (
         <form className="maternity__gnral__info-form">
@@ -85,7 +85,7 @@ const MaternityGeneralInfoForm = ({
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.employeeName} ${beneficiary.surname}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -109,7 +109,7 @@ const MaternityGeneralInfoForm = ({
                             <CustomInput
                                 id={'partner'}
                                 name={'partner'}
-                                label="Madre:"
+                                label="Pareja:"
                                 orientation="row"
                                 type="text"
                                 editable={false}
@@ -184,7 +184,7 @@ const MaternityGeneralInfoForm = ({
                     <DataTable
                         dataSource={payloadData}
                         columnSizes={[10, 30, 30, 30]}
-                        labels={['Id', 'Nombre', 'Apellido', 'N Emp']}
+                        labels={['Id', 'Nombre', 'P. Apellido', 'S. Apellido']}
                         sortColumn={[0, 2, 3, 4]}
                         entries={[5, 10, 20]}
                         enableSearch={true}
@@ -207,7 +207,7 @@ MaternityGeneralInfoForm.propTypes = {
         value: PropTypes.string
     })),
     authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         value: PropTypes.string
     })),
     currentIndex: PropTypes.number,
