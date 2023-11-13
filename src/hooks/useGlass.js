@@ -10,6 +10,7 @@ import {setEmployeeList} from "../redux/beneficiary.slice.js";
 
 export const useGlassProps = () => {
     const {
+        authorizedAmount,
         history,
         clinics,
         diagnosis,
@@ -23,6 +24,7 @@ export const useGlassProps = () => {
     }
 
     return {
+        authorizedAmount,
         history,
         clinics,
         diagnosis,
@@ -51,6 +53,7 @@ export const useGlassesRequestManagement = () => {
     function initialDataLoading(applicants, props, request, mode='register') {
 
         dispatch(setGlassesProps({
+            amounts: props.data.montos,
             clinics: props.data.clinica,
             details: props.data.detalleLente,
             material: props.data.materialLente,

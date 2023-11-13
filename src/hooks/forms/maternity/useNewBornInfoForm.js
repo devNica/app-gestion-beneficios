@@ -6,7 +6,7 @@ export default function useNewBornInfoForm({
     updateCurrentIndex,
     currentIndex, typesBirth,
     authorizedAmountsMathernity,
-    internalExchange
+    exchangeRate
 }) {
 
     const { states: { newBornInfoReq: info, childrenOfBeneficiary }, actions } = useMaternityRequestManagement()
@@ -44,24 +44,24 @@ export default function useNewBornInfoForm({
         const confirmed = current.filter(child => child.selected === true)
 
         if(confirmed.length === 1 ) {
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Normal').amount_usd
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Normal').amount
             setTypeBirth(typesBirth[0])
         } else if (confirmed.length === 2 ){
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Gemelar').amount_usd
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Gemelar').amount
             setTypeBirth(typesBirth[1])
         } else if (confirmed.length > 2) {
             setTypeBirth(typesBirth[2])
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Multiple').amount_usd
+            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Multiple').amount
         }
 
-        const authAmountInCs = authAmountInUs * Number(internalExchange.toFixed(2))
+        const authAmountInCs = authAmountInUs * Number(exchangeRate.value.toFixed(2))
 
         setAmountInUS(`U$ ${formatNumberWithCommas(authAmountInUs)}`)
         setAmountInCS(`C$ ${formatNumberWithCommas(authAmountInCs)}`)
     }
 
     function handleSelectItem(id) {
-            const current = confirmedChildren.map((ele) => {
+        const current = confirmedChildren.map((ele) => {
                 if (ele.id === id) {
                     return {
                         ...ele,

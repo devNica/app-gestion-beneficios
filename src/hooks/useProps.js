@@ -7,21 +7,17 @@ export const useAdminProps = () => {
         authorizedAmounts,
         supports,
         typesBirth,
-        internalExchange
+        exchangeRate
     } = useSelector(state => state.props)
 
-    const authorizedAmoutForGlassBenefit = authorizedAmounts.find(ele => ele.typeBenefit === 'Lentes')
-    const maternityAmounts = authorizedAmounts.filter(ele => ele.typeBenefitId === 2)
     const maternitySupports = supports.find(ele => ele.typeBenefitId === 2).supports
    
     return {
-        authorizedAmoutForGlassBenefit,
-        maternityAmounts,
         userAuthorizers,
         paymentTypes,
         authorizedAmounts,
         maternitySupports,
         typesBirth,
-        internalExchange
+        exchangeRate
     }
 }

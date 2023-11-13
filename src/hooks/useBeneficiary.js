@@ -27,18 +27,24 @@ export const useBeneficiaryProps = () => {
         dispatch(setEmployeeWithRelatives(employeeWithRelativesMockup))
     }
     
-    function getCoupleName({ beneficiaryName }) {
-        const result = employeeWithChildrens.find(emp => `${emp.firstName} ${emp.lastName}` === beneficiaryName)
+    function getCoupleName({ employeeId }) {
+        const result = employeeList.find(emp => emp.employeeId === employeeId)
         return result.couple
     }
     
     function getBeneficiaryListBySex({ sex }){
-        return employeeWithChildrens.filter(emp => emp.sex === sex )
+        return employeeList.filter(emp => emp.sex === sex )
     }
     
     function getChildren ({ employeeId }) {
-        const result =  employeeWithChildrens.filter(emp => emp.id === employeeId)
-        return result[0].children.map(child => ({...child, selected: false }))
+        const result =  employeeList.filter(emp => emp.employeeId === employeeId)
+
+        if (result.length > 0) {
+            return result[0].relatives.map(child => ({...child, selected: false }))
+        } else {
+            return []
+        }
+
     }
     
     function getEmployeeWithRelatives ({ serialized = false, queryFields =[], returnFields = []}){

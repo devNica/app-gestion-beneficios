@@ -42,6 +42,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
     const [notes, setNotes] = useState(gnrl.notes)
     const [letterRef, setLetterRef] = useState(gnrl.letterRef)
     const [memoRef, setMemoRef] = useState(gnrl.memoRef)
+    const [amountSelected, setAuthorizedAmount] = useState(authorizedAmount[0])
 
     const [registerDate, setRegisterDate] = useState(gnrl.registerDate || new Date().toISOString().slice(0, 10))
     const [hashDate, setHashDate] = useState(getCurrentDateString('', gnrl.registerDate || new Date().toISOString().slice(0, 10)))
@@ -49,6 +50,9 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
     useEffect(()=>{
         if(gnrl.beneficiary !== null) {
             setBeneficiary(gnrl.beneficiary)
+        }
+        if(gnrl.authorizedAmount !== null) {
+            setAuthorizedAmount(gnrl.authorizedAmount)
         }
     }, [])
 
@@ -186,7 +190,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
             beneficiary,
             paymentType,
             clinic: currentClinic,
-            authorizedAmount: authorizedAmount,
+            authorizedAmount: amountSelected,
             notes,
             logger: logger.username,
             authorizer: currentAuthorizer,
@@ -210,6 +214,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
 
     return {
         states: {
+            amountSelected,
             paymentType,
             currentClinic,
             currentAuthorizer,
@@ -224,6 +229,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
         },
 
         actions: {
+            setAuthorizedAmount,
             handleEmployeeSelection,
             handleRegisterDate,
             handleSubmit,

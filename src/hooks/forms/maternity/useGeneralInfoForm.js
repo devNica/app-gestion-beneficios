@@ -35,7 +35,7 @@ export default function useGeneralInfoForm({
     const [currentAuthorizer, setCurrentAuthorizer] = useState(null)
     const [notes, setNotes] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [partner, setPartner] = useState('')
+    const [partner, setPartner] = useState('-')
     const [genderSelected, setGender] = useState('F')
     const [memoRef, setMemoRef] = useState('')
     const [hashDate, setHashDate] = useState(getCurrentDateString('', gnrl.registerDate || new Date().toISOString().slice(0, 10)))
@@ -80,15 +80,17 @@ export default function useGeneralInfoForm({
         setBeneficiary(data)
 
         if (genderSelected === 'M') {
-            setPartner(beneficiaryAct.getCoupleName({
-                beneficiaryName: `${data.firstName} ${data.lastName}`
-            }))
+            const couple = beneficiaryAct.getCoupleName({
+                employeeId: data.employeeId
+            })
+            setPartner(couple)
         } else {
             setPartner(null)
         }
 
-        setChildrenOfBeneficiary(beneficiaryAct.getChildren({ employeeId: data.id }))
+        setChildrenOfBeneficiary(beneficiaryAct.getChildren({ employeeId: data.employeeId }))
 
+        actions.resetNewBornInfo()
     }
 
     function handleRegisterDate(value) {
@@ -136,6 +138,17 @@ export default function useGeneralInfoForm({
                 delay: 1500
             }))
             return
+        }
+
+        if (genderSelected === 'M') {
+            if(partner === '-') {
+                dispatch(setNotification({
+                    message: 'El colaborador no tiene una Pareja asociada',
+                    type: 'warning',
+                    delay: 1500
+                }))
+                return
+            }
         }
 
         if (!isNull(currentAuthorizer)) {
