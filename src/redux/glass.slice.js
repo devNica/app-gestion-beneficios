@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit"
 import {createNewGlassesRequest, fetchShortHistoryGlassesReq} from "../service/api"
 
 const initialState = {
+
+    authorizedAmount: null,
+
     history: [],
 
     clinics: [],
@@ -81,6 +84,7 @@ const glassSlice = createSlice({
         setGlassesProps: (state, action) => {
             return {
                 ...state,
+                authorizedAmount: action.payload.amounts,
                 clinics: action.payload.clinics,
                 lensDetail: action.payload.details,
                 lensMaterial: action.payload.material,
@@ -162,6 +166,7 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
     try {
 
         const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
+        const {exchangeRate} = getState().props
 
         await createNewGlassesRequest({
             registerDate: generalInfoReq.registerDate,
@@ -182,12 +187,14 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
             authorizerId: generalInfoReq.authorizer.id,
             paymentTypeId: generalInfoReq.paymentType.id,
             authorizedAmountId: generalInfoReq.authorizedAmount.id,
-            supportType: applicationSupports.currentMode
+            supportType: applicationSupports.currentMode,
+            exchangeRateId: exchangeRate.id
         })
 
         dispatch(resetGlassReq())
         
     } catch (error) {
+        console.log('error encontrado', error)
         throw new Error(String(error))
     }
 }

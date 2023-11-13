@@ -15,7 +15,7 @@ const initialState = {
         { id: 3, value: 'Parto Multiple +2...' }
     
     ],
-    internalExchange: 0
+    exchangeRate: null
 }
 
 const propsSlice = createSlice({
@@ -26,7 +26,7 @@ const propsSlice = createSlice({
             return {
                 ...state,
                 paymentTypes: action.payload.paymentTypes,
-                internalExchange: action.payload.internalExchange,
+                exchangeRate: action.payload.exchangeRate,
                 supports: action.payload.supports,
                 authorizedAmounts: action.payload.authorizedAmounts,
                 userAuthorizers: action.payload.userAuthorizers

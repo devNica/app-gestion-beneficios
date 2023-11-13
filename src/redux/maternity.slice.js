@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     history: [],
+    authorizedAmount: null,
     childrenOfBeneficiary: [],
     generalInfoReq: {
         gender: null,
@@ -19,13 +20,6 @@ const initialState = {
         typeBirth: null,
         amountInUS: null,
         amountInCS: null,
-        /*childrens: [{
-            id: 0,
-            firstname: '--',
-            lastname: '--',
-            sex: 'M',
-            birthdate: ''
-        }]*/
         confirmedChildren: null
     }
 }
@@ -34,6 +28,13 @@ const maternitySlice = createSlice({
     name: 'maternity',
     initialState,
     reducers: {
+
+        loadAuthorizedAmounts: (state, action) => {
+            return {
+                ...state,
+                authorizedAmount: action.payload.amounts
+            }
+        },
 
         loadHistory: (state, action) => {
             return {
@@ -59,6 +60,13 @@ const maternitySlice = createSlice({
             }
         },
 
+        resetNewBornInfoReq: (state) =>{
+          return {
+              ...state,
+              newBornInfoReq: initialState.newBornInfoReq
+          }
+        },
+
         setNewBornInfoReq: (state, action) => {
             return {
                 ...state,
@@ -69,9 +77,11 @@ const maternitySlice = createSlice({
 })
 
 export const {
+    loadAuthorizedAmounts,
     loadHistory,
     setGeneralInfoReq,
     setNewBornInfoReq,
-    resetMaternityReq } = maternitySlice.actions
+    resetMaternityReq,
+    resetNewBornInfoReq} = maternitySlice.actions
 
 export default maternitySlice.reducer

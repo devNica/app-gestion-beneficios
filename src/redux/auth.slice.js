@@ -91,9 +91,8 @@ export const asyncLoginThunk = payload => async dispatch => {
 
         dispatch(setProps({
             paymentTypes: data.paymentTypes,
-            internalExchange: data.internalExchange,
+            exchangeRate: data.exchangeRate,
             supports: data.requiredSupports,
-            authorizedAmounts: data.authorizedAmounts,
             userAuthorizers: data.authorizers
         }))
 

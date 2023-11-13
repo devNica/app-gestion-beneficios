@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     history: [],
+    authorizedAmount: null,
     relativesList: null,
     requiredSupports: null,
     generalInfoReq: {
