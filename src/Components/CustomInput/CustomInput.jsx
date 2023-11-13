@@ -40,12 +40,13 @@ const CustomInput = ({
                     /> :
 
                     <input
-                        defaultValue={defaultValue}
+                        value={defaultValue}
                         id={id}
                         name={name}
                         key={key}
                         type={type}
                         readOnly
+                        onChange={()=>{}}
                         placeholder={placeHolder}
                         className={customStyles !== null ? `form__input ${customStyles}` : `form__input`}
                     />
