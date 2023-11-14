@@ -20,6 +20,7 @@ import {
     GlassesBenefiEditPageL,
     GlassesBenefitRegisterPageL,
     GlassesRequestHistoryPageL,
+    GlassesRequestSummaryPageL,
     MaternityBenefitEditPageL,
     MaternityBenefitRegisterPageL,
     MaternityRequestHistoryPageL,
@@ -44,6 +45,7 @@ function App() {
 
             <Route path="/glasses/insert" element={<GlassesBenefitRegisterPageL/>}/>
             <Route path="/glasses/edit/:id" element={<GlassesBenefiEditPageL/>}/>
+            <Route path="/glasses/summary/:id" element={<GlassesRequestSummaryPageL/>}/>
             <Route path="/glasses/history" element={<GlassesRequestHistoryPageL/>}/>
 
             <Route path="/maternity/insert" element={<MaternityBenefitRegisterPageL/>}/>

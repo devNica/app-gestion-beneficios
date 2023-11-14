@@ -30,7 +30,6 @@
         }
 
         .btn {
-            border: none;
             border-radius: 3px;
             height: 30px;
             width: 30px;
@@ -49,8 +48,8 @@
                 cursor: pointer;
                 color: var(--bg-white-100);
                 background-color: var(--primary--color);
-                animation: animate .3s linear infinite;
-                animation-direction: alternate-reverse;
+/*                animation: animate .3s linear infinite;*/
+/*                animation-direction: alternate-reverse;*/
             }
         }
     }

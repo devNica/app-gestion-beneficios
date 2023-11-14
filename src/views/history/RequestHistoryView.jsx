@@ -64,7 +64,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
     }
 
     function handleEditRecord() {
-        if (currentRecord.state !== 'Solicitud Pendiente') {
+        if (currentRecord.state !== 'No Impreso (Editable)') {
             dispatch(setNotification({
                 message: 'Este registro no admite edicion',
                 type: 'info',
@@ -97,7 +97,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
                 {
                     currentRecord !== null ?
                         <div className="btn-option">
-                            <Link className="btn view-option" to={`/${nameSpace.navigationPath}/detail/${currentRecord.recordId}`}>
+                            <Link className="btn view-option" to={`/${nameSpace.navigationPath}/summary/${currentRecord.recordId}`}>
                                 <i className="bi bi-eye-fill"></i>
                             </Link>
                             <button className="btn edit-option" onClick={handleEditRecord}>

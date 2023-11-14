@@ -1,0 +1,137 @@
+.glasses__request-summary {
+    display: flex;
+    flex-direction: column;
+
+    .main-title {
+        color: var(--bg-gray-500);
+        font-size: 1.6rem;
+        font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .summary {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, 350px);
+
+        .summary__gnral-info {
+            padding: 1rem 0.7rem;
+
+            .title {
+                color: var(--primary--color);
+                font-size: 1.4rem;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+
+            > span {
+                color: var(--bg-gray-600);
+                font-size: 1.3rem;
+                font-family: 'Barlow Condensed', sans-serif;
+                line-height: 0.3rem;
+            }
+        }
+
+        .summary__oph-info {
+
+            .title {
+                color: var(--primary--color);
+                font-size: 1.4rem;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+
+            > span {
+                color: var(--bg-gray-600);
+                font-size: 1.3rem;
+                font-family: 'Barlow Condensed', sans-serif;
+                line-height: 0.3rem;
+            }
+
+            .exam__summary {
+                margin-top: 20px;
+                gap: 10px;
+                display: grid;
+                grid-template-columns: repeat(2, 120px);
+                grid-template-rows: repeat(9, 1fr);
+                height: 330px;
+
+                .reye, .leye {
+                    padding: 0.7rem;
+                    border: 1px solid var(--bg-gray-600);
+                    border-radius: 4px;
+                }
+
+                .oph-info {
+                    font-size: 1.3rem;
+                    font-family: 'Barlow Condensed', sans-serif;
+                }
+
+                .oph__main-title {
+                    font-size: 1.5rem;
+                    font-family: 'Barlow Condensed', sans-serif;
+                }
+            }
+        }
+
+        .summary__glass-info {
+
+            .title {
+                color: var(--primary--color);
+                font-size: 1.4rem;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+
+            > span {
+                color: var(--bg-gray-600);
+                font-size: 1.3rem;
+                font-family: 'Barlow Condensed', sans-serif;
+                line-height: 0.3rem;
+            }
+
+
+            .supports {
+                display: grid;
+                grid-template-columns: repeat(2, 150px);
+                grid-template-rows: repeat(4, auto);
+                gap: 30px;
+                
+                margin-top: 20px;
+
+                .proforma, .invoice {
+                    
+                    border: 1px solid var(--bg-gray-600);
+                    border-radius: 4px;
+                    padding: 1rem 0.7rem;
+
+                    .support-title {
+                        font-size: 1.5rem;
+                        font-family: 'Barlow Condensed', sans-serif;
+                    }
+
+                    .title {
+                        color: var(--primary--color);
+                        font-size: 1.4rem;
+                        font-family: 'Barlow Condensed', sans-serif;
+                    }
+
+                    > span {
+                        color: var(--bg-gray-600);
+                        font-size: 1.3rem;
+                        font-family: 'Barlow Condensed', sans-serif;
+                        line-height: 0.3rem;
+                    }
+                }
+
+            }
+
+            .spec {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 70px;
+                font-family: 'Barlow Condensed', sans-serif;
+                line-height: 0.3rem;
+                font-size: 1.3rem;
+                color: var(--bg-gray-600);
+            }
+
+        }
+    }
+}

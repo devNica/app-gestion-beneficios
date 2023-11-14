@@ -3,6 +3,7 @@ import { lazy } from "react";
 const GlassesBenefitRegisterPageL = lazy(() => import('./pages/RegisterPages/GlassesBenefitPage.jsx'))
 const GlassesBenefiEditPageL = lazy(() => import('./pages/EditPages/GlassesBenefitEditPage.jsx'))
 const GlassesRequestHistoryPageL = lazy(() => import('./pages/HistoryPages/GlassesRequestHistoryPage.jsx'))
+const GlassesRequestSummaryPageL = lazy(() => import('./pages/SummaryPages/GlassesRequestSummaryPage.jsx'))
 
 const MaternityBenefitRegisterPageL = lazy(() => import('./pages/RegisterPages/MaternityBenefitPage.jsx'))
 const MaternityBenefitEditPageL = lazy(() => import('./pages/EditPages/MaternityEditPage.jsx'))
@@ -20,12 +21,16 @@ export {
     GlassesBenefitRegisterPageL,
     GlassesBenefiEditPageL,
     GlassesRequestHistoryPageL,
+    GlassesRequestSummaryPageL,
+
     MaternityBenefitRegisterPageL,
     MaternityBenefitEditPageL,
     MaternityRequestHistoryPageL,
+
     DeathBenefitRegisterPageL,
     DeathBenefitEditPageL,
     DeathRequestHistoryPageL,
+
     ScholarPeriodPageL,
     ScholarshipBenefitPageL
 }

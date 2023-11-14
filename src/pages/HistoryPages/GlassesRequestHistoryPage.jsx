@@ -34,7 +34,6 @@ const GlassesRequestHistoryPage = () => {
                     <RequestHistoryView
                         data={data}
                         nameSpace={nameSpace}
-                        //fetchRequestById={actions.fetchGlassesRequestRecordById}
                     /> : <></>
             }
         </div>
