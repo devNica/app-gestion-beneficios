@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {createNewGlassesRequest, fetchShortHistoryGlassesReq} from "../service/api"
+import {createNewGlassesRequest, fetchShortHistoryGlassesReq, updateGlassesRequestFromAPI} from "../service/api"
 
 const initialState = {
 
@@ -134,7 +134,7 @@ const glassSlice = createSlice({
         resetGlassReq: (state) => {
             return {
                 ...state,
-                memoryFlag: false,
+                history: [],
                 generalInfoReq: initialState.generalInfoReq,
                 ophthalmicInfoReq: initialState.ophthalmicInfoReq,
                 applicationSupports: initialState.applicationSupports
@@ -192,7 +192,45 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
         })
 
         dispatch(resetGlassReq())
-        
+
+    } catch (error) {
+        console.log('error encontrado', error)
+        throw new Error(String(error))
+    }
+}
+
+
+export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState) => {
+    try {
+
+        const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
+        const {exchangeRate} = getState().props
+
+        await updateGlassesRequestFromAPI(orderId, {
+            registerDate: generalInfoReq.registerDate,
+            memoRef: generalInfoReq.memoRef,
+            letterRef: generalInfoReq.letterRef,
+            notes: generalInfoReq.notes,
+            diagnosis: ophthalmicInfoReq.diagnosis,
+            rEye: ophthalmicInfoReq.rightEye,
+            lEye: ophthalmicInfoReq.leftEye,
+            proforma: applicationSupports.proforma,
+            invoice: applicationSupports.invoice,
+            lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
+            lendDetailId: ophthalmicInfoReq.lenDetail.id,
+            lenTypeId: ophthalmicInfoReq.lenType.id,
+            clinicId: generalInfoReq.clinic.id,
+            beneficiaryId: generalInfoReq.beneficiary.employeeNumber,
+            // loggerId: 1, // corregir esto cuando se implemente la api de auth
+            // authorizerId: generalInfoReq.authorizer.id,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            authorizedAmountId: generalInfoReq.authorizedAmount.id,
+            supportType: applicationSupports.currentMode,
+            exchangeRateId: exchangeRate.id
+        })
+
+        dispatch(resetGlassReq())
+
     } catch (error) {
         console.log('error encontrado', error)
         throw new Error(String(error))

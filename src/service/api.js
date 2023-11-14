@@ -80,3 +80,12 @@ export const fetchMaternityApplicants = async () => {
     })
 }
 
+
+export const updateGlassesRequestFromAPI = async (orderId, payload) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/glasses/${orderId}`,
+        body: payload,
+        method: 'PUT'
+    })
+}

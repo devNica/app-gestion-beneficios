@@ -11,10 +11,10 @@ import { useTrackingProps } from '../../useTracking'
 
 import { formatNumberWithCommas } from "../../../utils/number.util"
 import { isNull } from "../../../utils/object.util"
-import { registerGlassesRequestThunk } from "../../../redux/glass.slice"
+import {registerGlassesRequestThunk, updateGlassesRequestThunk} from "../../../redux/glass.slice"
 
 
-export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options, mode }) => {
+export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options, mode, orderId }) => {
 
     const { actions, states: glassStates } = useGlassesRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
@@ -109,6 +109,8 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     }
 
     function editRequest(){
+        dispatch(updateGlassesRequestThunk(orderId))
+
         dispatch(setNotification({
             message: 'Edicion Exitosa',
             type: 'success',

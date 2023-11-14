@@ -97,6 +97,7 @@ export default function GlassesBenefitEditPage() {
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
             mode='edit'
+            orderId={id}
         />
     ]
 
