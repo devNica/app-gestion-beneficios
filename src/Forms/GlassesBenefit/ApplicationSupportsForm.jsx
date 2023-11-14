@@ -20,10 +20,11 @@ const options = [
 const ApplicationSupportsForm = ({
     currentIndex,
     updateCurrentIndex,
-    mode
+    mode,
+    orderId
 }) => {
 
-    const { states, actions } = useHandleApplicationSupportForm({ updateCurrentIndex, currentIndex, options, mode })
+    const { states, actions } = useHandleApplicationSupportForm({ updateCurrentIndex, currentIndex, options, mode, orderId })
 
     const { invoiceAmountInCS, invoiceCurrency, invoiceDate, invoiceAmount,
         invoiceExchangeRate, invoiceNumber,
@@ -263,5 +264,6 @@ export default React.memo(ApplicationSupportsForm)
 ApplicationSupportsForm.propTypes = {
     currentIndex: PropTypes.number,
     updateCurrentIndex: PropTypes.func,
-    mode: PropTypes.string
+    mode: PropTypes.string,
+    orderId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }

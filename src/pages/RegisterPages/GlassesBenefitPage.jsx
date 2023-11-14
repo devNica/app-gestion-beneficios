@@ -88,6 +88,7 @@ export default function GlassesBenefitPage() {
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
             mode='register'
+            orderId={''}
         />
     ]
 

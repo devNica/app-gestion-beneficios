@@ -34,14 +34,14 @@
                 "fullname": "Antonio Alvarez",
                 "relationShip": "Padre",
                 "sex": "M",
-                "status": false
+                "status": true
             },
             {
                 "id": 2,
                 "fullname": "Carlos Aleman Alvarez",
                 "relationShip": "Hijo",
                 "sex": "M",
-                "status": false
+                "status": true
             }
         ]
     },
