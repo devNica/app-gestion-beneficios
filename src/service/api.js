@@ -89,3 +89,20 @@ export const updateGlassesRequestFromAPI = async (orderId, payload) => {
         method: 'PUT'
     })
 }
+
+export const registerNewRequestMaternityBenefit = async (payload) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity`,
+        body: payload,
+        method: 'POST'
+    })
+}
+
+
+export const fetchShortHistoryMaternityReq = async () => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity`
+    })
+}

@@ -70,6 +70,7 @@ export default function MaternityBenefitPage() {
             exchangeRate={exchangeRate}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode={'register'}
         />
 
     ]

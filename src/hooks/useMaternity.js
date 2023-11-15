@@ -4,7 +4,7 @@ import {
     setNewBornInfoReq,
     loadHistory,
     loadAuthorizedAmounts,
-    resetNewBornInfoReq
+    resetNewBornInfoReq, fetchHistoryMaternityReqThunk
 } from '../redux/maternity.slice'
 import mockupHistory from '../data/history/generic-history.json'
 import {filterData} from "../utils/object.util.js";
@@ -45,8 +45,8 @@ export const useMaternityRequestManagement = () => {
         dispatch(setNewBornInfoReq(data))
     }
 
-    function fetchAsyncGlassesHistory() {
-        dispatch(loadHistory(mockupHistory))
+    function fetchAsyncMaternityHistory() {
+        dispatch(fetchHistoryMaternityReqThunk())
     }
 
     function serializedHistory({ queryFields, returnFields }) {
@@ -63,7 +63,7 @@ export const useMaternityRequestManagement = () => {
         actions: {
             serializedHistory,
             fetchMaternityRequestRecordById,
-            fetchAsyncGlassesHistory,
+            fetchAsyncMaternityHistory,
             setGnralInfo,
             setNewBornInfo,
             resetNewBornInfo,

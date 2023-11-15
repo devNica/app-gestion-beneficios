@@ -1,41 +1,119 @@
 import { useEffect, useState } from "react"
 import { useMaternityRequestManagement } from "../../useMaternity"
 import { formatNumberWithCommas } from "../../../utils/number.util"
+import {useDispatch} from "react-redux";
+import {setNotification} from "../../../redux/notification.slice.js";
+import CustomNotification from "../../../Components/Notification/CustomNotification.jsx";
+import {registerMaternityBenefitThunk} from "../../../redux/maternity.slice.js";
+import {useTrackingProps} from "../../useTracking.js";
+import {useNavigate} from "react-router-dom";
 
 export default function useNewBornInfoForm({
     updateCurrentIndex,
-    currentIndex, typesBirth,
+    currentIndex,
     authorizedAmountsMathernity,
-    exchangeRate
+    mode
 }) {
 
     const { states: { newBornInfoReq: info, childrenOfBeneficiary }, actions } = useMaternityRequestManagement()
+    const { actions: trackingAct } = useTrackingProps()
+
+    const dispatch = useDispatch()
+    CustomNotification()
+
+    const navigate = useNavigate()
+
 
     const [support, setSupport] = useState(info.supports)
     const [typeBirth, setTypeBirth] = useState('')
 
     const [amountInUS, setAmountInUS] = useState('')
-    const [amountInCS, setAmountInCS] = useState('')
     const [confirmedChildren, setConfirmedChildren] = useState(childrenOfBeneficiary)
+    const [authorizedAmountId, setAuthorizedAmountId] = useState(null)
 
     useEffect(()=>{
         if (info.confirmedChildren !== null) setConfirmedChildren(info.confirmedChildren)
         if (info.amountInUS !== null) setAmountInUS(info.amountInUS)
-        if (info.amountInCS !== null) setAmountInCS(info.amountInCS)
         if (info.typeBirth !== null) setTypeBirth(info.typeBirth)
     }, [])
+
+    function registerNewRequets(){
+
+        dispatch(registerMaternityBenefitThunk())
+
+        dispatch(setNotification({
+            message: 'Registro Exitoso',
+            type: 'success',
+            delay: 1500
+        }))
+
+        trackingAct.removeTrack({
+            procIdentity: 'MTN-REG',
+            space: 'maternity'
+        })
+    }
 
     function handleBackStep() {
 
         actions.setNewBornInfo({
+            authorizedAmountId,
             supports: support,
             typeBirth: typeBirth,
             amountInUS: amountInUS,
-            amountInCS: amountInCS,
             confirmedChildren: confirmedChildren
         })
 
         updateCurrentIndex(currentIndex - 1)
+    }
+
+    function handleSubmit() {
+
+        const confirmed = confirmedChildren.some(el => el.selected === true)
+
+        if(!confirmed) {
+             dispatch(setNotification({
+                message: 'Debe Seleccionar al menos un registro en la lista parental',
+                 type: 'warning',
+                 delay: 1500
+             }))
+
+            return
+        }
+
+        if(support.length === 0) {
+            dispatch(setNotification({
+                message: 'Agregue informacion de los soportes presentados por el beneficiario',
+                type: 'warning',
+                delay: 1500
+            }))
+
+            return
+        }
+
+        actions.setNewBornInfo({
+            authorizedAmountId,
+            supports: support,
+            typeBirth: typeBirth,
+            amountInUS: amountInUS,
+            confirmedChildren: confirmedChildren
+        })
+
+        try{
+
+            if (mode === 'register'){
+                registerNewRequets()
+            } else if (mode === 'edit'){
+                // editRequest()
+            }
+
+
+            setTimeout(() => {
+                navigate('/home')
+            }, 1700);
+
+        } catch(err) {
+            console.error(err)
+        }
     }
 
     function updateAmounts(current) {
@@ -44,20 +122,23 @@ export default function useNewBornInfoForm({
         const confirmed = current.filter(child => child.selected === true)
 
         if(confirmed.length === 1 ) {
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Normal').amount
-            setTypeBirth(typesBirth[0])
+            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Normal')
+            authAmountInUs = data.amount
+            setTypeBirth(data.relative)
+            setAuthorizedAmountId(data.id)
         } else if (confirmed.length === 2 ){
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Gemelar').amount
-            setTypeBirth(typesBirth[1])
+            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Gemelar')
+            authAmountInUs = data.amount
+            setTypeBirth(data.relative)
+            setAuthorizedAmountId(data.id)
         } else if (confirmed.length > 2) {
-            setTypeBirth(typesBirth[2])
-            authAmountInUs = authorizedAmountsMathernity.find(ele => ele.relative === 'Multiple').amount
+            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Multiple')
+            authAmountInUs = data.amount
+            setTypeBirth(data.relative)
+            setAuthorizedAmountId(data.id)
         }
 
-        const authAmountInCs = authAmountInUs * Number(exchangeRate.value.toFixed(2))
-
-        setAmountInUS(`U$ ${formatNumberWithCommas(authAmountInUs)}`)
-        setAmountInCS(`C$ ${formatNumberWithCommas(authAmountInCs)}`)
+        setAmountInUS(`${formatNumberWithCommas(authAmountInUs)} USD`)
     }
 
     function handleSelectItem(id) {
@@ -82,12 +163,12 @@ export default function useNewBornInfoForm({
             support,
             typeBirth,
             amountInUS,
-            amountInCS,
             confirmedChildren
         },
         actions: {
             handleBackStep,
             handleSelectItem,
+            handleSubmit,
             setSupport,
             setTypeBirth
         }

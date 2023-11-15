@@ -18,11 +18,11 @@ const MaternityRequestHistoryPage = () => {
 
     const data = actions.serializedHistory({
         queryFields: [],
-        returnFields: ["recordId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
+        returnFields: ["recordId", "fullname", "beneficiaryId", "registeredAt", "finishedAt", "state"]
     })
 
     useEffect(() => {
-        actions.fetchAsyncGlassesHistory()
+        actions.fetchAsyncMaternityHistory()
     }, [])
 
     return (

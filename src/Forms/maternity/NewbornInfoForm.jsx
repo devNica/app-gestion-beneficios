@@ -15,20 +15,20 @@ export default function NewbornInfoForm
         authorizedAmountsMathernity,
         updateCurrentIndex,
         currentIndex,
-        exchangeRate
+        mode
     }) {
 
 
     const { states, actions } = useNewBornInfoForm({
         authorizedAmountsMathernity,
-        exchangeRate,
         typesBirth,
         currentIndex,
-        updateCurrentIndex
+        updateCurrentIndex,
+        mode
     })
 
-    const { amountInCS, amountInUS, support, typeBirth, confirmedChildren } = states
-    const { handleBackStep, handleSelectItem, setSupport } = actions
+    const {  amountInUS, support, typeBirth, confirmedChildren } = states
+    const { handleBackStep, handleSelectItem, handleSubmit, setSupport } = actions
 
 
     return (
@@ -53,7 +53,7 @@ export default function NewbornInfoForm
                         name={'typeBirth'}
                         id={'typeBirth'}
                         label='Tipo de Parto:'
-                        defaultValue={typeBirth.value}
+                        defaultValue={typeBirth}
                         customStyles={'disabled'}
                         editable={false}
                     />
@@ -62,13 +62,6 @@ export default function NewbornInfoForm
                         type='text'
                         name={'amountInUS'}
                         defaultValue={amountInUS}
-                        editable={false}
-                        customStyles='disabled'
-                    />
-                    <CustomInput
-                        label='Monto Autorizado C$:'
-                        type='text'
-                        defaultValue={amountInCS}
                         editable={false}
                         customStyles='disabled'
                     />
@@ -102,7 +95,7 @@ export default function NewbornInfoForm
                 <div className="prev" onClick={handleBackStep} >
                     <button type='button' className='btn btn__prev'>Atras</button>
                 </div>
-                <div className="netx">
+                <div className="netx" onClick={handleSubmit}>
                     <button type='button' className='btn btn__done'>Listo</button>
                 </div>
             </div>
@@ -127,8 +120,5 @@ NewbornInfoForm.propTypes = {
     })),
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
-    exchangeRate: PropTypes.shape({
-        id: PropTypes.string,
-        value: PropTypes.number
-    })
+    mode: PropTypes.oneOf(['register', 'edit'])
 }

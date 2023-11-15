@@ -12,13 +12,13 @@
     .form__group-middle {
         margin-top: 20px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, auto);
         gap: 20px;
 
         .row-1 {
             grid-row: 1;
-            grid-column: span 3;
+            grid-column: span 2;
 
             display: flex;
             flex-direction: row;
@@ -27,7 +27,7 @@
 
         .row-2 {
             grid-row: 2;
-            grid-column: span 3;
+            grid-column: span 2;
             display: flex;
             flex-direction: column;
             align-items: center;
