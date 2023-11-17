@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {fetchShortHistoryMaternityReq, registerNewRequestMaternityBenefit} from "../service/api.js";
+import {
+    fetchShortHistoryMaternityReq,
+    registerNewRequestMaternityBenefit,
+    updateMaternityRequestDetail
+} from "../service/api.js";
 
 const initialState = {
     history: [],
     authorizedAmount: null,
-    childrenOfBeneficiary: [],
+    markedChildren: [],
+    childrenList: [], // esto es una mejora al codigo
     generalInfoReq: {
         gender: null,
         registerDate: null,
@@ -14,7 +19,7 @@ const initialState = {
         logger: '', 
         authorizer: null,
         memoRef: null,
-        partner: ''
+        couple: ''
     },
     newBornInfoReq: {
         authorizedAmountId: null,
@@ -44,19 +49,37 @@ const maternitySlice = createSlice({
             }
         },
 
+        loadRecord: (state, action) => {
+            return {
+                ...state,
+                markedChildren: action.payload.markedChildren,
+                generalInfoReq: action.payload.generalInfoReq,
+                newBornInfoReq: action.payload.newBornInfoReq
+            }
+        },
+
         resetMaternityReq: (state) => {
             return {
                 ...state,
-                childrenOfBeneficiary: initialState.childrenOfBeneficiary,
+                history: initialState.history,
+                markedChildren: initialState.markedChildren,
+                childrenList: initialState.childrenList,
                 generalInfoReq: initialState.generalInfoReq,
                 newBornInfoReq: initialState.newBornInfoReq
             }
         },
 
+        updateChildrenList: (state, action) => {
+            return {
+                ...state,
+                childrenList: action.payload.children
+            }
+            },
+
         setGeneralInfoReq: (state, action) =>{
             return {
                 ...state,
-                childrenOfBeneficiary: action.payload.children,
+                childrenList: action.payload.children,
                 generalInfoReq: action.payload.info
             }
         },
@@ -78,8 +101,10 @@ const maternitySlice = createSlice({
 })
 
 export const {
+    loadRecord,
     loadAuthorizedAmounts,
     loadHistory,
+    updateChildrenList,
     setGeneralInfoReq,
     setNewBornInfoReq,
     resetMaternityReq,
@@ -98,17 +123,19 @@ export const fetchHistoryMaternityReqThunk = () => async dispatch => {
 
 export const registerMaternityBenefitThunk = () => async (dispatch, getState) => {
     try{
-        const { generalInfoReq, newBornInfoReq } = getState().maternity
+        const { generalInfoReq, newBornInfoReq, childrenList } = getState().maternity
         const { user } = getState().auth
         const { exchangeRate } = getState().props
 
-        const childrenSelcted = newBornInfoReq.confirmedChildren.filter(ch => ch.selected)
+        console.log('CHILDRENSSS LIST', childrenList)
+
+        const childrenSelected = childrenList.filter(ch => ch.selected)
 
         const payload = {
             registerDate: generalInfoReq.registerDate,
             beneficiaryId: generalInfoReq.beneficiary.employeeId,
             paymentTypeId: generalInfoReq.paymentType.id,
-            couple: generalInfoReq.partner,
+            couple: generalInfoReq.couple,
             notes: generalInfoReq.notes,
             memoRef: generalInfoReq.memoRef,
             loggerId: user.id,
@@ -116,13 +143,43 @@ export const registerMaternityBenefitThunk = () => async (dispatch, getState) =>
             authorizedAmountId: newBornInfoReq.authorizedAmountId,
             exchangeRateId: exchangeRate.id,
             supports: newBornInfoReq.supports,
-            children: childrenSelcted.map(ch => ({ parentId: ch.id }))
+            children: childrenSelected.map(ch => ({ parentId: ch.id }))
         }
+
+        console.log('this is payload: ', payload)
 
         await registerNewRequestMaternityBenefit(payload)
 
         dispatch(resetMaternityReq())
     }catch(err){
+        console.log(err)
+    }
+}
 
+
+export const updateMaternityRequestThunk = (orderId) => async (dispatch, getState) => {
+    try{
+        const { generalInfoReq, newBornInfoReq, childrenList } = getState().maternity
+
+        const childrenSelcted = childrenList.filter(ch => ch.selected)
+
+        const payload = {
+            registerDate: generalInfoReq.registerDate,
+            beneficiaryId: generalInfoReq.beneficiary.employeeId,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            couple: generalInfoReq.couple,
+            notes: generalInfoReq.notes,
+            memoRef: generalInfoReq.memoRef,
+            authorizerId: generalInfoReq.authorizer.id,
+            authorizedAmountId: newBornInfoReq.authorizedAmountId,
+            supports: newBornInfoReq.supports,
+            children: childrenSelcted.map(ch => ({ parentId: ch.id }))
+        }
+
+        await updateMaternityRequestDetail(orderId, payload)
+
+        dispatch(resetMaternityReq())
+    }catch(err){
+        console.log('ERROR AL ACTUALIZAR BENEFICIO MATERNIDAD: ', err)
     }
 }

@@ -73,10 +73,10 @@ export const fetchAuthorizedAmountsForMaternity = async () => {
     })
 }
 
-export const fetchMaternityApplicants = async () => {
+export const fetchMaternityApplicants = async (mode) => {
     return await httpHandler({
         instance: axiosInstance,
-        endpoint: `/maternity/applicants`
+        endpoint: `/maternity/applicants/${mode}`
     })
 }
 
@@ -104,5 +104,22 @@ export const fetchShortHistoryMaternityReq = async () => {
     return await httpHandler({
         instance: axiosInstance,
         endpoint: `/maternity`
+    })
+}
+
+
+export const fetchMaternityRequestDetail = async (orderId) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity/detail/${orderId}`
+    })
+}
+
+export const updateMaternityRequestDetail = async (orderId, payload) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/maternity/${orderId}`,
+        body: payload,
+        method: 'PUT'
     })
 }

@@ -15,6 +15,7 @@ export default function NewbornInfoForm
         authorizedAmountsMathernity,
         updateCurrentIndex,
         currentIndex,
+        orderId,
         mode
     }) {
 
@@ -24,6 +25,7 @@ export default function NewbornInfoForm
         typesBirth,
         currentIndex,
         updateCurrentIndex,
+        orderId,
         mode
     })
 
@@ -120,5 +122,6 @@ NewbornInfoForm.propTypes = {
     })),
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
-    mode: PropTypes.oneOf(['register', 'edit'])
+    mode: PropTypes.oneOf(['register', 'edit']),
+    orderId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }

@@ -31,7 +31,7 @@ export default function MaternityBenefitPage() {
     const fetching = useCallback(async()=>{
         try{
             const [applicants, amounts] = await Promise.all([
-                fetchMaternityApplicants(),
+                fetchMaternityApplicants('register'),
                 fetchAuthorizedAmountsForMaternity()
             ])
 
@@ -71,6 +71,7 @@ export default function MaternityBenefitPage() {
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
             mode={'register'}
+            orderId={''}
         />
 
     ]

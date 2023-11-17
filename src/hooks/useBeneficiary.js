@@ -1,9 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import {
-    setEmployeeWithChildrens,
     setEmployeeWithRelatives,
 } from "../redux/beneficiary.slice.js";
-import employeeWithChildrensMockup from '../data/employee-with-childrens.json'
 import employeeWithRelativesMockup from '../data/employee-with-relatives.json'
 import {filterData} from "../utils/object.util.js";
 
@@ -17,11 +15,6 @@ export const useBeneficiaryProps = () => {
     } = useSelector(state => state.beneficiary)
     
     const { authorizedAmounts } = useSelector(state => state.props)
-
-
-    function setAsyncEmployeeWithChildrens() {
-        dispatch(setEmployeeWithChildrens(employeeWithChildrensMockup))
-    }
     
     function setAsyncEmployeeWithRelatives(){
         dispatch(setEmployeeWithRelatives(employeeWithRelativesMockup))
@@ -40,7 +33,7 @@ export const useBeneficiaryProps = () => {
         const result =  employeeList.filter(emp => emp.employeeId === employeeId)
 
         if (result.length > 0) {
-            return result[0].relatives.map(child => ({...child, selected: false }))
+            return result[0].relatives
         } else {
             return []
         }
@@ -95,7 +88,6 @@ export const useBeneficiaryProps = () => {
         },
         
         actions: {
-            setAsyncEmployeeWithChildrens,
             setAsyncEmployeeWithRelatives,
             getCoupleName,
             getBeneficiaryListBySex,

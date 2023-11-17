@@ -4,7 +4,7 @@ import { formatNumberWithCommas } from "../../../utils/number.util"
 import {useDispatch} from "react-redux";
 import {setNotification} from "../../../redux/notification.slice.js";
 import CustomNotification from "../../../Components/Notification/CustomNotification.jsx";
-import {registerMaternityBenefitThunk} from "../../../redux/maternity.slice.js";
+import {registerMaternityBenefitThunk, updateMaternityRequestThunk} from "../../../redux/maternity.slice.js";
 import {useTrackingProps} from "../../useTracking.js";
 import {useNavigate} from "react-router-dom";
 
@@ -12,10 +12,11 @@ export default function useNewBornInfoForm({
     updateCurrentIndex,
     currentIndex,
     authorizedAmountsMathernity,
+    orderId,
     mode
 }) {
 
-    const { states: { newBornInfoReq: info, childrenOfBeneficiary }, actions } = useMaternityRequestManagement()
+    const { states: { newBornInfoReq: info, childrenList }, actions } = useMaternityRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
 
     const dispatch = useDispatch()
@@ -28,13 +29,14 @@ export default function useNewBornInfoForm({
     const [typeBirth, setTypeBirth] = useState('')
 
     const [amountInUS, setAmountInUS] = useState('')
-    const [confirmedChildren, setConfirmedChildren] = useState(childrenOfBeneficiary)
+    const [confirmedChildren, setConfirmedChildren] = useState(childrenList)
     const [authorizedAmountId, setAuthorizedAmountId] = useState(null)
 
     useEffect(()=>{
-        if (info.confirmedChildren !== null) setConfirmedChildren(info.confirmedChildren)
+        //if (info.confirmedChildren !== null) setConfirmedChildren(info.confirmedChildren)
         if (info.amountInUS !== null) setAmountInUS(info.amountInUS)
         if (info.typeBirth !== null) setTypeBirth(info.typeBirth)
+        if (info.authorizedAmountId !== null) setAuthorizedAmountId(info.authorizedAmountId)
     }, [])
 
     function registerNewRequets(){
@@ -53,22 +55,36 @@ export default function useNewBornInfoForm({
         })
     }
 
+    function editRequest(){
+        dispatch(updateMaternityRequestThunk(orderId))
+
+        dispatch(setNotification({
+            message: 'Edicion Exitosa',
+            type: 'success',
+            delay: 1500
+        }))
+
+        trackingAct.removeTrack({
+            procIdentity: 'MTN-EDIT',
+            space: 'maternity'
+        })
+    }
+
     function handleBackStep() {
 
         actions.setNewBornInfo({
             authorizedAmountId,
             supports: support,
             typeBirth: typeBirth,
-            amountInUS: amountInUS,
-            confirmedChildren: confirmedChildren
-        })
+            amountInUS: amountInUS
+        }, confirmedChildren)
 
         updateCurrentIndex(currentIndex - 1)
     }
 
     function handleSubmit() {
 
-        const confirmed = confirmedChildren.some(el => el.selected === true)
+        const confirmed = confirmedChildren.some(el => el.selected === true || el.selected === 1)
 
         if(!confirmed) {
              dispatch(setNotification({
@@ -95,15 +111,14 @@ export default function useNewBornInfoForm({
             supports: support,
             typeBirth: typeBirth,
             amountInUS: amountInUS,
-            confirmedChildren: confirmedChildren
-        })
+        },confirmedChildren)
 
         try{
 
             if (mode === 'register'){
                 registerNewRequets()
             } else if (mode === 'edit'){
-                // editRequest()
+                editRequest()
             }
 
 
@@ -119,7 +134,7 @@ export default function useNewBornInfoForm({
     function updateAmounts(current) {
         let authAmountInUs = 0.00
 
-        const confirmed = current.filter(child => child.selected === true)
+        const confirmed = current.filter(child => child.selected === true || child.selected === 1)
 
         if(confirmed.length === 1 ) {
             const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Normal')

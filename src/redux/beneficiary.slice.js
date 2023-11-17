@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {fetchGlassesApplicants} from "../service/api.js";
 
 const initialState = {
     employeeWithChildrens: [],

@@ -34,6 +34,9 @@ export const useTrackingProps = () => {
             if(space === 'glass') {
                 dispatch(resetGlassReq())
             }
+            if (space === 'maternity') {
+                dispatch(resetMaternityReq())
+            }
         }
     }
 

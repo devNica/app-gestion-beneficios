@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 import Stepper from "../../Components/Stepper/Stepper"
@@ -9,23 +9,46 @@ import NewbornInfoForm from "../../Forms/maternity/NewbornInfoForm"
 
 import {useTrackingProps} from "../../hooks/useTracking.js";
 import { useAdminProps } from "../../hooks/useProps"
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 
 import '../main-page.css'
+import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
+import {
+    fetchAuthorizedAmountsForMaternity,
+    fetchMaternityApplicants,
+    fetchMaternityRequestDetail
+} from "../../service/api.js";
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx";
 
 export default function MaternityEditPage() {
 
     const navigate = useNavigate()
+    const { id } = useParams()
     const { actions: trackingAct } = useTrackingProps()
 
-    const { actions: beneficiaryAct} = useBeneficiaryProps()
-
-    const { paymentTypes, serializedAuthorizers, maternityAmounts,
-        internalExchange, maternitySupports, typesBirth
+    const { paymentTypes, userAuthorizers,
+        exchangeRate, maternitySupports, typesBirth
     } = useAdminProps()
+
+    const { states: maternitySts, actions: maternityAct } = useMaternityRequestManagement()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    const fetching = useCallback(async()=>{
+        try{
+            const [applicants, amounts, record] = await Promise.all([
+                fetchMaternityApplicants('edit'),
+                fetchAuthorizedAmountsForMaternity(),
+                fetchMaternityRequestDetail(id)
+            ])
+
+            maternityAct.initialDataLoading(applicants, amounts, 'edit', record)
+            setLoading(false)
+        }catch(err){
+            console.log(err)
+        }
+    }, [])
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -35,8 +58,8 @@ export default function MaternityEditPage() {
             setIsOpen(true)
         }
 
-        /* establecer lista de empleados con hijos*/
-        beneficiaryAct.setAsyncEmployeeWithChildrens()
+        setLoading(true)
+        fetching()
 
     }, [])
 
@@ -44,17 +67,19 @@ export default function MaternityEditPage() {
         <MaternityGeneralInfoForm
             mode={'edit'}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
             />,
         <NewbornInfoForm
-            authorizedAmountsMathernity={maternityAmounts}
+            authorizedAmountsMathernity={maternitySts.authorizedAmount}
             maternitySupports={maternitySupports}
             typesBirth={typesBirth}
-            internalExchange={internalExchange}
+            exchangeRate={exchangeRate}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode={'edit'}
+            orderId={id}
         />
 
     ]
@@ -75,6 +100,7 @@ export default function MaternityEditPage() {
 
             {
             !isOpen ?
+                loading ? <CustomLoader/> :
                 <Stepper
                     CurrenComponent={MultipleComponent.at(currentIndex)}
                     steps={["1", "2"]}

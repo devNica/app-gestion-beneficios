@@ -28,7 +28,7 @@ const MaternityGeneralInfoForm = ({
 
     const {
         beneficiary, currentAuthorizer, employeeList, genderSelected,
-        isModalOpen, notes, logger, memoRef, partner, paymentType, registerDate
+        isModalOpen, notes, logger, memoRef, couple, paymentType, registerDate
     } = states
 
     const {
@@ -37,7 +37,7 @@ const MaternityGeneralInfoForm = ({
         setNotes, setPaymentType, updateGenderSelected
     } = actions
 
-    const payloadData = filterData([], ['employeeId', 'employeeName', 'surname', 'secondSurname'], employeeList)
+    const payloadData = filterData([], ['employeeId', 'name', 'surname', 'secondSurname'], employeeList)
 
     return (
         <form className="maternity__gnral__info-form">
@@ -85,7 +85,7 @@ const MaternityGeneralInfoForm = ({
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.employeeName} ${beneficiary.surname}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.name} ${beneficiary.surname}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -113,7 +113,7 @@ const MaternityGeneralInfoForm = ({
                                 orientation="row"
                                 type="text"
                                 editable={false}
-                                defaultValue={partner}
+                                defaultValue={couple}
                                 customStyles={["disabled"]}
                             /> : <></>
                     }

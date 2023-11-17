@@ -26,7 +26,7 @@ export default function useGeneralInfoForm({
 
     const logger = useGetUserInfo()
 
-    const { states: { generalInfoReq: gnrl }, actions } = useMaternityRequestManagement()
+    const { states: { generalInfoReq: gnrl, markedChildren, childrenList }, actions } = useMaternityRequestManagement()
     const { actions: trackingAct} =useTrackingProps()
 
     const [registerDate, setRegisterDate] = useState(new Date().toISOString().slice(0, 10))
@@ -35,14 +35,24 @@ export default function useGeneralInfoForm({
     const [currentAuthorizer, setCurrentAuthorizer] = useState(null)
     const [notes, setNotes] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [partner, setPartner] = useState('-')
+    const [couple, setCouple] = useState('-')
     const [genderSelected, setGender] = useState('F')
     const [memoRef, setMemoRef] = useState('')
     const [hashDate, setHashDate] = useState(getCurrentDateString('', gnrl.registerDate || new Date().toISOString().slice(0, 10)))
 
-    const [childrenOfBeneficiary, setChildrenOfBeneficiary] = useState([])
+    const [children, setChildrenList] = useState([])
 
     useEffect(() => {
+
+        if(mode === 'edit'){
+            const noSelected = beneficiaryAct.getChildren({ employeeId: gnrl.beneficiary.employeeId })
+            setChildrenList([...noSelected, ...markedChildren])
+        }
+
+        if ( mode === 'register') {
+           setChildrenList(childrenList)
+        }
+
         if (gnrl.registerDate !== null) {
             setRegisterDate(gnrl.registerDate)
         }
@@ -52,8 +62,8 @@ export default function useGeneralInfoForm({
         if (gnrl.paymentType !== null) {
             setPaymentType(gnrl.paymentType)
         }
-        if (gnrl.partner !== null) {
-            setPartner(gnrl.partner)
+        if (gnrl.couple !== null) {
+            setCouple(gnrl.couple)
         }
         if (gnrl.gender !== null) {
             setGender(gnrl.gender)
@@ -72,7 +82,7 @@ export default function useGeneralInfoForm({
     function updateGenderSelected(value) {
         setGender(value)
         setBeneficiary(null)
-        setPartner(null)
+        setCouple(null)
     }
 
     function handleEmployeeSelection(data) {
@@ -83,13 +93,18 @@ export default function useGeneralInfoForm({
             const couple = beneficiaryAct.getCoupleName({
                 employeeId: data.employeeId
             })
-            setPartner(couple)
+            setCouple(couple)
         } else {
-            setPartner(null)
+            setCouple(null)
         }
 
-        setChildrenOfBeneficiary(beneficiaryAct.getChildren({ employeeId: data.employeeId }))
-
+        if(mode === 'register') {
+            setChildrenList(beneficiaryAct.getChildren({ employeeId: data.employeeId }))
+        } else if (mode === 'edit') {
+            const noSelected = beneficiaryAct.getChildren({ employeeId: gnrl.beneficiary.employeeId })
+            setChildrenList([...noSelected, ...markedChildren])
+        }
+        
         actions.resetNewBornInfo()
     }
 
@@ -100,9 +115,7 @@ export default function useGeneralInfoForm({
         setRegisterDate(value)
         setHashDate(postDate)
         setMemoRef(prev => prev.replace(prevDate, postDate))
-
     }
-
 
     function handleKeyDown(event) {
         if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -141,7 +154,7 @@ export default function useGeneralInfoForm({
         }
 
         if (genderSelected === 'M') {
-            if(partner === '-') {
+            if(couple === '-') {
                 dispatch(setNotification({
                     message: 'El colaborador no tiene una Pareja asociada',
                     type: 'warning',
@@ -179,8 +192,8 @@ export default function useGeneralInfoForm({
             logger: logger.username,
             authorizer: currentAuthorizer,
             memoRef,
-            partner
-        }, childrenOfBeneficiary)
+            couple
+        }, children)
 
         trackingAct.trackingUpdate({
             typeAction: 'add',
@@ -203,7 +216,7 @@ export default function useGeneralInfoForm({
             beneficiary,
             currentAuthorizer,
             isModalOpen,
-            partner,
+            couple,
             genderSelected,
             registerDate,
             memoRef,
