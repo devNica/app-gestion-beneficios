@@ -76,7 +76,7 @@ export const useManageDataTable = ({ entries, dataSource }) => {
         if (e.length > 2) {
             const result = dataSource.filter((el) => {
                 for (const key in el) {
-                    if (el[key].toString().toLowerCase().includes(e)) {
+                    if (el[key] !== null && el[key].toString().toLowerCase().includes(e)) {
                         return true
                     }
                 }

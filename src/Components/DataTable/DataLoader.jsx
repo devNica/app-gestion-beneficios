@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import CustomTable from "./CustomTable"
-
 const DataLoader = ({
-    data,
+    data = [],
+    showColumns = [],
     columSizes = [],
     sortColumn = [],
     labels = [],
@@ -14,15 +14,17 @@ const DataLoader = ({
     const [model, setModel] = useState([])
 
     useEffect(() => {
-        const newModel = labels.map((label, index) => (
-            {
+        const newModel = []
+
+        labels.forEach((label, index) => {
+            newModel.push({
                 label: label,
                 field: label.toLowerCase(),
                 isSort: sortColumn.some(e => e === index),
                 sortType: 'unordered',
                 width: columSizes[index]
-            }
-        ))
+            })
+        })
 
         setModel(newModel)
     }, [labels])
@@ -48,7 +50,15 @@ const DataLoader = ({
     }
 
     return (
-        <CustomTable data={data} {...rest} model={model} isDT={isDT} columSize={columSizes} mutateModel={mutateModel} />
+        <CustomTable
+            data={data}
+            {...rest}
+            model={model}
+            isDT={isDT}
+            columSize={columSizes}
+            mutateModel={mutateModel}
+            showColums={showColumns}
+        />
     )
 
 }

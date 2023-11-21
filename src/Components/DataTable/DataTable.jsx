@@ -10,6 +10,7 @@ import './datatable.css'
 const DataTable = ({
     dataSource = [],
     entries = [5, 10, 15],
+    showColumns,
     labels = [],
     columnSizes = [],
     sortColumn = [],
@@ -63,6 +64,7 @@ const DataTable = ({
                         <DataLoader
                             isDT={true}
                             data={dataSubSet}
+                            showColumns={showColumns}
                             labels={labels}
                             sortColumn={sortColumn}
                             columSizes={columnSizes}

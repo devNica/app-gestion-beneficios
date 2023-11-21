@@ -8,12 +8,12 @@ const CustomTable = ({
     isDT,
     columSize,
     handleSelectionRow,
-    mutateModel
+    mutateModel,
+    showColums = []
 }) => {
 
 
     useEffect(() => {
-
     }, [model])
 
     const renderHeaders = model.map((el, i) => (
@@ -40,16 +40,20 @@ const CustomTable = ({
             onClick={() => handleSelectionRow(el)}
         >
             {
-                Object.keys(data[0]).map((k, j) => (
-                    <td
-                        className="table-data"
-                        key={j}
-                        style={{ width: `${columSize[j]}%` }}
+                Object.keys(data[0]).map((k, j) => {
+                   if(showColums.some(s=>s === k)){
+                        return (
+                            <td
+                                className="table-data"
+                                key={j}
+                                style={{ width: `${columSize[showColums.indexOf(k)]}%` }}
 
-                    >
-                        {el[`${k}`]}
-                    </td>
-                ))
+                                >
+                                {el[`${k}`]}
+                            </td>
+                            )
+                    }
+                })
             }
         </tr>
     ))
