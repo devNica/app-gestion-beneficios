@@ -42,8 +42,7 @@ export const useMaternityRequestManagement = () => {
         dispatch(resetNewBornInfoReq())
     }
 
-    function fetchMaternityRequestRecordById() {}
-
+    
     function setGnralInfo(data, children) {
         dispatch(setGeneralInfoReq({ info: data, children }))
     }
@@ -71,7 +70,6 @@ export const useMaternityRequestManagement = () => {
         },
         actions: {
             serializedHistory,
-            fetchMaternityRequestRecordById,
             fetchAsyncMaternityHistory,
             setGnralInfo,
             setNewBornInfo,

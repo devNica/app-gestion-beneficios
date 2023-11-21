@@ -137,12 +137,12 @@ export default function useNewBornInfoForm({
         const confirmed = current.filter(child => child.selected === true || child.selected === 1)
 
         if(confirmed.length === 1 ) {
-            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Normal')
+            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Normal')
             authAmountInUs = data.amount
             setTypeBirth(data.relative)
             setAuthorizedAmountId(data.id)
         } else if (confirmed.length === 2 ){
-            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Parto Gemelar')
+            const data = authorizedAmountsMathernity.find(ele => ele.relative === 'Gemelar')
             authAmountInUs = data.amount
             setTypeBirth(data.relative)
             setAuthorizedAmountId(data.id)
@@ -167,7 +167,6 @@ export default function useNewBornInfoForm({
                     return { ...ele }
                 }
             })
-
             updateAmounts(current)
             setConfirmedChildren(current)
     }

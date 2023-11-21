@@ -37,7 +37,6 @@ const MaternityGeneralInfoForm = ({
         setNotes, setPaymentType, updateGenderSelected
     } = actions
 
-    const payloadData = filterData([], ['employeeId', 'name', 'surname', 'secondSurname'], employeeList)
 
     return (
         <form className="maternity__gnral__info-form">
@@ -182,9 +181,10 @@ const MaternityGeneralInfoForm = ({
                 onClose={() => setIsModalOpen(false)}
                 children={
                     <DataTable
-                        dataSource={payloadData}
+                        dataSource={employeeList}
                         columnSizes={[10, 30, 30, 30]}
-                        labels={['Id', 'Nombre', 'P. Apellido', 'S. Apellido']}
+                        labels={['Id', 'Nombre', 'P. Apellido', 'Cedula']}
+                        showColumns={['employeeId', 'name', 'surname', 'dni']}
                         sortColumn={[0, 2, 3, 4]}
                         entries={[5, 10, 20]}
                         enableSearch={true}

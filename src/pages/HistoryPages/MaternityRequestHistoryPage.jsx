@@ -6,7 +6,7 @@ import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
 const MaternityRequestHistoryPage = () => {
 
     const { actions } = useMaternityRequestManagement()
-   
+
     const nameSpace = {
         navigationPath: 'maternity',
         slice: 'maternity',
@@ -18,8 +18,10 @@ const MaternityRequestHistoryPage = () => {
 
     const data = actions.serializedHistory({
         queryFields: [],
-        returnFields: ["recordId", "fullname", "beneficiaryId", "registeredAt", "finishedAt", "state"]
+        returnFields: ["recordId", "serial", "fullname", "beneficiaryId", "registeredAt", "approvedAt", "state"]
     })
+
+    console.log('maternity: ', data)
 
     useEffect(() => {
         actions.fetchAsyncMaternityHistory()
@@ -27,13 +29,12 @@ const MaternityRequestHistoryPage = () => {
 
     return (
         <div className="history__page">
-            <h3 className="bread__crum">Historico de Beneficio de Lentes</h3>
+            <h3 className="bread__crum">Historico de Beneficio de Maternidad</h3>
             {
                 data.length > 0 ?
                     <RequestHistoryView
                         data={data}
                         nameSpace={nameSpace}
-                        fetchRequestById={actions.fetchMaternityRequestRecordById}
                     /> : <></>
             }
         </div>

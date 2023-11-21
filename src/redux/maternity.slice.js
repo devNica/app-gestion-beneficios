@@ -127,8 +127,6 @@ export const registerMaternityBenefitThunk = () => async (dispatch, getState) =>
         const { user } = getState().auth
         const { exchangeRate } = getState().props
 
-        console.log('CHILDRENSSS LIST', childrenList)
-
         const childrenSelected = childrenList.filter(ch => ch.selected)
 
         const payload = {
@@ -141,12 +139,10 @@ export const registerMaternityBenefitThunk = () => async (dispatch, getState) =>
             loggerId: user.id,
             authorizerId: generalInfoReq.authorizer.id,
             authorizedAmountId: newBornInfoReq.authorizedAmountId,
-            exchangeRateId: exchangeRate.id,
+            exchangeValue: exchangeRate.value,
             supports: newBornInfoReq.supports,
             children: childrenSelected.map(ch => ({ parentId: ch.id }))
         }
-
-        console.log('this is payload: ', payload)
 
         await registerNewRequestMaternityBenefit(payload)
 

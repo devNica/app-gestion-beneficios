@@ -115,7 +115,7 @@ NewbornInfoForm.propTypes = {
         value: PropTypes.string
     })),
     authorizedAmountsMathernity: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         amount: PropTypes.number,
         symbol: PropTypes.string,
         amountInCurrency: PropTypes.string
