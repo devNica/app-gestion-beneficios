@@ -3,7 +3,6 @@ import {
     setEmployeeWithRelatives,
 } from "../redux/beneficiary.slice.js";
 import employeeWithRelativesMockup from '../data/employee-with-relatives.json'
-import {filterData} from "../utils/object.util.js";
 
 export const useBeneficiaryProps = () => {
     const dispatch = useDispatch()
@@ -14,7 +13,7 @@ export const useBeneficiaryProps = () => {
         employeeList
     } = useSelector(state => state.beneficiary)
     
-    const { authorizedAmounts } = useSelector(state => state.props)
+    const { authorizedAmount } = useSelector(state => state.death)
     
     function setAsyncEmployeeWithRelatives(){
         dispatch(setEmployeeWithRelatives(employeeWithRelativesMockup))
@@ -40,21 +39,11 @@ export const useBeneficiaryProps = () => {
 
     }
     
-    function getEmployeeWithRelatives ({ serialized = false, queryFields =[], returnFields = []}){
-        let result = []
-        if (serialized) {
-            result = filterData(queryFields, returnFields, employeeWithRelatives)
-        } else {
-            result = employeeWithRelatives
-        }
-        return result
-    }
-
     function calcMonetaryAidForDeath(employeeId, typeRegister = 'F') {
 
-        const preload = employeeWithRelatives.filter(emp => emp.id === employeeId)
+        const preload = employeeList.filter(emp => emp.employeeId === employeeId)
 
-        const records = preload[0].familyRecord.filter(fr => fr.status)
+        const records = preload[0].relatives.filter(fr => fr.status)
 
         let results
 
@@ -62,23 +51,22 @@ export const useBeneficiaryProps = () => {
             results = records.map(item => ({
                 ...item,
                 date: '',
-                amount: authorizedAmounts.find(element => element.relative === item.relationShip && element.typeBenefitId === 3).amount_usd
+                amount: authorizedAmount.find(element => element.relative === item.relationship).amount,
+                authorizedAmountId: authorizedAmount.id
             }))
 
         } else {
             results = records.map(item => ({
                 ...item,
                 date: '',
-                amount: authorizedAmounts.find(ele => ele.typeBenefitId === 3 && ele.relative === 'Colaborador').amount_usd
+                amount: authorizedAmount.find(ele => ele.relative === 'Colaborador').amount,
+                authorizedAmountId: authorizedAmount.id
             }))
         }
-
 
         return results
 
     }
-
-
 
     return {
         states: {
@@ -92,7 +80,6 @@ export const useBeneficiaryProps = () => {
             getCoupleName,
             getBeneficiaryListBySex,
             getChildren,
-            getEmployeeWithRelatives,
             calcMonetaryAidForDeath
         }
         

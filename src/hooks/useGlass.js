@@ -39,7 +39,8 @@ export const useGlassProps = () => {
 export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
 
-    const { 
+    const {
+        history, 
         memoryFlag,
         generalInfoReq,
         ophthalmicInfoReq,
@@ -86,6 +87,7 @@ export const useGlassesRequestManagement = () => {
 
     return {
         states: {
+            history,
             memoryFlag,
             generalInfoReq,
             ophthalmicInfoReq,

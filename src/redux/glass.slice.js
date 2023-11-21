@@ -182,13 +182,13 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
             clinicId: generalInfoReq.clinic.id,
-            beneficiaryId: generalInfoReq.beneficiary.employeeNumber,
+            beneficiaryId: generalInfoReq.beneficiary.employeeId,
             loggerId: 1, // corregir esto cuando se implemente la api de auth
             authorizerId: generalInfoReq.authorizer.id,
             paymentTypeId: generalInfoReq.paymentType.id,
             authorizedAmountId: generalInfoReq.authorizedAmount.id,
             supportType: applicationSupports.currentMode,
-            exchangeRateId: exchangeRate.id
+            exchangeRateRef: exchangeRate.value
         })
 
         dispatch(resetGlassReq())
@@ -220,7 +220,7 @@ export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState)
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
             clinicId: generalInfoReq.clinic.id,
-            beneficiaryId: generalInfoReq.beneficiary.employeeNumber,
+            beneficiaryId: generalInfoReq.beneficiary.employeeId,
             // loggerId: 1, // corregir esto cuando se implemente la api de auth
             // authorizerId: generalInfoReq.authorizer.id,
             paymentTypeId: generalInfoReq.paymentType.id,

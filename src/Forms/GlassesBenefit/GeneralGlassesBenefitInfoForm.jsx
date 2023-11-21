@@ -29,7 +29,7 @@ export const GeneralGlassesBenefitInfoForm = ({
 
     const { states: { employeeList } } = useBeneficiaryProps()
 
-    const dataPayload = filterData([], ['employeeNumber','name', 'surname', 'secondSurname', 'dni'], employeeList)
+    const dataPayload = filterData([], ['employeeId','name', 'surname', 'secondSurname', 'dni'], employeeList)
 
     const {
         beneficiary, currentAuthorizer, currentClinic,
@@ -196,6 +196,7 @@ export const GeneralGlassesBenefitInfoForm = ({
                     <DataTable
                         dataSource={dataPayload}
                         columnSizes={[10, 25, 25, 25, 15]}
+                        showColumns={['employeeId', 'name', 'surname', 'secondSurname', 'dni']}
                         labels={['Emp', 'Nombre', 'P Apellido', 'S Apellido', 'Cedula']}
                         sortColumn={[0, 2, 3, 4]}
                         entries={[5, 10, 20]}
@@ -228,7 +229,7 @@ GeneralGlassesBenefitInfoForm.propTypes = {
         value: PropTypes.string
     })),
     authorizedAmount: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         amount: PropTypes.number,
         symbol: PropTypes.string
     })),
