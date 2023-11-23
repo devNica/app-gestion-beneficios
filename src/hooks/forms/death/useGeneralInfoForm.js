@@ -8,22 +8,21 @@ import CustomNotification from "../../../Components/Notification/CustomNotificat
 import { isNull } from "../../../utils/object.util"
 import { setNotification } from "../../../redux/notification.slice"
 import { resetAdditionalInfoReq, setRelativeList } from "../../../redux/death.slice"
-import {useTrackingProps} from "../../useTracking.js";
-import {useBeneficiaryProps} from "../../useBeneficiary.js";
+import { useTrackingProps } from "../../useTracking.js";
+import { useBeneficiaryProps } from "../../useBeneficiary.js";
 
 
 export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, mode }) {
 
     const dispatch = useDispatch()
     const logger = useGetUserInfo()
-    
+
     /** Notifications Controller */
     CustomNotification()
 
-    const { actions: beneficiaryAct} = useBeneficiaryProps()
+    const { states: { employeeList }, actions: beneficiaryAct } = useBeneficiaryProps()
 
-    const relativesOfEmployee = beneficiaryAct.getEmployeeWithRelatives({
-        serialized: true, queryFields: [], returnFields: ['id', 'firstName', 'lastName'] })
+    const relativesOfEmployee = employeeList
 
     const { states: { generalInfoReq: gnral, relativesList }, actions } = useDeathRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
@@ -41,7 +40,7 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, m
     const [relatives, setRelatives] = useState([])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setBeneficiary(gnral.beneficiary)
         setNotes(gnral.notes)
         setMemoRef(gnral.memoRef)
@@ -50,17 +49,20 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, m
         setCurrentAuthorizer(gnral.authorizer)
         setTypeRegister(gnral.typeRegister)
         setRelatives(relativesList)
-    },[])
+    }, [])
 
     function handleTypeRegister(v) {
-        setTypeRegister(v)
-        setBeneficiary(null)
+        if (mode === 'register') {
+            setTypeRegister(v)
+            setBeneficiary(null)
+        }
     }
 
     function handleEmployeeSelection(data) {
         setIsModalOpen(false)
         setBeneficiary(data)
-        setRelatives(beneficiaryAct.calcMonetaryAidForDeath(data.id, typeRegister))
+        const listOfMonetaryAidPerRelative = beneficiaryAct.calcMonetaryAidForDeath(data.employeeId, typeRegister)
+        setRelatives(listOfMonetaryAidPerRelative)
         dispatch(resetAdditionalInfoReq())
     }
 
@@ -73,7 +75,6 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, m
         setMemoRef(prev => prev.replace(prevDate, postDate))
 
     }
-
 
     function handleKeyDown(event) {
         if (event.key === 'Backspace' || event.key === 'Delete') {

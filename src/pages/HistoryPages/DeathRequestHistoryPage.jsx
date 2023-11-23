@@ -4,7 +4,7 @@ import {useDeathRequestManagement} from "../../hooks/useDeath.js";
 
 const DeathRequestHistoryPage = () => {
 
-    const { actions } = useDeathRequestManagement()
+    const { actions, states: deathSts } = useDeathRequestManagement()
     
     const nameSpace = {
         navigationPath: 'death',
@@ -15,10 +15,6 @@ const DeathRequestHistoryPage = () => {
         ]
     }
 
-    const data = actions.serializedHistory({
-        queryFields: [],
-        returnFields: ["recordId", "fullname", "employeeNumber", "registeredAt", "approvedAt", "statusDesc"]
-    })
 
     useEffect(() => {
         actions.fetchAsyncDeathHistory()
@@ -28,11 +24,10 @@ const DeathRequestHistoryPage = () => {
         <div className="history__page">
             <h3 className="bread__crum">Historico de Beneficio por Fallecimiento</h3>
             {
-                data.length > 0 ?
+                deathSts.history.length > 0 ?
                     <RequestHistoryView
-                        data={data}
+                        data={deathSts.history}
                         nameSpace={nameSpace}
-                        fetchRequestById={actions.fetchDeathRequestRecordById}
                     /> : <></>
             }
         </div>

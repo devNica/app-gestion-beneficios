@@ -1,8 +1,14 @@
 import { useDispatch, useSelector } from "react-redux"
-import {setGeneralInfoReq, setAdditionalInfoReq, loadHistory, loadSupport} from '../redux/death.slice'
-import mockupHistory from '../data/history/generic-history.json'
-import {filterData} from "../utils/object.util.js";
-
+import {
+    setGeneralInfoReq,
+    setAdditionalInfoReq,
+    loadProps,
+    fetchShortDeathHistoryThunk,
+    loadRecord,
+    setRelativeList,
+} from '../redux/death.slice'
+import {converToBoolean, filterData} from "../utils/object.util.js";
+import { setEmployeeList } from "../redux/beneficiary.slice.js";
 
 export const useDeathRequestManagement = () => {
     const dispatch = useDispatch()
@@ -14,39 +20,61 @@ export const useDeathRequestManagement = () => {
         relativesList
     } = useSelector(state => state.death)
 
-    const { supports } = useSelector(state => state.props)
+    
 
+    function initialDataLoading (applicants, props, mode='register', record = null) {
 
-    function setRequiredSupport() {
-
-       let forEmployee = []
-        let forFamilyMember = []
-
-       supports.forEach(ele => {
-           if(ele.requiredTo === 'Colaborador' && ele.typeBenefitId === 3){
-               forEmployee = ele.supports.map(item => ({
-                   name: item.fieldName,
-                   label: item.value,
-                   selected: false
-               }))
-           }
-           if (ele.requiredTo === 'Familiar' && ele.typeBenefitId === 3){
-               forFamilyMember = ele.supports.map(item => ({
-                   name: item.fieldName,
-                   label: item.value,
-                   selected: false
-               }))
-           }
-       })
-
-        dispatch(loadSupport({
-            forEmployee,
-            forFamilyMember
+        dispatch(loadProps({
+            supports: props.data.requiredSupports,
+            amounts: props.data.authorizedAmount
         }))
+
+        /** solo carga lista de empleados en modo */
+        if (mode==='register') {
+            dispatch(setEmployeeList(applicants.data))
+        }
+    
+        // Esperar 100ms para que la lista de empleados se asiente en el store
+        if (mode === 'edit') {
+
+            const amounts = props.data.authorizedAmount
+        
+            const relatives = applicants.data
+            const relativesMarked = record.data.relativesMarked
+            const typeRegister = record.data.generalInfoReq.typeRegister
+
+            const merge = [...relatives, ...relativesMarked]
+           
+            let results = []
+
+            if (typeRegister === 'F') {
+                results = merge.map(item => ({
+                    ...item,
+                    selected: converToBoolean(item.selected),
+                    amount: amounts.find(element => element.relative === item.relationship).amount,
+                    authorizedAmountId: amounts.find(element => element.relative === item.relationship).id
+                }))
+    
+            } else {
+                results = merge.map(item => ({
+                    ...item,
+                    selected: converToBoolean(item.selected),
+                    amount: amounts.find(ele => ele.relative === 'Colaborador').amount,
+                    authorizedAmountId: amounts.find(ele => ele.relative === 'Colaborador').id
+                }))
+            }
+
+            dispatch(loadRecord({
+                relativesList: results,
+                generalInfoReq: record.data.generalInfoReq,
+                additionalInfo: record.data.additionalInfo
+            }))
+        } 
+       
     }
 
     function fetchAsyncDeathHistory(){
-        dispatch(loadHistory(mockupHistory))
+        dispatch(fetchShortDeathHistoryThunk())
     }
 
     function serializedHistory({ queryFields, returnFields }) {
@@ -55,6 +83,10 @@ export const useDeathRequestManagement = () => {
 
     function fetchDeathRequestRecordById() {
 
+    }
+
+    function updateRelativeList(data) {
+        dispatch(setRelativeList(data))
     }
 
     function setGnralInfo(data) {
@@ -72,18 +104,21 @@ export const useDeathRequestManagement = () => {
 
     return {
         states: {
+            history,
             relativesList,
             generalInfoReq,
             additionalInfo
         },
         actions: {
-            setRequiredSupport,
+            initialDataLoading,
             serializedHistory,
             fetchDeathRequestRecordById,
             fetchAsyncDeathHistory,
+            updateRelativeList,
             setGnralInfo,
             setAdditionalInfo,
             getRequiredSupportsByTypeRegister
         }
     }
 }
+

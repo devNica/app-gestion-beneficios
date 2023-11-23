@@ -15,7 +15,6 @@ export default function LoginPage() {
                     Component={LoginForm}
                     urlIcon={userIcon}
                     mageneticIcon={true}
-                    // handleOnSubmit={handleOnSubmit}
                 />
             </div>
         </div>

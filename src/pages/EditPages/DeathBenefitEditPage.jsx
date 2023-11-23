@@ -1,32 +1,55 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 
 import Stepper from '../../Components/Stepper/Stepper'
 import DeathGeneralInfoForm from '../../Forms/Death/DeathGeneralInfoForm'
 import AdditionalDeathInfoForm from '../../Forms/Death/AdditionalDeathInfoForm'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
 import {useTrackingProps} from "../../hooks/useTracking.js";
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 import { useAdminProps } from '../../hooks/useProps'
 
-import '../main-page.css'
 import {useDeathRequestManagement} from "../../hooks/useDeath.js";
+import CustomLoader from '../../Components/Loader/CustomLoader.jsx';
+
+import { 
+    fetchDeathBenefitPropsFromAPI, 
+    fetchDetailDeathBenefitApplicationFromAPI, 
+    fetchParentalInfoFromAPI} from '../../service/death.api.js';
+
+import '../main-page.css'
 
 export default function DeathBenefitEditPage() {
 
     const navigate = useNavigate()
+    const { id } = useParams()
+    
     const { actions: trackingAct } = useTrackingProps()
-
-    const { actions: beneficiaryAct} = useBeneficiaryProps()
     const { actions: deathAct} = useDeathRequestManagement()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const { 
         paymentTypes,
-        serializedAuthorizers } = useAdminProps()
+        userAuthorizers } = useAdminProps()
+
+    const fetching = useCallback(async()=>{
+        try {
+            const [applicants, props, record] =  await Promise.all([
+                fetchParentalInfoFromAPI(id),
+                fetchDeathBenefitPropsFromAPI(),
+                fetchDetailDeathBenefitApplicationFromAPI(id) 
+            ])
+
+            deathAct.initialDataLoading(applicants, props, 'edit', record)
+            setLoading(false)
+        
+        } catch (err){
+            console.log(err)
+        }
+    },[])
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -36,8 +59,8 @@ export default function DeathBenefitEditPage() {
             setIsOpen(true)
         }
 
-        deathAct.setRequiredSupport()
-        beneficiaryAct.setAsyncEmployeeWithRelatives()
+        setLoading(true)
+        fetching()
 
     }, [])
 
@@ -45,13 +68,15 @@ export default function DeathBenefitEditPage() {
         <DeathGeneralInfoForm
             mode={'edit'}
             paymentTypes={paymentTypes}
-            authorizers={serializedAuthorizers}
+            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
         />,
         <AdditionalDeathInfoForm
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode='edit'
+            orderId={id}
         />
     ]
 
@@ -71,6 +96,8 @@ export default function DeathBenefitEditPage() {
 
            {
             !isOpen ?
+                loading ?
+                <CustomLoader/> :
                  <Stepper
                      CurrenComponent={MultipleComponent.at(currentIndex)}
                      steps={["1", "2"]}

@@ -108,11 +108,12 @@ export default function RequestHistoryView({ data, nameSpace }) {
                 }
             </div>
 
+
             <DataTable
                 dataSource={data}
-                columnSizes={[10, 25, 15, 15, 15, 20]}
-                labels={["Id", "Nombre", "N° Emp", "Registrado", "Aprobado", "Estado"]}
-                sortColumn={[0, 1, 2, 3, 4, 5]}
+                columnSizes={[13, 40, 12, 15, 20]}
+                showColumns={['serial', 'fullname', 'beneficiaryId', 'registeredAt', 'state']}
+                labels={["Serie", "Nombre", "N Emp", 'Registrado', 'Estado']}
                 entries={[15, 30, 50]}
                 enableSearch={true}
                 enableEntries={true}
@@ -124,14 +125,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
 
 
 RequestHistoryView.propTypes={
-    data: PropTypes.arrayOf(PropTypes.shape({
-        recordId: PropTypes.number,
-        fullname: PropTypes.string,
-        employeeNumber: PropTypes.string,
-        registeredAt: PropTypes.string,
-        approvedAt: PropTypes.string,
-        state: PropTypes.string
-    })),
+    data: PropTypes.arrayOf(PropTypes.any),
     nameSpace: PropTypes.shape({
         navigationPath: PropTypes.oneOf(['glasses', 'death', 'maternity']),
         slice: PropTypes.oneOf(['glass', 'death', 'maternity']),

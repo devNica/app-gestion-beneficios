@@ -44,7 +44,7 @@ const CustomCheckOption = ({
 export default CustomCheckOption
 
 CustomCheckOption.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
     currentValue: PropTypes.any,
     value: PropTypes.any,

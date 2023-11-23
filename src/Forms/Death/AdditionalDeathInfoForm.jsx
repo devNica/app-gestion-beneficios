@@ -10,13 +10,14 @@ import './additional-death-info-form.css'
 export default function AdditionalDeathInfoForm({
     updateCurrentIndex,
     currentIndex,
-    internalExchange
+    mode,
+    orderId
 }) {
 
-    const { states, actions } = useAdditionalInfoForm({ updateCurrentIndex, currentIndex, internalExchange })
+    const { states, actions } = useAdditionalInfoForm({ updateCurrentIndex, currentIndex, mode, orderId })
 
-    const { typeRegister, amountInCS, amountInUS, relativesConfirmed, supportsConfirmed } = states
-    const { handleBackStep, handleDate, handleSelectItem, handleSupportConfirmation } = actions
+    const { typeRegister, amountInUs, relativesConfirmed, supportsConfirmed } = states
+    const { handleSubmit, handleBackStep, handleDate, handleSelectItem, handleSupportConfirmation } = actions
 
     return (
         <div className="additional__death__info-form">
@@ -44,14 +45,7 @@ export default function AdditionalDeathInfoForm({
                             label='Monto Autorizado U$:'
                             type='text'
                             name={'amountInUS'}
-                            defaultValue={amountInUS}
-                            editable={false}
-                            customStyles='disabled'
-                        />
-                        <CustomInput
-                            label='Monto Autorizado C$:'
-                            type='text'
-                            defaultValue={amountInCS}
+                            defaultValue={amountInUs}
                             editable={false}
                             customStyles='disabled'
                         />
@@ -66,7 +60,7 @@ export default function AdditionalDeathInfoForm({
                                 <th>Sel</th>
                                 <th>Parentezco:</th>
                                 {typeRegister === 'F' ? <th>En favor de:</th> : <th>Extendido a:</th>}
-                                {typeRegister === 'F' ? <th>Fallecido el:</th> : <th>Entregado el:</th>}
+                                {typeRegister === 'F' ? <th>Defuncion:</th> : <th>Defuncion:</th>}
                                 <th>Monto</th>
                             </tr>
                         </thead>
@@ -88,7 +82,7 @@ export default function AdditionalDeathInfoForm({
                 <div className="prev" onClick={handleBackStep}>
                     <button type='button' className='btn btn__prev'>Atras</button>
                 </div>
-                <div className="netx">
+                <div className="netx" onClick={handleSubmit}>
                     <button type='button' className='btn btn__done'>Listo</button>
                 </div>
             </div>
@@ -100,5 +94,6 @@ export default function AdditionalDeathInfoForm({
 AdditionalDeathInfoForm.propTypes = {
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
-    internalExchange: PropTypes.number
+    mode: PropTypes.string,
+    orderId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }

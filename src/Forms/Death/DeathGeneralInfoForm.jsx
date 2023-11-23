@@ -24,7 +24,8 @@ export default function DeathGeneralInfoForm
     const { states, actions } = useGeneralInfoForm({
         updateCurrentIndex,
         currentIndex,
-        mode })
+        mode
+    })
 
     const { beneficiary, currentAuthorizer, relativesOfEmployee, isModalOpen,
         notes, paymentType, registerDate, typeRegister,
@@ -37,7 +38,7 @@ export default function DeathGeneralInfoForm
 
     } = actions
 
-    
+
     return (
         <form className="death__gnral__info-form">
             <div className="form__title">
@@ -74,7 +75,7 @@ export default function DeathGeneralInfoForm
                         name={'registerDate'}
                         orientation="row"
                         value={registerDate}
-                        onChange={(e)=>handleRegisterDate(e.target.value)}
+                        onChange={(e) => handleRegisterDate(e.target.value)}
                     />
 
                     <CustomInput
@@ -83,7 +84,7 @@ export default function DeathGeneralInfoForm
                         label="Empleado:"
                         orientation="row"
                         editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.firstName} ${beneficiary.lastName}` : ''}
+                        defaultValue={beneficiary !== null ? `${beneficiary.name} ${beneficiary.surname}` : ''}
                         placeHolder="<<- Beneficiario ->>"
                         customStyles="has-child disabled"
                         attachmentElement={
@@ -146,7 +147,7 @@ export default function DeathGeneralInfoForm
                     type="text"
                     value={memoRef}
                     handleKeyDown={handleKeyDown}
-                    onChange={(e)=>updateDocumentRefs(e.target.value)}
+                    onChange={(e) => updateDocumentRefs(e.target.value)}
                 />
             </div>
 
@@ -159,23 +160,29 @@ export default function DeathGeneralInfoForm
                 </button>
             </div>
 
-            <Modal
-                title='Busqueda de Empleado'
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                children={
-                    <DataTable
-                        dataSource={relativesOfEmployee}
-                        columnSizes={[20, 40, 40]}
-                        labels={['Id', 'Nombre', 'Apellido']}
-                        sortColumn={[0, 2, 3]}
-                        entries={[5, 10, 20]}
-                        enableSearch={true}
-                        enableEntries={true}
-                        onSelectedRow={handleEmployeeSelection}
-                    />
-                }
-            />
+            {
+                mode === 'register' ?
+                    <Modal
+                        title='Busqueda de Empleado'
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        children={
+                            <DataTable
+                                dataSource={relativesOfEmployee}
+                                columnSizes={[10, 25, 25, 25, 15]}
+                                showColumns={['employeeId', 'name', 'surname', 'secondSurname', 'dni']}
+                                labels={['Emp', 'Nombre', 'P Apellido', 'S Apellido', 'Cedula']}
+                                sortColumn={[0, 2, 3]}
+                                entries={[5, 10, 20]}
+                                enableSearch={true}
+                                enableEntries={true}
+                                onSelectedRow={handleEmployeeSelection}
+                            />
+                        }
+                    /> : <></>
+            }
+
+
         </form>
     )
 }
@@ -185,7 +192,7 @@ DeathGeneralInfoForm.propTypes = {
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
     authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         value: PropTypes.string
     })),
     paymentTypes: PropTypes.arrayOf(PropTypes.shape({

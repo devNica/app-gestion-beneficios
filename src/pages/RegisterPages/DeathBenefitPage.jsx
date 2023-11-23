@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import { useAdminProps } from '../../hooks/useProps'
 
 import Stepper from '../../Components/Stepper/Stepper'
@@ -9,24 +9,36 @@ import AdditionalDeathInfoForm from '../../Forms/Death/AdditionalDeathInfoForm'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 import {useNavigate} from "react-router-dom";
 import {useTrackingProps} from "../../hooks/useTracking.js";
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
 import {useDeathRequestManagement} from "../../hooks/useDeath.js";
+import { fetchDeathBenefitApplicantsFromAPI, fetchDeathBenefitPropsFromAPI } from '../../service/death.api.js'
+import CustomLoader from '../../Components/Loader/CustomLoader.jsx'
 
 export default function DeathBenefitPage() {
 
     const navigate = useNavigate()
-    const { actions: trackingAct } = useTrackingProps()
 
-    const { actions: beneficiaryAct} = useBeneficiaryProps()
+    const { actions: trackingAct } = useTrackingProps()
     const { actions: deathAct} = useDeathRequestManagement()
 
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isOpen, setIsOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const {
-        internalExchange,
         paymentTypes,
         userAuthorizers } = useAdminProps()
+
+    const fetching = useCallback(async()=>{
+        try {
+            const [applicants, props] =  await Promise.all([
+                fetchDeathBenefitApplicantsFromAPI(),
+                fetchDeathBenefitPropsFromAPI() ])
+            deathAct.initialDataLoading(applicants, props, 'register')
+            setLoading(false)
+        } catch (err){
+            console.log(err)
+        }
+    },[])
 
     useEffect(() => {
         /** true --> si hay una solicitud de edicion en seguimiento */
@@ -36,8 +48,8 @@ export default function DeathBenefitPage() {
             setIsOpen(true)
         }
 
-        deathAct.setRequiredSupport()
-        beneficiaryAct.setAsyncEmployeeWithRelatives()
+        setLoading(true)
+        fetching()
 
     }, [])
 
@@ -50,9 +62,10 @@ export default function DeathBenefitPage() {
             updateCurrentIndex={setCurrentIndex}
         />,
         <AdditionalDeathInfoForm
-            internalExchange={internalExchange}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            mode='register'
+            orderId={''}
         />
     ]
 
@@ -72,6 +85,8 @@ export default function DeathBenefitPage() {
 
            {
             !isOpen ?
+                loading ?
+                    <CustomLoader/> :
                  <Stepper
                      CurrenComponent={MultipleComponent.at(currentIndex)}
                      steps={["1", "2"]}

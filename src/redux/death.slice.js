@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { fetchShortDeathHistoryFromAPI, registerDeathBenefitApplicationFromAPI } from "../service/death.api"
 
 const initialState = {
     history: [],
+    
     authorizedAmount: null,
+    
     relativesList: null,
+    
     requiredSupports: null,
+    
     generalInfoReq: {
         typeRegister: 'F',
         registerDate: '',
@@ -17,9 +22,8 @@ const initialState = {
         memoRef: '',
     },
     additionalInfo: {
-        relativesConfirmed: null,
-        amountInCS: 'C$ 0.00',
-        amountInUS: 'U$ 0.00',
+        hasSupport: false,
+        amountInUs: 'U$ 0.00',
         supportsConfirmed: null
     }
 }
@@ -29,10 +33,11 @@ const deathSlice = createSlice({
     initialState,
     reducers: {
 
-       loadSupport: (state, action) => {
+       loadProps: (state, action) => {
            return {
                ...state,
-               requiredSupports: action.payload
+               requiredSupports: action.payload.supports,
+               authorizedAmount: action.payload.amounts
            }
        },
 
@@ -40,6 +45,15 @@ const deathSlice = createSlice({
             return {
                 ...state,
                 history: action.payload
+            }
+       },
+
+       loadRecord: (state, action) => {
+            return {
+                ...state, 
+                relativesList: action.payload.relativesList,
+                generalInfoReq: action.payload.generalInfoReq,
+                additionalInfo: action.payload.additionalInfo
             }
        },
 
@@ -84,7 +98,8 @@ const deathSlice = createSlice({
 })
 
 export const {
-    loadSupport,
+    loadRecord,
+    loadProps,
     loadHistory,
     resetDeathReq,
     setGeneralInfoReq,
@@ -93,3 +108,62 @@ export const {
     resetAdditionalInfoReq } = deathSlice.actions
 
 export default deathSlice.reducer
+
+export const fetchShortDeathHistoryThunk = () => async dispatch => {
+    try {
+        const {data} = await fetchShortDeathHistoryFromAPI()
+        dispatch(loadHistory(data))
+    }catch(err) {
+        throw new Error(String(err))
+    }
+}
+
+
+export const registerDeathBenefitApplicationThunk = () => async (dispatch, getState) => {
+    try{
+        const { generalInfoReq, additionalInfo, relativesList } = getState().death
+        const { user } = getState().auth
+        const { exchangeRate } = getState().props
+
+        const typeRegister = generalInfoReq.typeRegister
+        let relatives = []
+        let employeeDeathDate = ''
+        
+        if(relativesList !== null && relativesList.length > 0) {
+            relativesList.forEach(r=>{
+                if(r.selected) {
+                    employeeDeathDate = typeRegister === 'C' ? r.date: ''
+                    relatives.push({ 
+                        relativeId: r.id, 
+                        fullname: typeRegister === 'F' ? `${r.fullname} Q.E.P.D` : '', 
+                        deathDate: r.date, 
+                        authorizedAmountId: r.authorizedAmountId })
+                }
+            })
+        }
+         
+
+        const payload ={
+            registerDate: generalInfoReq.registerDate,
+            typeRegister,
+            employeeDeathDate,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            notes: generalInfoReq.notes,
+            memoRef: generalInfoReq.memoRef,
+            parentalInfoList: relatives,
+            supports: additionalInfo.supportsConfirmed,
+            accumulatedAmount: additionalInfo.amountInUs,
+            beneficiaryId: generalInfoReq.beneficiary.employeeId,
+            loggerId: user.id,
+            authorizerId: generalInfoReq.authorizer.id,
+            exchangeValue: exchangeRate.value
+        }
+
+        await registerDeathBenefitApplicationFromAPI(payload)
+
+       dispatch(resetDeathReq())
+
+    } catch(err) {
+        console.error(err)
+    }
+}

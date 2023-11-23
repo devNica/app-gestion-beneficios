@@ -8,9 +8,9 @@ export default function RegistrationSupport({
     const renderElements = requiredSupport.map((item, index) => (
         <div key={index}>
             <CustomCheckOption
-                id={item.name}
-                name={item.name}
-                label={item.label}
+                id={item.id}
+                name={item.fieldName}
+                label={item.value}
                 orientation={'row'}
                 checked={item.selected}
                 onChange={onChange}

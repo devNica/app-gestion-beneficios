@@ -23,7 +23,7 @@ export default function ExtendedToCollaborator({
                     name={`${nb.id}-relationship`}
                     className='td-input'
                     readOnly
-                    defaultValue={nb.relationShip ?? '?'}
+                    defaultValue={nb.relationship ?? '?'}
                 />
             </td>
             <td>
@@ -40,7 +40,7 @@ export default function ExtendedToCollaborator({
                     nb?.selected ?
                         <input
                             type="date"
-                            name={`${nb.id}-date`}
+                            name={`${nb.id}_date`}
                             className='td-input'
                             onChange={(e) => handleDate(e)}
                             value={nb.date}
@@ -60,7 +60,8 @@ export default function ExtendedToCollaborator({
                     name={`${nb.id}-amount`}
                     className='td-input'
                     readOnly
-                    defaultValue={nb.selected ? `U$ ${nb.amount}` : ''}
+                    onChange={()=>{}}
+                    value={nb.selected ? `U$ ${nb.amount}` : ''}
                 />
             </td>
 

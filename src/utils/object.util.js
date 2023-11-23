@@ -83,7 +83,12 @@ function filterData(queryFields=[], returnFields, data) {
     return result
 }
 
+function converToBoolean(value) {
+    return value === 1 ? true : value === 0 ? false : undefined
+}
+
 export {
+    converToBoolean,
     filterData,
     missingItems,
     isNull,

@@ -3,6 +3,7 @@ import {
     setEmployeeWithRelatives,
 } from "../redux/beneficiary.slice.js";
 import employeeWithRelativesMockup from '../data/employee-with-relatives.json'
+import { converToBoolean } from "../utils/object.util.js";
 
 export const useBeneficiaryProps = () => {
     const dispatch = useDispatch()
@@ -41,26 +42,28 @@ export const useBeneficiaryProps = () => {
     
     function calcMonetaryAidForDeath(employeeId, typeRegister = 'F') {
 
-        const preload = employeeList.filter(emp => emp.employeeId === employeeId)
-
-        const records = preload[0].relatives.filter(fr => fr.status)
-
+        const found = employeeList.filter(emp => emp.employeeId === employeeId)
+        
+        const records = found[0].relatives
+        
         let results
 
         if (typeRegister === 'F') {
             results = records.map(item => ({
                 ...item,
                 date: '',
+                selected: converToBoolean(item.selected),
                 amount: authorizedAmount.find(element => element.relative === item.relationship).amount,
-                authorizedAmountId: authorizedAmount.id
+                authorizedAmountId: authorizedAmount.find(element => element.relative === item.relationship).id
             }))
 
         } else {
             results = records.map(item => ({
                 ...item,
                 date: '',
+                selected: converToBoolean(item.selected),
                 amount: authorizedAmount.find(ele => ele.relative === 'Colaborador').amount,
-                authorizedAmountId: authorizedAmount.id
+                authorizedAmountId: authorizedAmount.find(ele => ele.relative === 'Colaborador').id
             }))
         }
 
