@@ -15,7 +15,6 @@ import { isEmpty } from "lodash"
 import { useTrackingProps } from '../../useTracking'
 
 export const useHandleGeneralGlassesBenefitInfoForm = ({ 
-    paymentTypes, 
     currentIndex, 
     updateCurrentIndex,
     authorizedAmount, 
@@ -32,7 +31,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
     const { actions: trackingAct } = useTrackingProps()
 
 
-    const { generalInfoReq: gnrl } = states
+    const { generalInfoReq: gnrl, paymentTypes } = states
 
     const [paymentType, setPaymentType] = useState(gnrl.paymentType !== null ? gnrl.paymentType : paymentTypes[0])
     const [currentClinic, setCurrentClinic] = useState(gnrl.clinic)
@@ -216,6 +215,7 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
         states: {
             amountSelected,
             paymentType,
+            paymentTypes,
             currentClinic,
             currentAuthorizer,
             isModalOpen,

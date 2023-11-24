@@ -15,7 +15,6 @@ import {filterData} from "../../utils/object.util.js";
 export const GeneralGlassesBenefitInfoForm = ({
     mode,
     clinics,
-    paymentTypes,
     authorizers,
     currentIndex,
     updateCurrentIndex,
@@ -24,7 +23,7 @@ export const GeneralGlassesBenefitInfoForm = ({
 }) => {
 
     const { states, actions } = useHandleGeneralGlassesBenefitInfoForm({
-        paymentTypes, currentIndex, updateCurrentIndex, authorizedAmount, mode
+        currentIndex, updateCurrentIndex, authorizedAmount, mode
     })
 
     const { states: { employeeList } } = useBeneficiaryProps()
@@ -34,7 +33,7 @@ export const GeneralGlassesBenefitInfoForm = ({
     const {
         beneficiary, currentAuthorizer, currentClinic,
         isModalOpen, letterRef, memoRef, notes, paymentType, registerDate,
-        logger, amountSelected
+        logger, amountSelected, paymentTypes
     } = states
 
     const {
@@ -217,10 +216,6 @@ export default GeneralGlassesBenefitInfoForm
 GeneralGlassesBenefitInfoForm.propTypes = {
     mode: PropTypes.string,
     clinics: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string
-    })),
-    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         value: PropTypes.string
     })),

@@ -12,15 +12,15 @@ export const loginUserDM = async (payload) => {
     })
 }
 
+
 export const fetchGlassesPropsFromAPI = async () => {
-    const response = await axiosInstance.get('/props/glasses')
-    
-    if ([404, 500].some(codes => codes === response.status)) {
-        throw new Error(response.data)
-    }
-    
-    return response.data
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: '/glasses/props'
+    })
 }
+
+
 
 export const fetchAdminPropsFromAPI = async () => {
     const response = await axiosInstance('/props/admin')
@@ -66,10 +66,10 @@ export const fetchGlassesRequestDetail = async (orderId) => {
 }
 
 
-export const fetchAuthorizedAmountsForMaternity = async () => {
+export const fetchPropsForMaternityFromAPI = async () => {
     return await httpHandler({
         instance: axiosInstance,
-        endpoint: `/maternity/authorized-amount`
+        endpoint: `/maternity/props`
     })
 }
 

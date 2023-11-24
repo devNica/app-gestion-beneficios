@@ -22,7 +22,7 @@ import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
-    const { paymentTypes, userAuthorizers } = useAdminProps()
+    const { userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct} = useGlassesRequestManagement()
 
@@ -70,7 +70,6 @@ export default function GlassesBenefitPage() {
         <GeneralGlassesBenefitInfoForm
             mode="register"
             clinics={clinics}
-            paymentTypes={paymentTypes}
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

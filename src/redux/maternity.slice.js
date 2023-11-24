@@ -9,6 +9,7 @@ const initialState = {
     history: [],
     authorizedAmount: null,
     markedChildren: [],
+    paymentTypes: [],
     childrenList: [], // esto es una mejora al codigo
     generalInfoReq: {
         gender: null,
@@ -35,9 +36,10 @@ const maternitySlice = createSlice({
     initialState,
     reducers: {
 
-        loadAuthorizedAmounts: (state, action) => {
+        loadProps: (state, action) => {
             return {
                 ...state,
+                paymentTypes: action.payload.paymentTypes,
                 authorizedAmount: action.payload.amounts
             }
         },
@@ -102,7 +104,7 @@ const maternitySlice = createSlice({
 
 export const {
     loadRecord,
-    loadAuthorizedAmounts,
+    loadProps,
     loadHistory,
     updateChildrenList,
     setGeneralInfoReq,

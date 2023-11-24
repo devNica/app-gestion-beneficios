@@ -26,7 +26,7 @@ export default function GlassesBenefitEditPage() {
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const { paymentTypes, userAuthorizers } = useAdminProps()
+    const { userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct } = useGlassesRequestManagement()
 
@@ -79,7 +79,6 @@ export default function GlassesBenefitEditPage() {
         <GeneralGlassesBenefitInfoForm
             mode="edit"
             clinics={clinics}
-            paymentTypes={paymentTypes}
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

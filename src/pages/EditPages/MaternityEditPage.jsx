@@ -13,9 +13,9 @@ import { useAdminProps } from "../../hooks/useProps"
 import '../main-page.css'
 import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
 import {
-    fetchAuthorizedAmountsForMaternity,
     fetchMaternityApplicants,
-    fetchMaternityRequestDetail
+    fetchMaternityRequestDetail,
+    fetchPropsForMaternityFromAPI
 } from "../../service/api.js";
 import CustomLoader from "../../Components/Loader/CustomLoader.jsx";
 
@@ -25,7 +25,7 @@ export default function MaternityEditPage() {
     const { id } = useParams()
     const { actions: trackingAct } = useTrackingProps()
 
-    const { paymentTypes, userAuthorizers,
+    const { userAuthorizers,
         exchangeRate, maternitySupports, typesBirth
     } = useAdminProps()
 
@@ -37,13 +37,13 @@ export default function MaternityEditPage() {
 
     const fetching = useCallback(async()=>{
         try{
-            const [applicants, amounts, record] = await Promise.all([
+            const [applicants, props, record] = await Promise.all([
                 fetchMaternityApplicants('edit'),
-                fetchAuthorizedAmountsForMaternity(),
+                fetchPropsForMaternityFromAPI(),
                 fetchMaternityRequestDetail(id)
             ])
 
-            maternityAct.initialDataLoading(applicants, amounts, 'edit', record)
+            maternityAct.initialDataLoading(applicants, props, 'edit', record)
             setLoading(false)
         }catch(err){
             console.log(err)
@@ -66,7 +66,6 @@ export default function MaternityEditPage() {
     const MultipleComponent = [
         <MaternityGeneralInfoForm
             mode={'edit'}
-            paymentTypes={paymentTypes}
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

@@ -12,7 +12,7 @@ import { useAdminProps } from "../../hooks/useProps"
 import '../main-page.css'
 import CustomDialog from "../../Components/Dialog/Dialog.jsx";
 import {useMaternityRequestManagement} from "../../hooks/useMaternity.js";
-import {fetchAuthorizedAmountsForMaternity, fetchMaternityApplicants} from "../../service/api.js";
+import { fetchMaternityApplicants, fetchPropsForMaternityFromAPI} from "../../service/api.js";
 import CustomLoader from "../../Components/Loader/CustomLoader.jsx";
 export default function MaternityBenefitPage() {
 
@@ -20,7 +20,7 @@ export default function MaternityBenefitPage() {
     const { actions: trackingAct } = useTrackingProps()
     const { states: maternitySts, actions: maternityAct } = useMaternityRequestManagement()
 
-    const { paymentTypes, userAuthorizers,
+    const { userAuthorizers,
          exchangeRate, maternitySupports, typesBirth
     } = useAdminProps()
 
@@ -30,12 +30,12 @@ export default function MaternityBenefitPage() {
 
     const fetching = useCallback(async()=>{
         try{
-            const [applicants, amounts] = await Promise.all([
+            const [applicants, props] = await Promise.all([
                 fetchMaternityApplicants('register'),
-                fetchAuthorizedAmountsForMaternity()
+                fetchPropsForMaternityFromAPI()
             ])
 
-            maternityAct.initialDataLoading(applicants, amounts)
+            maternityAct.initialDataLoading(applicants, props)
             setLoading(false)
         }catch(err){
             console.log(err)
@@ -58,7 +58,6 @@ export default function MaternityBenefitPage() {
     const MultipleComponent = [
         <MaternityGeneralInfoForm
             mode={'register'}
-            paymentTypes={paymentTypes}
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

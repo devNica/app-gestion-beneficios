@@ -17,8 +17,7 @@ export default function DeathGeneralInfoForm
         mode,
         updateCurrentIndex,
         currentIndex,
-        authorizers,
-        paymentTypes
+        authorizers
     }) {
 
     const { states, actions } = useGeneralInfoForm({
@@ -29,7 +28,7 @@ export default function DeathGeneralInfoForm
 
     const { beneficiary, currentAuthorizer, relativesOfEmployee, isModalOpen,
         notes, paymentType, registerDate, typeRegister,
-        logger, memoRef
+        logger, memoRef, paymentTypes
     } = states
 
     const { handleEmployeeSelection, handleNextStep, handleTypeRegister, setCurrentAuthorizer,
@@ -192,10 +191,6 @@ DeathGeneralInfoForm.propTypes = {
     updateCurrentIndex: PropTypes.func,
     currentIndex: PropTypes.number,
     authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string
-    })),
-    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         value: PropTypes.string
     }))

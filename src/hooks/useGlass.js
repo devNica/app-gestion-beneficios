@@ -40,6 +40,7 @@ export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
 
     const {
+        paymentTypes,
         history, 
         memoryFlag,
         generalInfoReq,
@@ -54,6 +55,7 @@ export const useGlassesRequestManagement = () => {
     function initialDataLoading(applicants, props, request, mode='register') {
 
         dispatch(setGlassesProps({
+            paymentTypes: props.data.tipoPago,
             amounts: props.data.montos,
             clinics: props.data.clinica,
             details: props.data.detalleLente,
@@ -87,6 +89,7 @@ export const useGlassesRequestManagement = () => {
 
     return {
         states: {
+            paymentTypes,
             history,
             memoryFlag,
             generalInfoReq,

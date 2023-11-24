@@ -13,7 +13,6 @@ import {filterData} from "../../utils/object.util.js";
 
 const MaternityGeneralInfoForm = ({
     mode,
-    paymentTypes,
     authorizers,
     currentIndex,
     updateCurrentIndex
@@ -22,13 +21,13 @@ const MaternityGeneralInfoForm = ({
     const { states, actions } = useGeneralInfoForm({
         updateCurrentIndex,
         currentIndex,
-        paymentTypes,
         mode
     })
 
     const {
         beneficiary, currentAuthorizer, employeeList, genderSelected,
-        isModalOpen, notes, logger, memoRef, couple, paymentType, registerDate
+        isModalOpen, notes, logger, memoRef, couple, paymentType, registerDate,
+        paymentTypes
     } = states
 
     const {
@@ -202,10 +201,6 @@ export default MaternityGeneralInfoForm
 
 MaternityGeneralInfoForm.propTypes = {
     mode: PropTypes.string,
-    paymentTypes: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string
-    })),
     authorizers: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         value: PropTypes.string

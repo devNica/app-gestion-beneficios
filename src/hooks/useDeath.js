@@ -14,6 +14,7 @@ export const useDeathRequestManagement = () => {
     const dispatch = useDispatch()
     const {
         history,
+        paymentTypes,
         requiredSupports,
         generalInfoReq, 
         additionalInfo, 
@@ -25,6 +26,7 @@ export const useDeathRequestManagement = () => {
     function initialDataLoading (applicants, props, mode='register', record = null) {
 
         dispatch(loadProps({
+            paymentTypes: props.data.paymentType,
             supports: props.data.requiredSupports,
             amounts: props.data.authorizedAmount
         }))
@@ -58,6 +60,7 @@ export const useDeathRequestManagement = () => {
             } else {
                 results = merge.map(item => ({
                     ...item,
+                    date: relativesMarked[0].date,
                     selected: converToBoolean(item.selected),
                     amount: amounts.find(ele => ele.relative === 'Colaborador').amount,
                     authorizedAmountId: amounts.find(ele => ele.relative === 'Colaborador').id
@@ -105,6 +108,7 @@ export const useDeathRequestManagement = () => {
     return {
         states: {
             history,
+            paymentTypes,
             relativesList,
             generalInfoReq,
             additionalInfo

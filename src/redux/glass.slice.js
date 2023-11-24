@@ -4,6 +4,7 @@ import {createNewGlassesRequest, fetchShortHistoryGlassesReq, updateGlassesReque
 const initialState = {
 
     authorizedAmount: null,
+    paymentTypes: [],
 
     history: [],
 
@@ -84,6 +85,7 @@ const glassSlice = createSlice({
         setGlassesProps: (state, action) => {
             return {
                 ...state,
+                paymentTypes: action.payload.paymentTypes,
                 authorizedAmount: action.payload.amounts,
                 clinics: action.payload.clinics,
                 lensDetail: action.payload.details,

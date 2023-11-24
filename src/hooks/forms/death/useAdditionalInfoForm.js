@@ -66,35 +66,32 @@ export const useAdditionalInfoForm = ({ updateCurrentIndex, currentIndex, mode, 
         updateCurrentIndex(currentIndex - 1)
     }
 
-    function registerNewRequets() {
-        dispatch(registerDeathBenefitApplicationThunk())
+    function submitRequest() {
+        
+        if (mode === 'register') {
+            dispatch(registerDeathBenefitApplicationThunk(0, mode))
 
-        dispatch(setNotification({
-            message: 'Registro Exitoso',
-            type: 'success',
-            delay: 1500
-        }))
+            dispatch(setNotification({
+                message: 'Registro Exitoso',
+                type: 'success',
+                delay: 1500
+            }))
+        } else if (mode === 'edit'){
+            dispatch(registerDeathBenefitApplicationThunk(orderId, mode))
 
+            dispatch(setNotification({
+                message: 'Registro Exitoso',
+                type: 'success',
+                delay: 1500
+            }))
+        }
+        
         trackingAct.removeTrack({
             procIdentity: 'DAH-REG',
             space: 'death'
         })
     }
 
-    function editRequest() {
-        // dispatch(updateGlassesRequestThunk(orderId))
-
-        dispatch(setNotification({
-            message: 'Edicion Exitosa',
-            type: 'success',
-            delay: 1500
-        }))
-
-        trackingAct.removeTrack({
-            procIdentity: 'DAH-EDIT',
-            space: 'death'
-        })
-    }
 
     function handleSubmit() {
        
@@ -144,11 +141,7 @@ export const useAdditionalInfoForm = ({ updateCurrentIndex, currentIndex, mode, 
         
         try {
 
-            if (mode === 'register'){
-                registerNewRequets()
-            } else if (mode === 'edit'){
-                editRequest()
-            }
+            submitRequest()
             
             setTimeout(() => {
                 navigate('/home')

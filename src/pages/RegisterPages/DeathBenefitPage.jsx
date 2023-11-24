@@ -24,9 +24,7 @@ export default function DeathBenefitPage() {
     const [isOpen, setIsOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    const {
-        paymentTypes,
-        userAuthorizers } = useAdminProps()
+    const { userAuthorizers } = useAdminProps()
 
     const fetching = useCallback(async()=>{
         try {
@@ -56,7 +54,6 @@ export default function DeathBenefitPage() {
     const MultipleComponent = [
         <DeathGeneralInfoForm
             mode={'register'}
-            paymentTypes={paymentTypes}
             authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}

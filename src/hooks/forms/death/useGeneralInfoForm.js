@@ -24,7 +24,7 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, m
 
     const relativesOfEmployee = employeeList
 
-    const { states: { generalInfoReq: gnral, relativesList }, actions } = useDeathRequestManagement()
+    const { states: { generalInfoReq: gnral, relativesList, paymentTypes }, actions } = useDeathRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
 
 
@@ -161,6 +161,7 @@ export default function useGeneralInfoForm({ updateCurrentIndex, currentIndex, m
             registerDate,
             typeRegister,
             paymentType,
+            paymentTypes,
             beneficiary,
             isModalOpen,
             notes,

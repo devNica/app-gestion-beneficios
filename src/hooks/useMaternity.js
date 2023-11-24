@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
     setGeneralInfoReq,
     setNewBornInfoReq,
-    loadAuthorizedAmounts,
-    resetNewBornInfoReq, fetchHistoryMaternityReqThunk, updateChildrenList
+    resetNewBornInfoReq, fetchHistoryMaternityReqThunk, updateChildrenList, loadProps
 } from '../redux/maternity.slice'
 import {filterData} from "../utils/object.util.js";
 import {setEmployeeList} from "../redux/beneficiary.slice.js";
@@ -12,6 +11,7 @@ import {loadRecord} from "../redux/maternity.slice.js";
 export const useMaternityRequestManagement = () => {
     const dispatch = useDispatch()
     const {
+        paymentTypes,
         authorizedAmount,
         history,
         markedChildren,
@@ -20,10 +20,11 @@ export const useMaternityRequestManagement = () => {
         newBornInfoReq
     } = useSelector(state => state.maternity)
 
-    function initialDataLoading (applicants, amounts, mode='register', record = null) {
+    function initialDataLoading (applicants, props, mode='register', record = null) {
 
-        dispatch(loadAuthorizedAmounts({
-            amounts: amounts.data
+        dispatch(loadProps({
+            paymentTypes: props.data.paymentType,
+            amounts: props.data.amounts
         }))
 
         dispatch(setEmployeeList(applicants.data))
@@ -62,6 +63,7 @@ export const useMaternityRequestManagement = () => {
 
     return {
         states: {
+            paymentTypes,
             childrenList,
             authorizedAmount,
             markedChildren,

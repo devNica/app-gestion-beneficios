@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchShortDeathHistoryFromAPI, registerDeathBenefitApplicationFromAPI } from "../service/death.api"
+import { fetchShortDeathHistoryFromAPI, registerDeathBenefitApplicationFromAPI, updateDeathBenefitApplicationFromAPI } from "../service/death.api"
 
 const initialState = {
     history: [],
     
     authorizedAmount: null,
-    
     relativesList: null,
-    
+    paymentTypes: [],
     requiredSupports: null,
     
     generalInfoReq: {
@@ -36,6 +35,7 @@ const deathSlice = createSlice({
        loadProps: (state, action) => {
            return {
                ...state,
+               paymentTypes: action.payload.paymentTypes,
                requiredSupports: action.payload.supports,
                authorizedAmount: action.payload.amounts
            }
@@ -119,7 +119,7 @@ export const fetchShortDeathHistoryThunk = () => async dispatch => {
 }
 
 
-export const registerDeathBenefitApplicationThunk = () => async (dispatch, getState) => {
+export const registerDeathBenefitApplicationThunk = (orderId, mode='register') => async (dispatch, getState) => {
     try{
         const { generalInfoReq, additionalInfo, relativesList } = getState().death
         const { user } = getState().auth
@@ -135,7 +135,7 @@ export const registerDeathBenefitApplicationThunk = () => async (dispatch, getSt
                     employeeDeathDate = typeRegister === 'C' ? r.date: ''
                     relatives.push({ 
                         relativeId: r.id, 
-                        fullname: typeRegister === 'F' ? `${r.fullname} Q.E.P.D` : '', 
+                        fullname: r.fullname.replace('Q.E.P.D', '').trimEnd(), 
                         deathDate: r.date, 
                         authorizedAmountId: r.authorizedAmountId })
                 }
@@ -159,7 +159,11 @@ export const registerDeathBenefitApplicationThunk = () => async (dispatch, getSt
             exchangeValue: exchangeRate.value
         }
 
-        await registerDeathBenefitApplicationFromAPI(payload)
+        if (mode === 'register') {
+            await registerDeathBenefitApplicationFromAPI(payload)
+        } else if (mode === 'edit'){
+            await updateDeathBenefitApplicationFromAPI(payload, orderId)
+        }
 
        dispatch(resetDeathReq())
 

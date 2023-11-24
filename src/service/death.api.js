@@ -30,8 +30,6 @@ export const fetchDeathBenefitPropsFromAPI = async () => {
     })
 }
 
-
-
 export const registerDeathBenefitApplicationFromAPI = async (payload) => {
     return await httpHandler({
         instance: axiosInstance,
@@ -45,5 +43,15 @@ export const fetchParentalInfoFromAPI = async (orderId) => {
     return await httpHandler({
         instance: axiosInstance,
         endpoint: `/death/parental/${orderId}`,
+    })
+}
+
+
+export const updateDeathBenefitApplicationFromAPI = async (payload, orderId) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/death/${orderId}`,
+        method: 'PUT',
+        body: payload
     })
 }

@@ -14,7 +14,6 @@ import {useBeneficiaryProps} from "../../useBeneficiary.js";
 export default function useGeneralInfoForm({
     updateCurrentIndex,
     currentIndex,
-    paymentTypes,
     mode
 }) {
 
@@ -26,7 +25,7 @@ export default function useGeneralInfoForm({
 
     const logger = useGetUserInfo()
 
-    const { states: { generalInfoReq: gnrl, markedChildren, childrenList }, actions } = useMaternityRequestManagement()
+    const { states: { generalInfoReq: gnrl, markedChildren, childrenList, paymentTypes }, actions } = useMaternityRequestManagement()
     const { actions: trackingAct} =useTrackingProps()
 
     const [registerDate, setRegisterDate] = useState(new Date().toISOString().slice(0, 10))
@@ -213,6 +212,7 @@ export default function useGeneralInfoForm({
     return {
         states: {
             paymentType,
+            paymentTypes,
             beneficiary,
             currentAuthorizer,
             isModalOpen,
