@@ -24,6 +24,7 @@ import {
     MaternityBenefitEditPageL,
     MaternityBenefitRegisterPageL,
     MaternityRequestHistoryPageL,
+    MaternityRequestSummaryPageL,
     ScholarPeriodPageL, ScholarshipBenefitPageL
 } from "./LazyComponents.jsx"
 
@@ -50,6 +51,7 @@ function App() {
 
             <Route path="/maternity/insert" element={<MaternityBenefitRegisterPageL/>}/>
             <Route path="/maternity/edit/:id" element={<MaternityBenefitEditPageL/>}/>
+            <Route path="/maternity/summary/:id" element={<MaternityRequestSummaryPageL/>}/>
             <Route path="/maternity/history" element={<MaternityRequestHistoryPageL/>}/>
 
             <Route path="/death/register" element={<DeathBenefitRegisterPageL/>}/>

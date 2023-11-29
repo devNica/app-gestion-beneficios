@@ -220,7 +220,7 @@ GeneralGlassesBenefitInfoForm.propTypes = {
         value: PropTypes.string
     })),
     authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         value: PropTypes.string
     })),
     authorizedAmount: PropTypes.arrayOf(PropTypes.shape({

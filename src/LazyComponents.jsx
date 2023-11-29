@@ -9,6 +9,7 @@ const MaternityBenefitRegisterPageL = lazy(() => import('./pages/RegisterPages/M
 const MaternityBenefitEditPageL = lazy(() => import('./pages/EditPages/MaternityEditPage.jsx'))
 const MaternityRequestHistoryPageL = lazy(() => import('./pages/HistoryPages/MaternityRequestHistoryPage.jsx'))
 
+const MaternityRequestSummaryPageL = lazy(()=> import('./pages/SummaryPages/MaternityRequestSummaryPage.jsx'))
 const DeathBenefitRegisterPageL = lazy(()=> import('./pages/RegisterPages/DeathBenefitPage.jsx'))
 const DeathBenefitEditPageL = lazy(()=>import('./pages/EditPages/DeathBenefitEditPage.jsx'))
 const DeathRequestHistoryPageL = lazy(()=>import('./pages/HistoryPages/DeathRequestHistoryPage.jsx'))
@@ -26,6 +27,7 @@ export {
     MaternityBenefitRegisterPageL,
     MaternityBenefitEditPageL,
     MaternityRequestHistoryPageL,
+    MaternityRequestSummaryPageL,
 
     DeathBenefitRegisterPageL,
     DeathBenefitEditPageL,

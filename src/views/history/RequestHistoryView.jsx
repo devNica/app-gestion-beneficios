@@ -7,7 +7,7 @@ import CustomDialog from '../../Components/Dialog/Dialog'
 import { useTrackingProps } from '../../hooks/useTracking'
 
 import CustomNotification from '../../Components/Notification/CustomNotification'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { setNotification } from '../../redux/notification.slice'
 
 import PropTypes from "prop-types"
@@ -18,13 +18,19 @@ export default function RequestHistoryView({ data, nameSpace }) {
 
     CustomNotification()
     const dispatch = useDispatch()
+    const { user } = useSelector(state => state.auth)
     const navigate = useNavigate()
     const { actions: trackingAct } = useTrackingProps()
 
     const [currentRecord, serCurrentRecord] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
-    const editingProcess = nameSpace.process.find(p=> p.type === 'edit').procIdentity
+
+
+    const editingProcess = nameSpace.process.find(p => p.type === 'edit').procIdentity
     const registeringProcess = nameSpace.process.find(p => p.type === 'register').procIdentity
+
+
+
     function onDialog(choose) {
         if (choose) {
             trackingAct.trackingUpdate({
@@ -59,6 +65,29 @@ export default function RequestHistoryView({ data, nameSpace }) {
 
     }
 
+    async function generarPDF (){
+        fetch(`http://localhost:6700/telcor/beneficios/v1/${nameSpace.navigationPath}/download-memo`,{
+            body: JSON.stringify({ orderId: currentRecord.recordId, username: user.username }), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }).then(res=>{
+            return res
+                .arrayBuffer()
+                .then(res => {
+                    const blob = new Blob([res], { type: 'application/pdf' })
+                    const link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(blob)
+                    link.download = 'report.pdf'
+                    link.click();
+                })
+                .catch(e => alert(e))
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+
     function handleRecordSelection(data) {
         serCurrentRecord(data)
     }
@@ -71,7 +100,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
                 delay: 1500
             }))
         } else {
-            if (trackingAct.findTrack({ procIdentity:  registeringProcess })) {
+            if (trackingAct.findTrack({ procIdentity: registeringProcess })) {
                 setIsOpen(true)
             } else {
                 goToEdit()
@@ -97,6 +126,9 @@ export default function RequestHistoryView({ data, nameSpace }) {
                 {
                     currentRecord !== null ?
                         <div className="btn-option">
+                            <button className='btn' onClick={generarPDF}>
+                                <i className="bi bi-printer-fill"></i>
+                            </button>
                             <Link className="btn view-option" to={`/${nameSpace.navigationPath}/summary/${currentRecord.recordId}`}>
                                 <i className="bi bi-eye-fill"></i>
                             </Link>
@@ -120,11 +152,11 @@ export default function RequestHistoryView({ data, nameSpace }) {
                 onSelectedRow={handleRecordSelection}
             />
         </div>
-        )
+    )
 }
 
 
-RequestHistoryView.propTypes={
+RequestHistoryView.propTypes = {
     data: PropTypes.arrayOf(PropTypes.any),
     nameSpace: PropTypes.shape({
         navigationPath: PropTypes.oneOf(['glasses', 'death', 'maternity']),

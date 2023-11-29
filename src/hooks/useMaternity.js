@@ -10,6 +10,7 @@ import {loadRecord} from "../redux/maternity.slice.js";
 
 export const useMaternityRequestManagement = () => {
     const dispatch = useDispatch()
+    
     const {
         paymentTypes,
         authorizedAmount,

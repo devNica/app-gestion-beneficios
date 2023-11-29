@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-import {useGlassesRequestManagement} from "../../hooks/useGlass.js";
 import {useCallback, useEffect, useState} from "react";
 import {fetchGlassesRequestDetail} from "../../service/api.js";
 import GlassesRequestSummary from "../../summaries/GlassesRequestSummary.jsx";
@@ -9,7 +8,6 @@ import {loadRecord} from "../../redux/glass.slice.js";
 const GlassesRequestSummaryPage = () => {
     
     const { id } = useParams()
-    const { actions: glassesAct } = useGlassesRequestManagement()
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
     
@@ -31,7 +29,7 @@ const GlassesRequestSummaryPage = () => {
         } catch (err){
             console.log(err)
         }
-    }, [id, glassesAct])
+    }, [id])
     
     useEffect(()=>{
         setLoading(true)

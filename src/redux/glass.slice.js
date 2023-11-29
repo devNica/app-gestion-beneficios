@@ -169,6 +169,7 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
 
         const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
         const {exchangeRate} = getState().props
+        const { user } = getState().auth
 
         await createNewGlassesRequest({
             registerDate: generalInfoReq.registerDate,
@@ -185,7 +186,7 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
             lenTypeId: ophthalmicInfoReq.lenType.id,
             clinicId: generalInfoReq.clinic.id,
             beneficiaryId: generalInfoReq.beneficiary.employeeId,
-            loggerId: 1, // corregir esto cuando se implemente la api de auth
+            loggerId: user.id,
             authorizerId: generalInfoReq.authorizer.id,
             paymentTypeId: generalInfoReq.paymentType.id,
             authorizedAmountId: generalInfoReq.authorizedAmount.id,
@@ -224,7 +225,7 @@ export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState)
             clinicId: generalInfoReq.clinic.id,
             beneficiaryId: generalInfoReq.beneficiary.employeeId,
             // loggerId: 1, // corregir esto cuando se implemente la api de auth
-            // authorizerId: generalInfoReq.authorizer.id,
+            authorizerId: generalInfoReq.authorizer.id,
             paymentTypeId: generalInfoReq.paymentType.id,
             authorizedAmountId: generalInfoReq.authorizedAmount.id,
             supportType: applicationSupports.currentMode,

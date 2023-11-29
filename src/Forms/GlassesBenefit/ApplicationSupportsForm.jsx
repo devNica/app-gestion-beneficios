@@ -45,33 +45,77 @@ const ApplicationSupportsForm = ({
             </div>
 
             <div className="form__group-top">
-                <CustomCheckOption
-                    id={'onlyProform'}
-                    name={'onlyProform'}
-                    isCheckBox={false}
-                    value={'OPF'}
-                    currentValue={supportMode}
-                    onChange={(v) => setSupportMode(v)}
-                    label="Proforma:"
-                />
-                <CustomCheckOption
-                    id={'onlyInvoice'}
-                    name={'onlyInvoice'}
-                    isCheckBox={false}
-                    value={'OIV'}
-                    currentValue={supportMode}
-                    onChange={(v) => setSupportMode(v)}
-                    label="Factura:"
-                />
-                <CustomCheckOption
-                    id={'proformWithInvoice'}
-                    name={'proformWithInvoice'}
-                    isCheckBox={false}
-                    value={'PWI'}
-                    currentValue={supportMode}
-                    onChange={(v) => setSupportMode(v)}
-                    label="Proforma | Factura:"
-                />
+                {
+                    mode === 'register' ? <>
+                    <CustomCheckOption
+                        id={'onlyProform'}
+                        name={'onlyProform'}
+                        isCheckBox={false}
+                        value={'OPF'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Proforma:"
+                    />
+                    <CustomCheckOption
+                        id={'onlyInvoice'}
+                        name={'onlyInvoice'}
+                        isCheckBox={false}
+                        value={'OIV'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Factura:"
+                    />
+                    <CustomCheckOption
+                        id={'proformWithInvoice'}
+                        name={'proformWithInvoice'}
+                        isCheckBox={false}
+                        value={'PWI'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Proforma | Factura:"
+                    />
+                    </>: mode === 'edit' && supportMode === 'OPF' ? <>
+
+                    <CustomCheckOption
+                        id={'onlyProform'}
+                        name={'onlyProform'}
+                        isCheckBox={false}
+                        value={'OPF'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Proforma:"
+                    />
+                     <CustomCheckOption
+                        id={'proformWithInvoice'}
+                        name={'proformWithInvoice'}
+                        isCheckBox={false}
+                        value={'PWI'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Proforma | Factura:"
+                    />
+                    </>: mode === 'edit' && supportMode === 'OIV' ? <>
+                    <CustomCheckOption
+                        id={'onlyInvoice'}
+                        name={'onlyInvoice'}
+                        isCheckBox={false}
+                        value={'OIV'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Factura:"
+                    />
+                    <CustomCheckOption
+                        id={'proformWithInvoice'}
+                        name={'proformWithInvoice'}
+                        isCheckBox={false}
+                        value={'PWI'}
+                        currentValue={supportMode}
+                        onChange={(v) => setSupportMode(v)}
+                        label="Proforma | Factura:"
+                    />
+                    </>: <></>
+                }
+
             </div>
 
             <div className="form__group-middle">
