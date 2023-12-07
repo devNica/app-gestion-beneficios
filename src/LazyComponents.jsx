@@ -1,5 +1,6 @@
 import { lazy } from "react";
 
+const PreApplicantsForGlassesBenefitRegPageL = lazy(()=> import('./pages/RegisterPages/PreApplicantsForGlassesBenefitPage.jsx'))
 const GlassesBenefitRegisterPageL = lazy(() => import('./pages/RegisterPages/GlassesBenefitPage.jsx'))
 const GlassesBenefiEditPageL = lazy(() => import('./pages/EditPages/GlassesBenefitEditPage.jsx'))
 const GlassesRequestHistoryPageL = lazy(() => import('./pages/HistoryPages/GlassesRequestHistoryPage.jsx'))
@@ -19,6 +20,7 @@ const ScholarPeriodPageL = lazy(()=>import('./pages/RegisterPages/ScholarshipPer
 const ScholarshipBenefitPageL = lazy(()=>import('./pages/RegisterPages/ScholarshipApplicationPage.jsx'))
 
 export {
+    PreApplicantsForGlassesBenefitRegPageL,
     GlassesBenefitRegisterPageL,
     GlassesBenefiEditPageL,
     GlassesRequestHistoryPageL,

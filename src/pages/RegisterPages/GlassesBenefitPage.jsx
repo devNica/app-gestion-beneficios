@@ -7,7 +7,6 @@ import GeneralGlassesBenefitInfoForm from "../../Forms/GlassesBenefit/GeneralGla
 import OphthalmicForm from '../../Forms/GlassesBenefit/OphthalmicForm'
 import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSupportsForm"
 
-import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
 import {useGlassesRequestManagement, useGlassProps} from "../../hooks/useGlass"
 
@@ -22,14 +21,11 @@ import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 export default function GlassesBenefitPage() {
     const navigate = useNavigate()
 
-    const { userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct} = useGlassesRequestManagement()
 
 
     const {
-        authorizedAmount,
-        clinics,
         diagnosis,
         lensDetail,
         lensMaterial,
@@ -69,11 +65,8 @@ export default function GlassesBenefitPage() {
     const multipleComponent = [
         <GeneralGlassesBenefitInfoForm
             mode="register"
-            clinics={clinics}
-            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
-            authorizedAmount={authorizedAmount}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

@@ -15,6 +15,7 @@
   -webkit-text-size-adjust: 100%;
 
   /*color definition*/
+  --danger--color: #fa7373;
   --primary--color: #142a7e;
   --success--color: rgb(23, 174, 134);
   --secondary--color: #dedede;

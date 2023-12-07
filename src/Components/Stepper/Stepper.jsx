@@ -75,39 +75,44 @@ export default function Stepper(props) {
         showNavigation = false,
         CurrenComponent,
         setIndex,
-        currentIndex } = props
+        currentIndex,
+        showIndicators = true
+    } = props
 
     return (
         <div className="stepper">
-            <div className="stepper__header">
-                <ul>
-                    {
-                        steps.map((s, index) =>
-                            <StepHeader
-                                step={s}
-                                key={index}
-                                isActive={index <= currentIndex }
-                            />
-                        )
-                    }
-                </ul>
-            </div>
-            
+            {
+                showIndicators ?
+                    <div className="stepper__header">
+                        <ul>
+                            {
+                                steps.map((s, index) =>
+                                    <StepHeader
+                                        step={s}
+                                        key={index}
+                                        isActive={index <= currentIndex}
+                                    />
+                                )
+                            }
+                        </ul>
+                    </div> : <></>
+            }
+
             <div className="stepper__content">
                 {CurrenComponent}
             </div>
 
             {
-            showNavigation ?
-                 <div className="stepper__buttons">
-                     {
-                    <StepButtons
-                        currentIndex={currentIndex}
-                        numberStep={steps.length}
-                        setCurrentIndex={setIndex}
-                    />
-                }
-                 </div> : <></>
+                showNavigation ?
+                    <div className="stepper__buttons">
+                        {
+                            <StepButtons
+                                currentIndex={currentIndex}
+                                numberStep={steps.length}
+                                setCurrentIndex={setIndex}
+                            />
+                        }
+                    </div> : <></>
             }
 
         </div>

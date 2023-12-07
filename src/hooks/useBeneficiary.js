@@ -1,13 +1,8 @@
-import {useDispatch, useSelector} from "react-redux"
-import {
-    setEmployeeWithRelatives,
-} from "../redux/beneficiary.slice.js";
-import employeeWithRelativesMockup from '../data/employee-with-relatives.json'
+import { useSelector} from "react-redux"
 import { converToBoolean } from "../utils/object.util.js";
 
 export const useBeneficiaryProps = () => {
-    const dispatch = useDispatch()
-    
+
     const {
         employeeWithChildrens,
         employeeWithRelatives,
@@ -16,9 +11,6 @@ export const useBeneficiaryProps = () => {
     
     const { authorizedAmount } = useSelector(state => state.death)
     
-    function setAsyncEmployeeWithRelatives(){
-        dispatch(setEmployeeWithRelatives(employeeWithRelativesMockup))
-    }
     
     function getCoupleName({ employeeId }) {
         const result = employeeList.find(emp => emp.employeeId === employeeId)
@@ -79,7 +71,6 @@ export const useBeneficiaryProps = () => {
         },
         
         actions: {
-            setAsyncEmployeeWithRelatives,
             getCoupleName,
             getBeneficiaryListBySex,
             getChildren,

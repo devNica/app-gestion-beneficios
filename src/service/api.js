@@ -33,6 +33,15 @@ export const fetchAdminPropsFromAPI = async () => {
     return response.data
 }
 
+
+
+export const fetchRelativesApplicant = async (employeeId) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/glasses/relatives/${employeeId}`
+    })
+}
+
 export const fetchGlassesApplicants = async () => {
     return await httpHandler({
         instance: axiosInstance,
@@ -81,10 +90,10 @@ export const fetchMaternityApplicants = async (mode) => {
 }
 
 
-export const updateGlassesRequestFromAPI = async (orderId, payload) => {
+export const updateGlassesRequestFromAPI = async (payload) => {
     return await httpHandler({
         instance: axiosInstance,
-        endpoint: `/glasses/${orderId}`,
+        endpoint: `/glasses/medical-record`,
         body: payload,
         method: 'PUT'
     })

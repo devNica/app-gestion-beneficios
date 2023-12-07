@@ -38,13 +38,13 @@ const GlassesRequestSummary = () => {
             <div className='summary'>
                 <div className='summary__gnral-info'>
                     <span><h3 className='title'>Fecha Solicitud:</h3>{convertDateFromISOFormatToLocal(generalInfoReq.registerDate)}</span>
-                    <span><h3 className='title'>Beneficiario:</h3>{`${generalInfoReq.beneficiary.name} ${generalInfoReq.beneficiary.surname}`}</span>
+                    <span><h3 className='title'>Beneficiario:</h3>{`${generalInfoReq.beneficiary.fullname}`}</span>
                     <span><h3 className='title'>Notas:</h3>{generalInfoReq.notes}</span>
-                    <span><h3 className='title'>Monto Autorizado:</h3>{generalInfoReq.authorizedAmount.currency}</span>
-                    <span><h3 className='title'>Tipo de Pago:</h3>{generalInfoReq.paymentType.value}</span>
+                    <span><h3 className='title'>Monto Autorizado:</h3>{generalInfoReq.beneficiary.authorizedAmount}</span>
+                    <span><h3 className='title'>Tipo de Pago:</h3>{generalInfoReq.beneficiary.paymentType}</span>
                 </div>
                 <div className='summary__oph-info'>
-                    <span><h3 className='title'>Clinica:</h3>{generalInfoReq.clinic.value}</span>
+                    <span><h3 className='title'>Clinica:</h3>{generalInfoReq.beneficiary.clinic}</span>
                     <div className='exam__summary'>
                         <div className={'reye'}>
                             <span className={'oph__main-title'}>Derecho</span>

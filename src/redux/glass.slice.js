@@ -6,6 +6,11 @@ const initialState = {
     authorizedAmount: null,
     paymentTypes: [],
 
+    applicationsInProcess: [],
+    applicationTypes: [],
+    applicationStatus: [],
+    preApplicants: [],
+
     history: [],
 
     clinics: [],
@@ -17,17 +22,12 @@ const initialState = {
     memoryFlag: false,
 
     generalInfoReq: {
+        medicalRecord: null,
         registerDate: null,
         beneficiary: null,
-        paymentType: null,
-        clinic: null,
-        authorizedAmount: null,
-        notes: '',
-        logger: '',
-        authorizer: null,
-        letterRef: '',
-        memoRef: ''
+        notes: ''
     },
+
     ophthalmicInfoReq: {
         rightEye: [
             { erEsf: '-' },
@@ -82,12 +82,28 @@ const glassSlice = createSlice({
     initialState,
     reducers: {
 
-        setGlassesProps: (state, action) => {
+        updApplicantsAndApplications: (state, action) =>{
+            return {
+                ...state,
+                preApplicants: action.payload.preApplicants,
+                applicationsInProcess: action.payload.list,
+            }
+        },
+
+        setPreApplicantsProps: (state, action) => {
             return {
                 ...state,
                 paymentTypes: action.payload.paymentTypes,
-                authorizedAmount: action.payload.amounts,
+                applicationsInProcess: action.payload.applicationsInProcess,
+                applicationTypes: action.payload.applicationTypes,
                 clinics: action.payload.clinics,
+                preApplicants: action.payload.preApplicants
+            }
+        },
+
+        setGlassesProps: (state, action) => {
+            return {
+                ...state,
                 lensDetail: action.payload.details,
                 lensMaterial: action.payload.material,
                 lensType: action.payload.types,
@@ -146,6 +162,8 @@ const glassSlice = createSlice({
 })
 
 export const {
+    updApplicantsAndApplications,
+    setPreApplicantsProps,
     setGlassesProps,
     loadHistory,
     loadRecord,
@@ -154,6 +172,21 @@ export const {
     setSupportsReq,
     resetGlassReq } = glassSlice.actions
 
+
+export const updateRecordStatusThunk = (recordId) => (dispatch, getState) =>{
+    const { history } = getState().glass
+    const currentHistory = history.map(h=>{
+        if(h.recordId === recordId){
+            return {
+                ...h,
+                state: "Impreso",
+                stateId: 2
+            }
+        } else return h
+    })
+
+    dispatch(loadHistory(currentHistory))
+}
 
 export const fetchHistoryGlassesReqThunk = () => async dispatch => {
     try {
@@ -169,12 +202,9 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
 
         const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
         const {exchangeRate} = getState().props
-        const { user } = getState().auth
 
         await createNewGlassesRequest({
             registerDate: generalInfoReq.registerDate,
-            memoRef: generalInfoReq.memoRef,
-            letterRef: generalInfoReq.letterRef,
             notes: generalInfoReq.notes,
             diagnosis: ophthalmicInfoReq.diagnosis,
             rEye: ophthalmicInfoReq.rightEye,
@@ -184,14 +214,11 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
             lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
-            clinicId: generalInfoReq.clinic.id,
-            beneficiaryId: generalInfoReq.beneficiary.employeeId,
-            loggerId: user.id,
-            authorizerId: generalInfoReq.authorizer.id,
-            paymentTypeId: generalInfoReq.paymentType.id,
-            authorizedAmountId: generalInfoReq.authorizedAmount.id,
+            authorizedAmount: generalInfoReq.beneficiary.authorizedAmount,
             supportType: applicationSupports.currentMode,
-            exchangeRateRef: exchangeRate.value
+            exchangeValue: exchangeRate.value,
+            glassesRequestId: generalInfoReq.beneficiary.glassesRequestId,
+            applicationType: generalInfoReq.beneficiary.applicationType
         })
 
         dispatch(resetGlassReq())
@@ -209,10 +236,8 @@ export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState)
         const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
         const {exchangeRate} = getState().props
 
-        await updateGlassesRequestFromAPI(orderId, {
+        await updateGlassesRequestFromAPI({
             registerDate: generalInfoReq.registerDate,
-            memoRef: generalInfoReq.memoRef,
-            letterRef: generalInfoReq.letterRef,
             notes: generalInfoReq.notes,
             diagnosis: ophthalmicInfoReq.diagnosis,
             rEye: ophthalmicInfoReq.rightEye,
@@ -222,14 +247,12 @@ export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState)
             lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
-            clinicId: generalInfoReq.clinic.id,
-            beneficiaryId: generalInfoReq.beneficiary.employeeId,
-            // loggerId: 1, // corregir esto cuando se implemente la api de auth
-            authorizerId: generalInfoReq.authorizer.id,
-            paymentTypeId: generalInfoReq.paymentType.id,
-            authorizedAmountId: generalInfoReq.authorizedAmount.id,
+            authorizedAmount: generalInfoReq.beneficiary.authorizedAmount,
             supportType: applicationSupports.currentMode,
-            exchangeRateId: exchangeRate.id
+            exchangeValue: exchangeRate.value,
+            glassesRequestId: orderId,
+            applicationType: generalInfoReq.beneficiary.applicationType,
+            medicalRecordId: generalInfoReq.medicalRecord.id
         })
 
         dispatch(resetGlassReq())

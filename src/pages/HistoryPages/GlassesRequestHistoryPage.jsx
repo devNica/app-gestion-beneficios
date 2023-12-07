@@ -18,6 +18,10 @@ const GlassesRequestHistoryPage = () => {
 
     useEffect(() => {
         actions.fetchAsyncGlassesHistory()
+
+        return ()=>{
+            actions.resetHistory()
+        }
     }, [])
 
     return (

@@ -1,0 +1,62 @@
+.pre__applicants-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    .form__title{
+        text-align: center;
+        font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .gnral-info{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+
+        .form__left, .form__right{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+    }
+
+
+    .navigation{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        
+        .btn {
+            width: 100px;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.btn__save {
+                background-color: var(--success--color);
+
+                &:hover {
+                    background-color: rgba(12, 194, 139, 0.85);
+                }
+            }
+
+            &.btn__next {
+                background-color: var(--primary--color);
+
+                &:hover {
+                    background-color: rgba(20, 42, 126, 0.85);
+                }
+            }
+        }
+    }
+
+}

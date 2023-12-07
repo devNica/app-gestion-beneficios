@@ -18,7 +18,7 @@ const DataTable = ({
     enableEntries = true,
     onSelectedRow
 }) => {
-
+    
     const { states, actions } = useManageDataTable({ entries, dataSource})
 
     const {

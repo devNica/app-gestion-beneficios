@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import DataTable from '../../Components/DataTable/DataTable'
 import { Link, useNavigate } from 'react-router-dom'
 import CustomDialog from '../../Components/Dialog/Dialog'
@@ -13,6 +13,7 @@ import { setNotification } from '../../redux/notification.slice'
 import PropTypes from "prop-types"
 
 import './request-history-view.css'
+import {updateRecordStatusThunk} from "../../redux/glass.slice.js";
 
 export default function RequestHistoryView({ data, nameSpace }) {
 
@@ -24,12 +25,20 @@ export default function RequestHistoryView({ data, nameSpace }) {
 
     const [currentRecord, serCurrentRecord] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
+    const [currentData, setCurrentData] = useState([])
 
 
     const editingProcess = nameSpace.process.find(p => p.type === 'edit').procIdentity
     const registeringProcess = nameSpace.process.find(p => p.type === 'register').procIdentity
 
+    useEffect(()=>{
+        setCurrentData(data)
+    },[currentData])
 
+    function updateRecordStatus(recordId){
+        dispatch(updateRecordStatusThunk(recordId))
+        setCurrentData([])
+    }
 
     function onDialog(choose) {
         if (choose) {
@@ -82,7 +91,9 @@ export default function RequestHistoryView({ data, nameSpace }) {
                     link.download = 'report.pdf'
                     link.click();
                 })
-                .catch(e => alert(e))
+                .catch(e => alert(e)).finally(()=> {
+                    updateRecordStatus(currentRecord.recordId)
+                })
         }).catch(err=>{
             console.log(err);
         })
@@ -93,7 +104,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
     }
 
     function handleEditRecord() {
-        if (currentRecord.state !== 'No Impreso (Editable)') {
+        if (currentRecord.stateId !== 4) {
             dispatch(setNotification({
                 message: 'Este registro no admite edicion',
                 type: 'info',
@@ -111,46 +122,52 @@ export default function RequestHistoryView({ data, nameSpace }) {
     return (
         <div className="request__history__view">
 
-            <CustomDialog
-                isOpen={isOpen}
-                positiveActionTitle="Continuar"
-                negativeActionTitle="Cancelar"
-                onDialog={onDialog}
-                showIcons={true}
-                message="Tiene pendiente una solicitud sin salvar"
-                question="¿Desea perder los cambios realizados?"
-            />
+            { currentData.length > 0 ?
+                <>
+                <CustomDialog
+                    isOpen={isOpen}
+                    positiveActionTitle="Continuar"
+                    negativeActionTitle="Cancelar"
+                    onDialog={onDialog}
+                    showIcons={true}
+                    message="Tiene pendiente una solicitud sin salvar"
+                    question="¿Desea perder los cambios realizados?"
+                />
 
-            <div className="history__page-options">
-                <span>{currentRecord !== null ? currentRecord.fullname : '-/-/-/-'}</span>
-                {
-                    currentRecord !== null ?
-                        <div className="btn-option">
-                            <button className='btn' onClick={generarPDF}>
-                                <i className="bi bi-printer-fill"></i>
-                            </button>
-                            <Link className="btn view-option" to={`/${nameSpace.navigationPath}/summary/${currentRecord.recordId}`}>
-                                <i className="bi bi-eye-fill"></i>
-                            </Link>
-                            <button className="btn edit-option" onClick={handleEditRecord}>
-                                <i className="bi bi-pen-fill"></i>
-                            </button>
-                        </div>
-                        : <></>
-                }
-            </div>
+                <div className="history__page-options">
+                    <span>{currentRecord !== null ? currentRecord.fullname : '-/-/-/-'}</span>
+                    {
+                        currentRecord !== null ?
+                            <div className="btn-option">
+                                <button className='btn' onClick={generarPDF}>
+                                    <i className="bi bi-printer-fill"></i>
+                                </button>
+                                <Link className="btn view-option" to={`/${nameSpace.navigationPath}/summary/${currentRecord.recordId}`}>
+                                    <i className="bi bi-eye-fill"></i>
+                                </Link>
+                                <button className="btn edit-option" onClick={handleEditRecord}>
+                                    <i className="bi bi-pen-fill"></i>
+                                </button>
+                            </div>
+                            : <></>
+                    }
+                </div>
 
 
-            <DataTable
-                dataSource={data}
-                columnSizes={[13, 40, 12, 15, 20]}
-                showColumns={['serial', 'fullname', 'beneficiaryId', 'registeredAt', 'state']}
-                labels={["Serie", "Nombre", "N Emp", 'Registrado', 'Estado']}
-                entries={[15, 30, 50]}
-                enableSearch={true}
-                enableEntries={true}
-                onSelectedRow={handleRecordSelection}
-            />
+                <DataTable
+                    dataSource={currentData}
+                    columnSizes={[13, 40, 12, 15, 20]}
+                    showColumns={['serial', 'fullname', 'beneficiaryId', 'registeredAt', 'state']}
+                    labels={["Serie", "Nombre", "N Emp", 'Registrado', 'Estado']}
+                    entries={[15, 30, 50]}
+                    enableSearch={true}
+                    enableEntries={true}
+                    onSelectedRow={handleRecordSelection}
+                />
+                </>
+             :
+            <h1>Pending...</h1>
+            }
         </div>
     )
 }

@@ -13,9 +13,12 @@ export const useManageDataTable = ({ entries, dataSource }) => {
     const [numberResults, setNumberResults] = useState(entries[0])
     const [currentPage, setCurrentPage] = useState(1)
 
-    useEffect(() => {
+    useEffect(()=>{
+        setLastPagination(entries[0])
+        setNumberResults(entries[0])
         setTotalPages(Math.ceil((dataSource.length / entries[0])))
-    }, [])
+    },[dataSource])
+
 
     useEffect(() => {
         if (dataFilteredSet.length > 0) {
@@ -23,7 +26,7 @@ export const useManageDataTable = ({ entries, dataSource }) => {
         } else {
             setSubSet(dataSource.slice(firstPagination, lastPagination))
         }
-    }, [lastPagination, firstPagination])
+    }, [lastPagination, firstPagination, dataSource])
 
     function handleSelectionRow(data) {
         console.log(data)
@@ -72,6 +75,7 @@ export const useManageDataTable = ({ entries, dataSource }) => {
 
     /** this function handle results from query to original data source */
     const handleQuery = useCallback((e) => {
+        
         setStringQuery(e)
         if (e.length > 2) {
             const result = dataSource.filter((el) => {
@@ -83,7 +87,7 @@ export const useManageDataTable = ({ entries, dataSource }) => {
 
                 return false
             })
-
+            
             setFilteredSet(result)
             setSubSet(result.slice(firstPagination, lastPagination))
             setTotalPages(Math.ceil((result.length / numberResults)))
@@ -94,8 +98,8 @@ export const useManageDataTable = ({ entries, dataSource }) => {
             setTotalPages(Math.ceil((dataSource.length / numberResults)))
         }
 
-    }, [numberResults])
-
+    }, [numberResults, dataSource])
+   
 
     function handleSort(value) {
 

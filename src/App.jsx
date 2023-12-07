@@ -24,7 +24,7 @@ import {
     MaternityBenefitEditPageL,
     MaternityBenefitRegisterPageL,
     MaternityRequestHistoryPageL,
-    MaternityRequestSummaryPageL,
+    MaternityRequestSummaryPageL, PreApplicantsForGlassesBenefitRegPageL,
     ScholarPeriodPageL, ScholarshipBenefitPageL
 } from "./LazyComponents.jsx"
 
@@ -48,6 +48,8 @@ function App() {
             <Route path="/glasses/edit/:id" element={<GlassesBenefiEditPageL/>}/>
             <Route path="/glasses/summary/:id" element={<GlassesRequestSummaryPageL/>}/>
             <Route path="/glasses/history" element={<GlassesRequestHistoryPageL/>}/>
+            <Route path="/glasses/formalities" element={<PreApplicantsForGlassesBenefitRegPageL/>}/>
+
 
             <Route path="/maternity/insert" element={<MaternityBenefitRegisterPageL/>}/>
             <Route path="/maternity/edit/:id" element={<MaternityBenefitEditPageL/>}/>

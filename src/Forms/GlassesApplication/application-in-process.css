@@ -1,0 +1,113 @@
+.records {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    .record {
+        padding: 0.3rem;
+        width: 100%;
+        height: 30px;
+        border: 1px solid gray;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: 'Barlow Condensed', sans-serif;
+
+        .options {
+            display: flex;
+            gap: 7px;
+
+            .btn {
+                border-radius: 3px;
+                height: 30px;
+                width: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.1rem;
+                background-color: var(--bg-white-100);
+                color: var(--bg-gray-400);
+                border: 1px solid var(--bg-gray-500);
+                transition: .3s ease-in-out;
+
+                &.btn__print {
+                    &:hover {
+                        border: 1px solid var(--primary--color);
+                        cursor: pointer;
+                        color: var(--bg-white-100);
+                        background-color: var(--primary--color);
+                    }
+                }
+
+                &.btn__approved {
+                    &:hover {
+                        border: 1px solid var(--success--color);
+                        cursor: pointer;
+                        color: var(--bg-white-100);
+                        background-color: var(--success--color);
+                    }
+                }
+
+                &.btn__rejected {
+                    &:hover {
+                        border: 1px solid var(--danger--color);
+                        cursor: pointer;
+                        color: var(--bg-white-100);
+                        background-color: var(--danger--color);
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    .definitions {
+        display: flex;
+        flex-direction: column;
+
+        .status,
+        .types {
+            line-height: 1.13rem;
+            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            font-family: 'Barlow Condensed', sans-serif;
+            height: 40px;
+
+            >P {
+                height: 20px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                padding: 0.5rem;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .navigation {
+        .btn {
+            width: 120px;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.btn__back {
+                background-color: var(--primary--color);
+
+                &:hover {
+                    background-color: rgba(20, 42, 126, 0.85);
+                }
+            }
+        }
+    }
+}

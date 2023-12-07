@@ -9,12 +9,11 @@ import OphthalmicForm from '../../Forms/GlassesBenefit/OphthalmicForm'
 import ApplicationSupportsForm from "../../Forms/GlassesBenefit/ApplicationSupportsForm"
 
 import { useGlassProps, useGlassesRequestManagement } from "../../hooks/useGlass"
-import { useAdminProps } from "../../hooks/useProps"
 import { useTrackingProps } from "../../hooks/useTracking"
 
 import { useNavigate, useParams } from "react-router-dom"
 
-import {fetchGlassesApplicants, fetchGlassesPropsFromAPI, fetchGlassesRequestDetail} from "../../service/api.js"
+import { fetchGlassesPropsFromAPI, fetchGlassesRequestDetail} from "../../service/api.js"
 
 
 import '../main-page.css'
@@ -26,7 +25,6 @@ export default function GlassesBenefitEditPage() {
     const navigate = useNavigate()
     const { id } = useParams()
 
-    const { userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct } = useGlassesRequestManagement()
 
@@ -34,8 +32,6 @@ export default function GlassesBenefitEditPage() {
 
 
     const {
-        authorizedAmount,
-        clinics,
         diagnosis,
         lensDetail,
         lensMaterial,
@@ -47,13 +43,12 @@ export default function GlassesBenefitEditPage() {
     const fetching = useCallback(async () => {
 
       try {
-          const [applicants, props, request] = await Promise.all([
-              fetchGlassesApplicants(),
+          const [props, request] = await Promise.all([
               fetchGlassesPropsFromAPI(),
               fetchGlassesRequestDetail(id)
           ])
 
-          glassesAct.initialDataLoading(applicants,props, request, 'edit')
+          glassesAct.initialDataLoading(null, props, request, 'edit')
 
           setLoading(false)
 
@@ -78,11 +73,8 @@ export default function GlassesBenefitEditPage() {
     const multipleComponent = [
         <GeneralGlassesBenefitInfoForm
             mode="edit"
-            clinics={clinics}
-            authorizers={userAuthorizers}
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
-            authorizedAmount={authorizedAmount}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

@@ -1,4 +1,3 @@
-import Select from "../../Components/Select/Select"
 import CustomInput from "../../Components/CustomInput/CustomInput"
 import CustomTextArea from "../../Components/CustomTextArea/CustomTextArea"
 import Modal from "../../Components/Modal/Modal"
@@ -9,38 +8,27 @@ import PropTypes from "prop-types"
 import { useHandleGeneralGlassesBenefitInfoForm } from "../../hooks/forms/glasses/useGeneralInforForm"
 
 import './glasses-benefit-form.css'
-import {useBeneficiaryProps} from "../../hooks/useBeneficiary.js";
-import {filterData} from "../../utils/object.util.js";
+import { useBeneficiaryProps } from "../../hooks/useBeneficiary.js";
 
 export const GeneralGlassesBenefitInfoForm = ({
     mode,
-    clinics,
-    authorizers,
     currentIndex,
-    updateCurrentIndex,
-    authorizedAmount
-
+    updateCurrentIndex
 }) => {
 
     const { states, actions } = useHandleGeneralGlassesBenefitInfoForm({
-        currentIndex, updateCurrentIndex, authorizedAmount, mode
+        currentIndex, updateCurrentIndex, mode
     })
 
     const { states: { employeeList } } = useBeneficiaryProps()
 
-    const dataPayload = filterData([], ['employeeId','name', 'surname', 'secondSurname', 'dni'], employeeList)
-
     const {
-        beneficiary, currentAuthorizer, currentClinic,
-        isModalOpen, letterRef, memoRef, notes, paymentType, registerDate,
-        logger, amountSelected, paymentTypes
+        beneficiary, isModalOpen, notes, registerDate, logger
     } = states
 
     const {
         handleEmployeeSelection, handleRegisterDate, handleSubmit,
-        setCurrentAuthorizer, setCurrentClinic, setNotes,
-        setIsModalOpen, updateDocumentRefs, handleKeyDown, handleSetPaymentType,
-        setAuthorizedAmount
+        setNotes, setIsModalOpen
     } = actions
 
 
@@ -58,45 +46,60 @@ export const GeneralGlassesBenefitInfoForm = ({
                         id="registerDate"
                         name="registerDate"
                         type="date"
-                        label="Fecha:"
+                        label="Fecha Examen:"
                         orientation="row"
                         value={registerDate}
                         onChange={(e) => handleRegisterDate(e.target.value)}
                     />
 
+                    {
+                        mode === 'register' ?
+                             <CustomInput
+                                 id="employee"
+                                 name="employee"
+                                 label="Empleado:"
+                                 orientation="row"
+                                 editable={false}
+                                 defaultValue={beneficiary !== null ? `${beneficiary.fullname}` : ''}
+                                 placeHolder="<<- Beneficiario ->>"
+                                 customStyles="has-child disabled"
+                                 attachmentElement={
+                                    <InvokeModal handleClick={setIsModalOpen} />
+                                    }
+                             />  :
+
+                            <CustomInput
+                                id="employee"
+                                name="employee"
+                                label="Empleado:"
+                                orientation="row"
+                                editable={false}
+                                defaultValue={beneficiary !== null ? `${beneficiary.fullname}` : ''}
+                                placeHolder="<<- Beneficiario ->>"
+                                customStyles="disabled"
+                            />
+                    }
+
+
+
                     <CustomInput
-                        id="employee"
-                        name="employee"
-                        label="Empleado:"
-                        orientation="row"
-                        editable={false}
-                        defaultValue={beneficiary !== null ? `${beneficiary.name} ${beneficiary.surname}` : ''}
-                        placeHolder="<<- Beneficiario ->>"
-                        customStyles="has-child disabled"
-                        attachmentElement={
-                            <InvokeModal handleClick={setIsModalOpen} />
-                        }
-                    />
-
-
-                    <Select
                         id={'paymentType'}
                         name={'paymentType'}
-                        options={paymentTypes}
-                        currentValue={paymentType}
-                        onChange={handleSetPaymentType}
                         label="Tipo Pago:"
                         orientation="row"
+                        defaultValue={beneficiary !== null ? beneficiary.paymentType : ''}
+                        editable={false}
+                        customStyles="disabled"
                     />
 
-                    <Select
+                    <CustomInput
                         id={'clinic'}
                         name={'clinic'}
-                        options={clinics}
-                        currentValue={currentClinic}
-                        onChange={(v) => setCurrentClinic(v)}
-                        orientation="row"
                         label="Optica:"
+                        orientation="row"
+                        defaultValue={beneficiary !== null ? beneficiary.clinic : ''}
+                        editable={false}
+                        customStyles="disabled"
                     />
 
                 </div>
@@ -104,14 +107,14 @@ export const GeneralGlassesBenefitInfoForm = ({
                 <div className="form__group-right">
 
 
-                    <Select
-                        id={'amount'}
-                        name={'amount'}
-                        options={authorizedAmount}
-                        currentValue={amountSelected}
-                        onChange={(v) => setAuthorizedAmount(v)}
+                    <CustomInput
+                        id="amount"
+                        name="amount"
+                        label="Monto Autorizado:"
                         orientation="row"
-                        label="Monto:"
+                        defaultValue={beneficiary !== null ? beneficiary.authorizedAmount : ''}
+                        editable={false}
+                        customStyles="disabled"
                     />
 
                     <CustomTextArea
@@ -134,15 +137,17 @@ export const GeneralGlassesBenefitInfoForm = ({
                         customStyles="disabled"
                     />
 
-                    <Select
+                    <CustomInput
                         id={'authorizer'}
                         name={'authorizer'}
-                        options={authorizers}
-                        currentValue={currentAuthorizer}
-                        onChange={(v) => setCurrentAuthorizer(v)}
-                        orientation="row"
                         label="Autorizado:"
+                        orientation="row"
+                        defaultValue={beneficiary !== null ? beneficiary.authorizer : ''}
+                        editable={false}
+                        customStyles="disabled"
                     />
+
+
 
                 </div>
             </div>
@@ -150,31 +155,16 @@ export const GeneralGlassesBenefitInfoForm = ({
             <div className="form__group-bottom">
                 <span>Documentos extendidos al solicitante</span>
 
-                {
-                    paymentType.id === 1 ?
+                <CustomInput
+                    id="letterRef"
+                    name="letterRef"
+                    label="Carta con Ref:"
+                    orientation="row"
+                    defaultValue={beneficiary !== null ? beneficiary.letterRef : ''}
+                    editable={false}
+                    customStyles="disabled"
+                />
 
-                        <CustomInput
-                            id="letterRef"
-                            name="letterRef"
-                            label="Carta con Ref:"
-                            orientation="row"
-                            type="text"
-                            value={letterRef}
-                            handleKeyDown={handleKeyDown}
-                            onChange={(e) => updateDocumentRefs(e.target.value)}
-                        /> :
-
-                        <CustomInput
-                            id="memoRef"
-                            name="memoRef"
-                            label="Memo con Ref:"
-                            orientation="row"
-                            type="text"
-                            value={memoRef}
-                            handleKeyDown={handleKeyDown}
-                            onChange={(e) => updateDocumentRefs(e.target.value)}
-                        />
-                }
             </div>
 
             <div className="form__group-actions">
@@ -193,11 +183,11 @@ export const GeneralGlassesBenefitInfoForm = ({
                 // eslint-disable-next-line react/no-children-prop
                 children={
                     <DataTable
-                        dataSource={dataPayload}
-                        columnSizes={[10, 25, 25, 25, 15]}
-                        showColumns={['employeeId', 'name', 'surname', 'secondSurname', 'dni']}
-                        labels={['Emp', 'Nombre', 'P Apellido', 'S Apellido', 'Cedula']}
-                        sortColumn={[0, 2, 3, 4]}
+                        dataSource={employeeList}
+                        columnSizes={[10, 55, 20, 15]}
+                        showColumns={['employeeId', 'fullname', 'applicationType', 'dni']}
+                        labels={['Emp', 'Nombre', 'Tipo Sol', 'Cedula.']}
+                        sortColumn={[0, 1, 2, 3]}
                         entries={[5, 10, 20]}
                         enableSearch={true}
                         enableEntries={true}
@@ -215,19 +205,6 @@ export default GeneralGlassesBenefitInfoForm
 
 GeneralGlassesBenefitInfoForm.propTypes = {
     mode: PropTypes.string,
-    clinics: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        value: PropTypes.string
-    })),
-    authorizers: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        value: PropTypes.string
-    })),
-    authorizedAmount: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        amount: PropTypes.number,
-        symbol: PropTypes.string
-    })),
     currentIndex: PropTypes.number,
     updateCurrentIndex: PropTypes.func
 }

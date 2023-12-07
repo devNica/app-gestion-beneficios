@@ -3,7 +3,7 @@ import {
     setGeneralInfoReq,
     setOphthalmicInfoReq,
     setSupportsReq,
-    fetchHistoryGlassesReqThunk, loadRecord, setGlassesProps
+    fetchHistoryGlassesReqThunk, loadRecord, setGlassesProps, loadHistory
 } from '../redux/glass.slice'
 import {filterData} from "../utils/object.util.js";
 import {setEmployeeList} from "../redux/beneficiary.slice.js";
@@ -40,8 +40,13 @@ export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
 
     const {
+        preApplicants,
+        applicationsInProcess,
+        applicationTypes,
+        aplicationStatus,
         paymentTypes,
-        history, 
+        history,
+        clinics,
         memoryFlag,
         generalInfoReq,
         ophthalmicInfoReq,
@@ -52,19 +57,18 @@ export const useGlassesRequestManagement = () => {
         dispatch(fetchHistoryGlassesReqThunk())
     }
 
-    function initialDataLoading(applicants, props, request, mode='register') {
+    function initialDataLoading(applicants=null, props, request, mode='register') {
 
         dispatch(setGlassesProps({
-            paymentTypes: props.data.tipoPago,
-            amounts: props.data.montos,
-            clinics: props.data.clinica,
             details: props.data.detalleLente,
             material: props.data.materialLente,
             types: props.data.tipoLente,
             diag: props.data.diagnostico
         }))
 
-        dispatch(setEmployeeList(applicants.data))
+        if (mode === 'register') {
+            dispatch(setEmployeeList(applicants.data))
+        }
 
         if (mode==='edit'){
            dispatch(loadRecord({
@@ -73,6 +77,10 @@ export const useGlassesRequestManagement = () => {
                 sup: request.data.applicationSupports
             }))
         }
+    }
+
+    function resetHistory(){
+        dispatch(loadHistory([]))
     }
 
     function setGnralInfo(data) {
@@ -89,14 +97,20 @@ export const useGlassesRequestManagement = () => {
 
     return {
         states: {
+            applicationsInProcess,
+            applicationTypes,
+            aplicationStatus,
+            preApplicants,
             paymentTypes,
             history,
+            clinics,
             memoryFlag,
             generalInfoReq,
             ophthalmicInfoReq,
             supportsReq
         },
         actions: {
+            resetHistory,
             fetchAsyncGlassesHistory,
             initialDataLoading,
             setGnralInfo,
