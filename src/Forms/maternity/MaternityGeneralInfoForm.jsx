@@ -9,7 +9,6 @@ import useGeneralInfoForm from "../../hooks/forms/maternity/useGeneralInfoForm"
 
 import PropTypes from "prop-types"
 import './maternity-gnral-info-form.css'
-import {filterData} from "../../utils/object.util.js";
 
 const MaternityGeneralInfoForm = ({
     mode,

@@ -12,7 +12,6 @@ export default function CustomInputCurrency({
     const [init, setInit] = useState(data || "0" + decimalSeparator + padding.substring(0, fractionSize))
 
     function handleKeyDownEvent(event) {
-        console.log(event.key);
         event.preventDefault();
 
         let newValue = value;
@@ -30,14 +29,12 @@ export default function CustomInputCurrency({
         else if (event['keyCode'] === 8) {
             value = newValue.slice(0, -1);
             parsedValue = newValue ? parse(parseInt(value) / divisor) : "0" + decimalSeparator + padding.substring(0, fractionSize);
-            // console.log(parsedValue);
             setInit(parsedValue)
             setValue(value)
         }
     }
     
     function parse(value) {
-        // console.log(value);
         let [integer, fraction = ""] = (value || "").toString().split(".");
 
         integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator) || "0";

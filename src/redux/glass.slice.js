@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {createNewGlassesRequest, fetchShortHistoryGlassesReq, updateGlassesRequestFromAPI} from "../service/api"
+import { fetchShortHistoryGlassesReq } from "../service/api"
+import { registerGlassesRequestAPI, updGlassesRequestAPI } from "../service/glasses.api"
 
 const initialState = {
+
+    requestsInProcess: [],
 
     authorizedAmount: null,
     paymentTypes: [],
 
-    applicationsInProcess: [],
     applicationTypes: [],
     applicationStatus: [],
-    preApplicants: [],
+    applicantList: [],
 
     history: [],
 
@@ -19,12 +21,19 @@ const initialState = {
     lensType: [],
     diagnosis: [],
 
-    memoryFlag: false,
+    requestStatus: {
+        id: 0,
+        value: ''
+    },
 
     generalInfoReq: {
-        medicalRecord: null,
+        initialOption: 'E',
         registerDate: null,
         beneficiary: null,
+        relative: null,
+        selectedClinic: null,
+        paymentType: null,
+        authorizedBy: null,
         notes: ''
     },
 
@@ -55,13 +64,14 @@ const initialState = {
         diagnosis: []
     },
     applicationSupports: {
-        currentMode: 'OPF',
+        installmentDeduction: null,
+        applicationType: null,
         hasProforma: false,
         proforma: {
             date: null,
             serie: '',
             amount: '',
-            currency: null,
+            currency: { id: 1, value: 'C$' },
             amountInCS: '',
             exchangeRate: null
         },
@@ -70,7 +80,7 @@ const initialState = {
             date: null,
             serie: '',
             amount: '',
-            currency: null,
+            currency: { id: 1, value: 'C$' },
             amountInCS: '',
             exchangeRate: null
         }
@@ -82,32 +92,33 @@ const glassSlice = createSlice({
     initialState,
     reducers: {
 
-        updApplicantsAndApplications: (state, action) =>{
+
+        loadRequestsInProcess: (state, action) => {
             return {
                 ...state,
-                preApplicants: action.payload.preApplicants,
-                applicationsInProcess: action.payload.list,
+                requestsInProcess: action.payload
             }
         },
 
-        setPreApplicantsProps: (state, action) => {
+        loadApplicants: (state, action) => {
+            return {
+                ...state,
+                applicantList: action.payload
+            }
+        },
+
+        loadProps: (state, action) => {
             return {
                 ...state,
                 paymentTypes: action.payload.paymentTypes,
-                applicationsInProcess: action.payload.applicationsInProcess,
                 applicationTypes: action.payload.applicationTypes,
                 clinics: action.payload.clinics,
-                preApplicants: action.payload.preApplicants
-            }
-        },
-
-        setGlassesProps: (state, action) => {
-            return {
-                ...state,
-                lensDetail: action.payload.details,
-                lensMaterial: action.payload.material,
-                lensType: action.payload.types,
-                diagnosis: action.payload.diag
+                authorizedAmount: action.payload.authorizedAmount,
+               
+                lensDetail: action.payload.lensDetail,
+                lensMaterial: action.payload.lensMaterial,
+                lensType: action.payload.lensType,
+                diagnosis: action.payload.diagnosis
             }
         },
 
@@ -121,6 +132,7 @@ const glassSlice = createSlice({
         loadRecord: (state, action) => {
             return {
                 ...state,
+                requestStatus: action.payload.status,
                 generalInfoReq: action.payload.gnral,
                 ophthalmicInfoReq: action.payload.oph,
                 applicationSupports: action.payload.sup
@@ -130,7 +142,6 @@ const glassSlice = createSlice({
         setGeneralInfoReq: (state, action) => {
             return {
                 ...state,
-                memoryFlag: true,
                 generalInfoReq: action.payload
             }
         },
@@ -162,9 +173,9 @@ const glassSlice = createSlice({
 })
 
 export const {
-    updApplicantsAndApplications,
-    setPreApplicantsProps,
-    setGlassesProps,
+    loadRequestsInProcess,
+    loadApplicants,
+    loadProps,
     loadHistory,
     loadRecord,
     setGeneralInfoReq,
@@ -202,10 +213,19 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
 
         const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
         const {exchangeRate} = getState().props
+        const { user} = getState().auth
 
-        await createNewGlassesRequest({
+        await registerGlassesRequestAPI({
             registerDate: generalInfoReq.registerDate,
+            applicantId: generalInfoReq.beneficiary.employeeId,
+            relativeId: generalInfoReq.relative !== null ? generalInfoReq.relative.id : null,
+            clinicId: generalInfoReq.selectedClinic.id,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            authorizedBy: generalInfoReq.authorizedBy.id,
+            registerBy: user.id,
             notes: generalInfoReq.notes,
+            beneficiaryType: generalInfoReq.initialOption,
+
             diagnosis: ophthalmicInfoReq.diagnosis,
             rEye: ophthalmicInfoReq.rightEye,
             lEye: ophthalmicInfoReq.leftEye,
@@ -214,11 +234,10 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
             lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
-            authorizedAmount: generalInfoReq.beneficiary.authorizedAmount,
-            supportType: applicationSupports.currentMode,
+
             exchangeValue: exchangeRate.value,
-            glassesRequestId: generalInfoReq.beneficiary.glassesRequestId,
-            applicationType: generalInfoReq.beneficiary.applicationType
+            installmentDeduction: applicationSupports.installmentDeduction,
+            applicationTypeId: applicationSupports.applicationType.id
         })
 
         dispatch(resetGlassReq())
@@ -230,15 +249,22 @@ export const registerGlassesRequestThunk = () => async (dispatch, getState) => {
 }
 
 
-export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState) => {
+export const updateGlassesRequestThunk = (requestId) => async (dispatch, getState) => {
     try {
 
-        const { generalInfoReq, ophthalmicInfoReq, applicationSupports } = getState().glass
+        const { generalInfoReq, ophthalmicInfoReq, applicationSupports, requestStatus } = getState().glass
         const {exchangeRate} = getState().props
 
-        await updateGlassesRequestFromAPI({
+        await updGlassesRequestAPI(requestId, {
             registerDate: generalInfoReq.registerDate,
+            applicantId: generalInfoReq.beneficiary.employeeId,
+            relativeId: generalInfoReq.relative !== null ? generalInfoReq.relative.id : null,
+            clinicId: generalInfoReq.selectedClinic.id,
+            paymentTypeId: generalInfoReq.paymentType.id,
+            authorizedBy: generalInfoReq.authorizedBy.id,
             notes: generalInfoReq.notes,
+            currentRequestStatus: requestStatus.value,
+            
             diagnosis: ophthalmicInfoReq.diagnosis,
             rEye: ophthalmicInfoReq.rightEye,
             lEye: ophthalmicInfoReq.leftEye,
@@ -247,12 +273,10 @@ export const updateGlassesRequestThunk = (orderId) => async (dispatch, getState)
             lenMaterialId: ophthalmicInfoReq.lenMaterial.id,
             lendDetailId: ophthalmicInfoReq.lenDetail.id,
             lenTypeId: ophthalmicInfoReq.lenType.id,
-            authorizedAmount: generalInfoReq.beneficiary.authorizedAmount,
-            supportType: applicationSupports.currentMode,
+
             exchangeValue: exchangeRate.value,
-            glassesRequestId: orderId,
-            applicationType: generalInfoReq.beneficiary.applicationType,
-            medicalRecordId: generalInfoReq.medicalRecord.id
+            installmentDeduction: applicationSupports.installmentDeduction,
+            applicationTypeId: applicationSupports.applicationType.id
         })
 
         dispatch(resetGlassReq())

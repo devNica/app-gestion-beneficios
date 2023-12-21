@@ -17,6 +17,15 @@ const options = [
     { id: 2, value: '$' },
 ]
 
+const installments = [
+    { id: 1, value: '1 Cuota' },
+    { id: 2, value: '3 Cuotas' },
+    { id: 3, value: '5 Cuotas' },
+    { id: 4, value: '7 Cuotas' },
+    { id: 5, value: '10 Cuotas' },
+    { id: 6, value: '12 Cuotas' }
+]
+
 const ApplicationSupportsForm = ({
     currentIndex,
     updateCurrentIndex,
@@ -29,13 +38,15 @@ const ApplicationSupportsForm = ({
     const { invoiceAmountInCS, invoiceCurrency, invoiceDate, invoiceAmount,
         invoiceExchangeRate, invoiceNumber,
         proformaAmountInCS, proformaCurrency, proformaDate, proformaAmount,
-        proformaExchangeRate, proformaNumber, supportMode
+        proformaExchangeRate, proformaNumber, docInEdition, applicationType,
+        installment
     } = states
 
     const { handleAmount, handleBackStep, handleExchangeRate, handleNextStep,
         setInvoiceCurrency, setInvoiceDate, setInvoiceNumber, setInvoiceAmountInCS,
         setProformaCurrency, setProformaNumber, setproformaDate, setproformaAmountInCS,
-        setSupportMode
+        handleDocInEditionSelection, verifyRequirementsForAuthorizationOfAmount,
+        handleFocusExchangeField, handleInstallmentSelection
     } = actions
 
     return (
@@ -45,76 +56,26 @@ const ApplicationSupportsForm = ({
             </div>
 
             <div className="form__group-top">
-                {
-                    mode === 'register' ? <>
-                    <CustomCheckOption
-                        id={'onlyProform'}
-                        name={'onlyProform'}
-                        isCheckBox={false}
-                        value={'OPF'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Proforma:"
-                    />
-                    <CustomCheckOption
-                        id={'onlyInvoice'}
-                        name={'onlyInvoice'}
-                        isCheckBox={false}
-                        value={'OIV'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Factura:"
-                    />
-                    <CustomCheckOption
-                        id={'proformWithInvoice'}
-                        name={'proformWithInvoice'}
-                        isCheckBox={false}
-                        value={'PWI'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Proforma | Factura:"
-                    />
-                    </>: mode === 'edit' && supportMode === 'OPF' ? <>
 
-                    <CustomCheckOption
-                        id={'onlyProform'}
-                        name={'onlyProform'}
-                        isCheckBox={false}
-                        value={'OPF'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Proforma:"
-                    />
-                     <CustomCheckOption
-                        id={'proformWithInvoice'}
-                        name={'proformWithInvoice'}
-                        isCheckBox={false}
-                        value={'PWI'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Proforma | Factura:"
-                    />
-                    </>: mode === 'edit' && supportMode === 'OIV' ? <>
-                    <CustomCheckOption
-                        id={'onlyInvoice'}
-                        name={'onlyInvoice'}
-                        isCheckBox={false}
-                        value={'OIV'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Factura:"
-                    />
-                    <CustomCheckOption
-                        id={'proformWithInvoice'}
-                        name={'proformWithInvoice'}
-                        isCheckBox={false}
-                        value={'PWI'}
-                        currentValue={supportMode}
-                        onChange={(v) => setSupportMode(v)}
-                        label="Proforma | Factura:"
-                    />
-                    </>: <></>
-                }
+                <CustomCheckOption
+                    id={'onlyProform'}
+                    name={'onlyProform'}
+                    isCheckBox={false}
+                    value={'P'}
+                    currentValue={docInEdition}
+                    onChange={handleDocInEditionSelection}
+                    label="Proforma:"
+                />
+                <CustomCheckOption
+                    id={'onlyInvoice'}
+                    name={'onlyInvoice'}
+                    isCheckBox={false}
+                    value={'I'}
+                    currentValue={docInEdition}
+                    onChange={handleDocInEditionSelection}
+                    label="Factura:"
+                />
+
 
             </div>
 
@@ -157,9 +118,11 @@ const ApplicationSupportsForm = ({
                                     if (v.id === 1) {
                                         const pfAmountInCS = 'C$ ' + formatNumberWithCommas(1 * Number(proformaAmount.replace(/,/g, '')))
                                         setproformaAmountInCS(pfAmountInCS)
+                                        verifyRequirementsForAuthorizationOfAmount(Number(proformaAmount.replace(/,/g, '')), v.id)
                                     } else {
                                         const pfAmountInCS = 'C$ ' + formatNumberWithCommas(Number(proformaExchangeRate) * Number(proformaAmount.replace(/,/g, '')))
                                         setproformaAmountInCS(pfAmountInCS)
+                                        verifyRequirementsForAuthorizationOfAmount(Number(proformaAmount.replace(/,/g, '')), v.id)
                                     }
 
                                 }}
@@ -192,6 +155,7 @@ const ApplicationSupportsForm = ({
                                     type="text"
                                     value={proformaExchangeRate}
                                     onChange={handleExchangeRate}
+                                    handleOnBlur={() => handleFocusExchangeField('proforma')}
                                 />
                         }
 
@@ -274,6 +238,7 @@ const ApplicationSupportsForm = ({
                                     type="text"
                                     value={invoiceExchangeRate}
                                     onChange={handleExchangeRate}
+                                    handleOnBlur={() => handleFocusExchangeField('invoice')}
                                 />
                         }
 
@@ -282,8 +247,48 @@ const ApplicationSupportsForm = ({
 
 
                 {/* this element is a fake layer on others component.*/}
-                <div className={`hide-element ${supportMode === 'OPF' ? 'right' : supportMode === 'OIV' ? 'left' : 'none'}`}></div>
+                <div
+                    className={`hide-element ${docInEdition === 'P' ?
+                        'right' : docInEdition === 'I' ? 'left' : 'none'}`}>
+                </div>
 
+            </div>
+
+            <div className="form__validations">
+
+                <CustomInput
+                    id="applicationType"
+                    name="applicationType"
+                    label="Tipo Aplicacion:"
+                    editable={false}
+                    defaultValue={applicationType.value}
+                    customStyles="disabled"
+                    onChange={() => { }}
+                />
+
+                {
+                    applicationType.id > 1
+                    ?
+                        <Select
+                            id="numberDeductions"
+                            name="numberDeductions"
+                            label="No. Cuotas:"
+                            placeHolder="Numero de Cuotas a Deducir del Salario"
+                            options={installments}
+                            currentValue={installment}
+                            onChange={handleInstallmentSelection}
+                        />
+                    :
+                        <CustomInput
+                            id="numberDeductions"
+                            name="numberDeductions"
+                            label="No. Cuotas:"
+                            type="text"
+                            editable={false}
+                            defaultValue={'No aplica'}
+                            customStyles="disabled"
+                        />
+                }
             </div>
 
             <div className="form__group-actions">

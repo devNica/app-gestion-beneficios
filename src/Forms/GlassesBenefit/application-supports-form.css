@@ -1,11 +1,11 @@
 .form__application__supports {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(5, auto);
     width: 100%;
     height: 100%;
     margin-bottom: 20px;
-    column-gap: 10px;
+    gap: 30px;
 
     .form__title {
         grid-column: span 2;
@@ -21,7 +21,6 @@
     }
 
     .form__group-top {
-        margin-bottom: 40px;
         grid-row: 2;
         grid-column: span 2;
         display: flex;
@@ -101,10 +100,21 @@
         }
     }
 
+    .form__validations{
+        grid-row: 4;
+        grid-column: span 2;
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 30px;       
+
+        
+    }
+
 
     .form__group-actions {
         margin-top: 15px;
-        grid-row: 4;
+        grid-row: 5;
         grid-column: span 2;
 
         display: flex;

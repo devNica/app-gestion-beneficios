@@ -12,16 +12,6 @@ export const loginUserDM = async (payload) => {
     })
 }
 
-
-export const fetchGlassesPropsFromAPI = async () => {
-    return await httpHandler({
-        instance: axiosInstance,
-        endpoint: '/glasses/props'
-    })
-}
-
-
-
 export const fetchAdminPropsFromAPI = async () => {
     const response = await axiosInstance('/props/admin')
 
@@ -33,28 +23,10 @@ export const fetchAdminPropsFromAPI = async () => {
     return response.data
 }
 
-
-
 export const fetchRelativesApplicant = async (employeeId) => {
     return await httpHandler({
         instance: axiosInstance,
         endpoint: `/glasses/relatives/${employeeId}`
-    })
-}
-
-export const fetchGlassesApplicants = async () => {
-    return await httpHandler({
-        instance: axiosInstance,
-        endpoint: '/glasses/applicants'
-    })
-}
-
-export const createNewGlassesRequest = async (payload) => {
-    return await httpHandler({
-        instance: axiosInstance,
-        endpoint: '/glasses',
-        body: payload,
-        method: 'POST'
     })
 }
 
@@ -86,16 +58,6 @@ export const fetchMaternityApplicants = async (mode) => {
     return await httpHandler({
         instance: axiosInstance,
         endpoint: `/maternity/applicants/${mode}`
-    })
-}
-
-
-export const updateGlassesRequestFromAPI = async (payload) => {
-    return await httpHandler({
-        instance: axiosInstance,
-        endpoint: `/glasses/medical-record`,
-        body: payload,
-        method: 'PUT'
     })
 }
 

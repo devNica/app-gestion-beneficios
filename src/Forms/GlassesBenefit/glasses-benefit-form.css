@@ -1,7 +1,7 @@
 .form__gnral__glasses__benefit__info {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(5, auto);
     max-width: 1200px;
 
     margin: 0 auto;
@@ -16,8 +16,17 @@
         text-transform: uppercase;
     }
 
-    .form__group-middle {
+    .form__group-top {
+        margin-bottom: 40px;
         grid-row: 2;
+        grid-column: span 2;
+        display: flex;
+        gap: 10px;
+        border-bottom: 1px solid var(--bg-gray-600);
+    }
+
+    .form__group-middle {
+        grid-row: 3;
         grid-column: 1 / 5;
 
         display: flex;
@@ -41,7 +50,7 @@
     }
 
     .form__group-bottom {
-        grid-row: 3;
+        grid-row: 4;
         grid-column: 1 / 5;
 
         display: flex;
@@ -58,9 +67,9 @@
     }
 
     .form__group-actions{
-        grid-row: 4;
+        grid-row: 5;
         grid-column: span 2;
-        margin-top: 10px;
+        margin-top: 30px;
         display: flex;
         flex-direction: row;
         justify-content: center;

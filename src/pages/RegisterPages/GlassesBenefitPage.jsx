@@ -11,11 +11,12 @@ import { useTrackingProps } from "../../hooks/useTracking"
 import {useGlassesRequestManagement, useGlassProps} from "../../hooks/useGlass"
 
 import { useNavigate } from "react-router-dom"
+import { useAdminProps } from "../../hooks/useProps"
 
+import { fetchApplicanstAPI, fetchPropsForGlassesReqAPI } from "../../service/glasses.api.js";
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 
 import '../main-page.css'
-import {fetchGlassesApplicants, fetchGlassesPropsFromAPI} from "../../service/api.js";
-import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
 
 
 export default function GlassesBenefitPage() {
@@ -24,6 +25,7 @@ export default function GlassesBenefitPage() {
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct} = useGlassesRequestManagement()
 
+    const { userAuthorizers } = useAdminProps()
 
     const {
         diagnosis,
@@ -39,9 +41,10 @@ export default function GlassesBenefitPage() {
     const fetching = useCallback(async()=>{
        try {
            const [applicants, props] =  await Promise.all([
-                    fetchGlassesApplicants(),
-                    fetchGlassesPropsFromAPI() ])
-           glassesAct.initialDataLoading(applicants, props, null)
+                    fetchApplicanstAPI(),
+                    fetchPropsForGlassesReqAPI() ])
+                    
+           glassesAct.propsRequiredInRegistrationMode({ props, applicants })
            setLoading(false)
        } catch (err){
            console.log(err)
@@ -67,6 +70,7 @@ export default function GlassesBenefitPage() {
             mode="register"
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            authorizers={userAuthorizers}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

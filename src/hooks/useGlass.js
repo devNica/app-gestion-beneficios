@@ -3,10 +3,9 @@ import {
     setGeneralInfoReq,
     setOphthalmicInfoReq,
     setSupportsReq,
-    fetchHistoryGlassesReqThunk, loadRecord, setGlassesProps, loadHistory
+    fetchHistoryGlassesReqThunk, loadRecord, loadHistory, loadProps, loadApplicants
 } from '../redux/glass.slice'
 import {filterData} from "../utils/object.util.js";
-import {setEmployeeList} from "../redux/beneficiary.slice.js";
 
 export const useGlassProps = () => {
     const {
@@ -40,8 +39,9 @@ export const useGlassesRequestManagement = () => {
     const dispatch = useDispatch()
 
     const {
-        preApplicants,
-        applicationsInProcess,
+        requestStatus,
+        requestsInProcess,
+        applicantList,
         applicationTypes,
         aplicationStatus,
         paymentTypes,
@@ -57,26 +57,47 @@ export const useGlassesRequestManagement = () => {
         dispatch(fetchHistoryGlassesReqThunk())
     }
 
-    function initialDataLoading(applicants=null, props, request, mode='register') {
 
-        dispatch(setGlassesProps({
-            details: props.data.detalleLente,
-            material: props.data.materialLente,
-            types: props.data.tipoLente,
-            diag: props.data.diagnostico
+    function propsRequiredInEditingMode({ props, requestDetail }){
+
+        dispatch(loadProps({
+            paymentTypes: props.data.paymentTypes,
+            applicationTypes: props.data.applicationTypes,
+            clinics: props.data.clinics,
+            authorizedAmount: props.data.authorizedAmount,
+
+            lensType: props.data.lensType,
+            lensMaterial: props.data.lensMaterial,
+            lensDetail: props.data.lensDetail,
+            diagnosis: props.data.diagnosis
         }))
 
-        if (mode === 'register') {
-            dispatch(setEmployeeList(applicants.data))
-        }
+        dispatch(loadRecord({
+            status: requestDetail.data.requestStatus,
+            gnral: requestDetail.data.gnralInfoReq,
+            oph: requestDetail.data.opthalmicInfo,
+            sup: requestDetail.data.applicationSupports
+        }))
+    }
 
-        if (mode==='edit'){
-           dispatch(loadRecord({
-                gnral: request.data.gnralInfoReq,
-                oph: request.data.opthalmicInfo,
-                sup: request.data.applicationSupports
-            }))
-        }
+
+    function propsRequiredInRegistrationMode({ props, applicants }) {
+
+        dispatch(loadProps({
+            paymentTypes: props.data.paymentTypes,
+            applicationTypes: props.data.applicationTypes,
+            clinics: props.data.clinics,
+            authorizedAmount: props.data.authorizedAmount,
+
+            lensType: props.data.lensType,
+            lensMaterial: props.data.lensMaterial,
+            lensDetail: props.data.lensDetail,
+            diagnosis: props.data.diagnosis
+        }))
+        
+        dispatch(loadApplicants(applicants.data))
+        
+
     }
 
     function resetHistory(){
@@ -97,10 +118,11 @@ export const useGlassesRequestManagement = () => {
 
     return {
         states: {
-            applicationsInProcess,
+            requestStatus,
+            requestsInProcess,
             applicationTypes,
             aplicationStatus,
-            preApplicants,
+            applicantList,
             paymentTypes,
             history,
             clinics,
@@ -112,10 +134,11 @@ export const useGlassesRequestManagement = () => {
         actions: {
             resetHistory,
             fetchAsyncGlassesHistory,
-            initialDataLoading,
             setGnralInfo,
             setOphthalmicInfo,
             setApplicationSupports,
+            propsRequiredInRegistrationMode,
+            propsRequiredInEditingMode
         }
     }
 }

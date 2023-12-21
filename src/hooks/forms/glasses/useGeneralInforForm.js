@@ -4,13 +4,13 @@ import CustomNotification from '../../../Components/Notification/CustomNotificat
 import { isNull } from "../../../utils/object.util"
 
 /** hooks & management state */
-import { useGetUserInfo } from "../../useAuth"
 import { useDispatch } from "react-redux"
 import { setNotification } from "../../../redux/notification.slice"
 
 
 import { useGlassesRequestManagement } from "../../useGlass"
 import { useTrackingProps } from '../../useTracking'
+import { fetchApplicantRelativesAPI } from '../../../service/glasses.api'
 
 export const useHandleGeneralGlassesBenefitInfoForm = ({
     currentIndex,
@@ -20,37 +20,65 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
 
 
     const dispatch = useDispatch()
-    const logger = useGetUserInfo()
 
     CustomNotification()
 
     const { actions, states } = useGlassesRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
 
-    const { generalInfoReq: gnrl } = states
+    const { generalInfoReq: gnrl, clinics, paymentTypes, applicantList, requestStatus } = states
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [beneficiary, setBeneficiary] = useState(null)
     const [notes, setNotes] = useState(gnrl.notes)
-    const [medicalRecord, setMedicalRecord] = useState(null)
-
     const [registerDate, setRegisterDate] = useState(new Date().toISOString().slice(0, 10))
 
+    const [clinic, setClinic] = useState(null)
+    const [paymentType, setPaymentType] = useState(null)
+    const [authorizer, setAuthorizer] = useState(null)
+    const [applicant, setApplicant] = useState(null)
+    const [relativeModal, setRelativeModal] = useState(false)
+    const [optionSelected, setOptionSelected] = useState(gnrl.initialOption)
+    const [relatives, setRelatives] = useState([])
+    const [relativeSelected, setRelativeSelected] = useState(null)
+
+
     useEffect(() => {
+
         if (gnrl.beneficiary !== null) {
-            setBeneficiary(gnrl.beneficiary)
+            setApplicant(gnrl.beneficiary)
         }
         if (gnrl.registerDate !== null) {
             setRegisterDate(gnrl.registerDate)
         }
-        if (gnrl.medicalRecord !== null) {
-            setMedicalRecord(gnrl.medicalRecord)
+        if (gnrl.paymentType !== null) {
+            setPaymentType(gnrl.paymentType)
         }
+        if (gnrl.relative !== null) {
+            setRelativeSelected(gnrl.relative)
+        }
+        if (gnrl.selectedClinic !== null) {
+            setClinic(gnrl.selectedClinic)
+        }
+
+        if (gnrl.authorizedBy !== null) {
+            setAuthorizer(gnrl.authorizedBy)
+        }
+
+
     }, [])
 
-    function handleEmployeeSelection(data) {
+    async function handleApplicantSelection(data) {
         setIsModalOpen(false)
-        setBeneficiary(data)
+        setApplicant(data)
+
+        const result = await fetchApplicantRelativesAPI(data.employeeId)
+        setRelatives(result.data)
+        setRelativeSelected(null)
+    }
+
+    function handleRelativeSelection(data) {
+        setRelativeSelected(data)
+        setRelativeModal(false)
     }
 
     function handleRegisterDate(value) {
@@ -59,9 +87,49 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
 
     function handleSubmit() {
 
-        if (!isNull(beneficiary)) {
+        if (!isNull(applicant)) {
             dispatch(setNotification({
-                message: 'No ha seleccionado al Beneficiario',
+                message: 'No ha seleccionado al Colaborador',
+                type: 'warning',
+                delay: 1500
+            }))
+
+            return
+        }
+
+        if (optionSelected === 'P' && relativeSelected === null) {
+            dispatch(setNotification({
+                message: 'No ha seleccionado al pariente del Colaborador',
+                type: 'warning',
+                delay: 1500
+            }))
+
+            return
+        }
+
+        if (clinic === null) {
+            dispatch(setNotification({
+                message: 'No ha seleccionado la Optica',
+                type: 'warning',
+                delay: 1500
+            }))
+
+            return
+        }
+
+        if (paymentType === null) {
+            dispatch(setNotification({
+                message: 'No ha seleccionado el tipo de pago',
+                type: 'warning',
+                delay: 1500
+            }))
+
+            return
+        }
+
+        if (authorizer === null) {
+            dispatch(setNotification({
+                message: 'No ha seleccionado el Autorizador',
                 type: 'warning',
                 delay: 1500
             }))
@@ -70,10 +138,14 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
         }
 
         actions.setGnralInfo({
-            registerDate,
-            beneficiary,
-            medicalRecord,
-            notes
+            initialOption: optionSelected,
+            registerDate: registerDate,
+            beneficiary: applicant,
+            relative: relativeSelected,
+            selectedClinic: clinic,
+            paymentType: paymentType,
+            authorizedBy: authorizer,
+            notes: notes
         }, mode)
 
         trackingAct.trackingUpdate({
@@ -90,21 +162,55 @@ export const useHandleGeneralGlassesBenefitInfoForm = ({
         updateCurrentIndex(currentIndex + 1)
     }
 
+    function handleOptionSelection(v) {
+
+        if (mode === 'register') {
+            setOptionSelected(v)
+            setRelativeSelected(null)
+            setRelatives(null)
+            setApplicant(null)
+        } else {
+            dispatch(setNotification({
+                message: 'No se puede modificar el valor de esta opcion',
+                type: 'info',
+                delay: 1500
+            }))
+        }
+
+    }
+
     return {
         states: {
             isModalOpen,
-            beneficiary,
+            applicant,
             notes,
             registerDate,
-            logger,
+            clinic,
+            clinics,
+            paymentType,
+            paymentTypes,
+            authorizer,
+            applicantList,
+            relativeSelected,
+            relatives,
+            relativeModal,
+            optionSelected,
+            requestStatus
         },
 
         actions: {
-            handleEmployeeSelection,
+            handleApplicantSelection,
             handleRegisterDate,
             handleSubmit,
             setNotes,
             setIsModalOpen,
+            setAuthorizer,
+            setClinic,
+            setPaymentType,
+            setRelativeModal,
+            setRelativeSelected,
+            handleOptionSelection,
+            handleRelativeSelection
         }
     }
 

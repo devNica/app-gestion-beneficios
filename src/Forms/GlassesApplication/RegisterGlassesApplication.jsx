@@ -45,8 +45,11 @@ const RegisterGlassesApplication = ({ currentIndex, updateCurrentIndex, authoriz
         setApplicant(null)
         setRelatives([])
         setRelativeSel(null)
-        setClinic(clinics[0])
-        setApplicationType(applicationTypes[0])
+        setClinic([])
+        setApplicationType([])
+        setLetterRef('')
+        setPaymentType(null)
+        setCurrentAuthorizer(null)
     }
 
     async function handleEmployeeSelection(data) {

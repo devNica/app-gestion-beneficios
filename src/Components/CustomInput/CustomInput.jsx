@@ -16,7 +16,8 @@ const CustomInput = ({
     onChange,
     handleKeyDown,
     customStyles = '',
-    attachmentElement = null
+    attachmentElement = null,
+    handleOnBlur= ()=> {}
 }) => {
 
 
@@ -36,6 +37,7 @@ const CustomInput = ({
                         autoComplete={autoComplete}
                         value={value}
                         onChange={onChange}
+                        onBlur={handleOnBlur}
                         className={customStyles !== null ? `form__input ${customStyles}` : `form__input`}
                     /> :
 

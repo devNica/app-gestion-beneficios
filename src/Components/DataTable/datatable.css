@@ -1,7 +1,7 @@
 .custom__datatable{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 90%;
     padding: 1rem;
     border-radius: 4px;
     border: 1px solid var(--bg-gray-600);

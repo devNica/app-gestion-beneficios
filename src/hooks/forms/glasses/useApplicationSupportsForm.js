@@ -11,7 +11,8 @@ import { useTrackingProps } from '../../useTracking'
 
 import { formatNumberWithCommas } from "../../../utils/number.util"
 import { isNull } from "../../../utils/object.util"
-import {registerGlassesRequestThunk, updateGlassesRequestThunk} from "../../../redux/glass.slice"
+import { registerGlassesRequestThunk, updateGlassesRequestThunk } from "../../../redux/glass.slice"
+import { isEmpty } from "lodash"
 
 
 export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentIndex, options, mode, orderId }) => {
@@ -19,7 +20,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     const { actions, states: glassStates } = useGlassesRequestManagement()
     const { actions: trackingAct } = useTrackingProps()
 
-    const { supportsReq: { proforma, invoice, currentMode } } = glassStates
+    const { supportsReq: { proforma, invoice, installmentDeduction }, generalInfoReq, applicationTypes, requestStatus } = glassStates
 
     const dispatch = useDispatch()
     /** Notifications Controller */
@@ -44,8 +45,10 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     const [proformaAmountInCS, setproformaAmountInCS] = useState('')
     const [invoiceAmountInCS, setInvoiceAmountInCS] = useState('')
 
-    const [supportMode, setSupportMode] = useState(currentMode)
-
+    const [docInEdition, setDocInEdition] = useState(null)
+    // const [docInEdition, setDocInEdition] = useState(mode === 'register' ? 'P' : 'I')
+    const [applicationType, setApplicationType] = useState({ id: 0, value: 'procesando' })
+    const [installment, setInstallment] = useState(null)
 
     /**Se garantiza que los datos obtenidos del store solo se seteen una unica vez */
     useEffect(() => {
@@ -66,13 +69,32 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         setproformaAmountInCS(proforma.amountInCS)
         setInvoiceAmountInCS(invoice.amountInCS)
 
+        if (installmentDeduction !== null) {
+            setInstallment(installmentDeduction)
+        }
+
+        if (mode === 'register') {
+            setDocInEdition('P')
+        }
+
+        if (mode === 'edit' && requestStatus.value !== 'SF4') {
+            setDocInEdition('P')
+        }
+
+        if (mode === 'edit' && requestStatus.value === 'SF4') {
+            setDocInEdition('I')
+        }
+
+        verifyRequirementsForAuthorizationOfAmount(Number(proforma.amount.replace(/,/g, '')), proforma.currency.id)
+
     }, [])
 
     function handleBackStep() {
         updateCurrentIndex(currentIndex - 1)
         actions.setApplicationSupports({
-            currentMode: supportMode,
-            hasProforma: supportMode !== 'OIV' ? true : false,
+            installmentDeduction: installment,
+            applicationType: null,
+            hasProforma: proformaAmount !== '' && proformaNumber !== '' ? true : false,
             proforma: {
                 date: proformaDate,
                 serie: proformaNumber,
@@ -81,7 +103,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 amountInCS: proformaAmountInCS,
                 exchangeRate: proformaExchangeRate
             },
-            hasInvoice: supportMode !== 'OPF' ? true : false,
+            hasInvoice: invoiceAmount !== '' && invoiceNumber !== '' ? true : false,
             invoice: {
                 date: invoiceDate,
                 serie: invoiceNumber,
@@ -93,7 +115,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         })
     }
 
-    function registerNewRequets(){
+    function registerNewRequets() {
         dispatch(registerGlassesRequestThunk())
 
         dispatch(setNotification({
@@ -108,7 +130,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         })
     }
 
-    function editRequest(){
+    function editRequest() {
         dispatch(updateGlassesRequestThunk(orderId))
 
         dispatch(setNotification({
@@ -125,7 +147,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
 
     function handleNextStep() {
 
-        if (supportMode === 'OPF') {
+        if (mode === 'register') {
             if (!isNull(proformaNumber) || proformaNumber === '') {
                 dispatch(setNotification({
                     message: 'No se ha digitado el numero de la proforma',
@@ -147,22 +169,9 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             }
 
 
-        }
-
-        if (supportMode === 'OIV') {
-            if (!isNull(invoiceNumber)) {
+            if (installment === null && applicationType.id > 1) {
                 dispatch(setNotification({
-                    message: 'No se ha digitado el numero de la factura',
-                    type: 'warning',
-                    delay: 1500
-                }))
-
-                return
-            }
-
-            if (invoiceAmount === '') {
-                dispatch(setNotification({
-                    message: 'No se ha digitado el monto de la factura',
+                    message: 'El tipo de solicitud requiere se indique el numero de cuotas',
                     type: 'warning',
                     delay: 1500
                 }))
@@ -171,8 +180,9 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             }
         }
 
-        if (supportMode === 'PWI') {
-            if (!isNull(proformaNumber)) {
+        if (mode === 'edit') {
+
+            if (!isNull(proformaNumber) || proformaNumber === '') {
                 dispatch(setNotification({
                     message: 'No se ha digitado el numero de la proforma',
                     type: 'warning',
@@ -192,30 +202,33 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 return
             }
 
-            if (!isNull(invoiceNumber)) {
-                dispatch(setNotification({
-                    message: 'No se ha digitado el numero de la factura',
-                    type: 'warning',
-                    delay: 1500
-                }))
+            if (docInEdition === 'I') {
+                if (!isNull(invoiceNumber) || invoiceNumber === '') {
+                    dispatch(setNotification({
+                        message: 'No se ha digitado el numero de la factura',
+                        type: 'warning',
+                        delay: 1500
+                    }))
 
-                return
-            }
+                    return
+                }
 
-            if (invoiceAmount === '') {
-                dispatch(setNotification({
-                    message: 'No se ha digitado el monto de la factura',
-                    type: 'warning',
-                    delay: 1500
-                }))
+                if (invoiceAmount === '') {
+                    dispatch(setNotification({
+                        message: 'No se ha digitado el monto de la factura',
+                        type: 'warning',
+                        delay: 1500
+                    }))
 
-                return
+                    return
+                }
             }
         }
 
         actions.setApplicationSupports({
-            currentMode: supportMode,
-            hasProforma: supportMode !== 'OIV' ? true : false,
+            installmentDeduction: installment,
+            applicationType: applicationType,
+            hasProforma: proformaAmount !== '' && proformaNumber !== '' ? true : false,
             proforma: {
                 date: proformaDate,
                 serie: proformaNumber,
@@ -224,7 +237,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 amountInCS: proformaAmountInCS,
                 exchangeRate: proformaExchangeRate
             },
-            hasInvoice: supportMode !== 'OPF' ? true : false,
+            hasInvoice: invoiceAmount !== '' && invoiceNumber !== '' ? true : false,
             invoice: {
                 date: invoiceDate,
                 serie: invoiceNumber,
@@ -236,14 +249,13 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         })
 
         try {
-
-            if (mode === 'register'){
+            if (mode === 'register') {
                 registerNewRequets()
-            } else if (mode === 'edit'){
+            } else if (mode === 'edit') {
                 editRequest()
             }
 
-            
+
             setTimeout(() => {
                 navigate('/home')
             }, 1700);
@@ -255,14 +267,26 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
                 type: 'danger',
                 delay: 1500
             }))
-        }        
+        }
     }
 
 
     function handleExchangeRate(e) {
 
-        const inputValue = String(e.target.value).replace(/,/g, '')
+        let value = e.target.value
+
+        value = value.replace(/[^0-9.]/g, '')
+
+        // Asegúrate de que solo haya un punto decimal
+        const dots = value.split('.').length - 1;
+        if (dots > 1) {
+            value = value.slice(0, value.lastIndexOf('.'));
+        }
+
+        const inputValue = String(value).replace(/,/g, '')
         const exchangeRate = formatNumberWithCommas(inputValue)
+
+
         if (e.target.name === 'proformExchangeRate') {
             setProformExchangeRate(exchangeRate)
             const v = Number(proformaAmount.replace(/,/g, '')) * Number(inputValue)
@@ -279,11 +303,24 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
     }
 
     function handleAmount(e) {
-        const inputValue = String(e.target.value).replace(/,/g, '')
+
+        let value = e.target.value
+
+        value = value.replace(/[^0-9.]/g, '')
+
+        // Asegúrate de que solo haya un punto decimal
+        const dots = value.split('.').length - 1;
+        if (dots > 1) {
+            value = value.slice(0, value.lastIndexOf('.'));
+        }
+
+        const inputValue = String(value).replace(/,/g, '')
         if (e.target.name === 'proformAmount') {
             setProformaAmount(formatNumberWithCommas(inputValue))
             const x = 'C$ ' + formatNumberWithCommas((Number(inputValue) * Number(proformaExchangeRate)).toFixed(2))
             setproformaAmountInCS(x)
+
+            verifyRequirementsForAuthorizationOfAmount(inputValue, proformaCurrency.id)
         }
         else if (e.target.name === 'invoiceAmount') {
             setInvoiceAmount(formatNumberWithCommas(inputValue))
@@ -292,6 +329,97 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
         }
 
     }
+
+    function verifyRequirementsForAuthorizationOfAmount(value, currencyId) {
+
+        const { beneficiary, initialOption } = generalInfoReq
+
+        const authAmountInCs = 50
+
+        if (initialOption === 'E' && beneficiary.range === 'Dentro' && beneficiary.received === 0) {
+            // verificar montos vs monto autorizado
+
+            const currProformaAmountInUsd = currencyId === 1 ?
+                Number(value) / 36.56 :
+                Number(value)
+
+            // cuando el monto de la proforma esta en cordobas
+            if (Number(value) === 0) {
+                setApplicationType({ id: 0, value: 'Procesando...' })
+            }
+            else if (authAmountInCs >= currProformaAmountInUsd) {
+                setApplicationType(applicationTypes[0])
+            } else if (authAmountInCs < currProformaAmountInUsd) {
+                setApplicationType(applicationTypes[1])
+            }
+        }
+        else if (initialOption === 'E' && beneficiary.range === 'Dentro' && beneficiary.received > 0) {
+            setApplicationType(applicationTypes[3])
+        }
+        else if (initialOption === 'E' && beneficiary.range === 'Fuera') {
+            setApplicationType(applicationTypes[2])
+        } else if (initialOption === 'P') {
+            setApplicationType(applicationTypes[2])
+        }
+    }
+
+
+    function handleFocusExchangeField(source) {
+        if (source === 'proforma') {
+            if (isEmpty(proformaExchangeRate)) {
+                setProformExchangeRate('1.00')
+                const x = 'C$ ' + formatNumberWithCommas(proformaAmount)
+                setproformaAmountInCS(x)
+            }
+        } else if (source === 'invoice') {
+            if (isEmpty(invoiceExchangeRate)) {
+                setInvoiceExchangeRate('1.00')
+                const x = 'C$ ' + formatNumberWithCommas(invoiceAmount)
+                setInvoiceAmountInCS(x)
+            }
+        }
+    }
+
+    function handleDocInEditionSelection(v) {
+        if (mode === 'register' && v === 'I') {
+            dispatch(setNotification({
+                message: 'No se puede editar la factura en este paso',
+                type: 'info',
+                delay: 1500
+            }))
+
+            return
+        } else if (mode === 'edit' && v === 'P' && requestStatus.value === 'SF4') {
+            dispatch(setNotification({
+                message: 'No se puede editar la proforma cuando la solcitud ya fue confirmada',
+                type: 'info',
+                delay: 1500
+            }))
+        } else if (mode === 'edit' && v === 'I' && requestStatus.value !== 'SF4') {
+            dispatch(setNotification({
+                message: 'No se puede editar la factura cuando la solicitud no ha sido confirmada',
+                type: 'info',
+                delay: 1500
+            }))
+        }
+        else if (mode === 'edit') {
+            setDocInEdition(v)
+        }
+    }
+
+    function handleInstallmentSelection(data) {
+        if (requestStatus.value !== 'SF4') {
+            setInstallment(data)
+        } else {
+            dispatch(setNotification({
+                message: 'No se puede modificar el numero de cuotas cuando la solicitud ya fue confirmada',
+                type: 'info',
+                delay: 1500
+            }))
+        }
+
+    }
+
 
     return {
         states: {
@@ -307,7 +435,9 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             invoiceAmount,
             proformaAmountInCS,
             invoiceAmountInCS,
-            supportMode
+            docInEdition,
+            applicationType,
+            installment
         },
         actions: {
             handleNextStep,
@@ -322,8 +452,11 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             setInvoiceNumber,
             setproformaAmountInCS,
             setInvoiceAmountInCS,
-            setSupportMode
-
+            setInstallment,
+            handleDocInEditionSelection,
+            verifyRequirementsForAuthorizationOfAmount,
+            handleFocusExchangeField,
+            handleInstallmentSelection
         }
     }
 

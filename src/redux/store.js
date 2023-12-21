@@ -10,6 +10,7 @@ import propsReducer from './props.slice'
 import trackingReducer from './tracking.slice'
 import beneficiaryReducer from './beneficiary.slice.js'
 import scholarShipReducer from './scholarship.slice.js'
+import paymentsReducer from './payment.slice.js'
 import thunk from 'redux-thunk'
 
 
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     death: deathReducer,
     notifications: notificationReducer,
     tracking: trackingReducer,
-    scholarship: scholarShipReducer
+    scholarship: scholarShipReducer,
+    payments: paymentsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

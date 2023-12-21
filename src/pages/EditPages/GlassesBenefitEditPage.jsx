@@ -13,11 +13,12 @@ import { useTrackingProps } from "../../hooks/useTracking"
 
 import { useNavigate, useParams } from "react-router-dom"
 
-import { fetchGlassesPropsFromAPI, fetchGlassesRequestDetail} from "../../service/api.js"
+import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
+import { fetchGlassesRequestDetailAPI, fetchPropsForGlassesReqAPI } from "../../service/glasses.api.js"
 
 
 import '../main-page.css'
-import CustomLoader from "../../Components/Loader/CustomLoader.jsx"
+import { useAdminProps } from "../../hooks/useProps.js"
 
 export default function GlassesBenefitEditPage() {
 
@@ -25,6 +26,7 @@ export default function GlassesBenefitEditPage() {
     const navigate = useNavigate()
     const { id } = useParams()
 
+    const { userAuthorizers } = useAdminProps()
     const { actions: trackingAct } = useTrackingProps()
     const { actions: glassesAct } = useGlassesRequestManagement()
 
@@ -43,12 +45,12 @@ export default function GlassesBenefitEditPage() {
     const fetching = useCallback(async () => {
 
       try {
-          const [props, request] = await Promise.all([
-              fetchGlassesPropsFromAPI(),
-              fetchGlassesRequestDetail(id)
+          const [props, requestDetail] = await Promise.all([
+              fetchPropsForGlassesReqAPI(),
+              fetchGlassesRequestDetailAPI(id)
           ])
 
-          glassesAct.initialDataLoading(null, props, request, 'edit')
+          glassesAct.propsRequiredInEditingMode({ props, requestDetail})
 
           setLoading(false)
 
@@ -75,6 +77,7 @@ export default function GlassesBenefitEditPage() {
             mode="edit"
             currentIndex={currentIndex}
             updateCurrentIndex={setCurrentIndex}
+            authorizers={userAuthorizers}
         />,
         <OphthalmicForm
             diagnosis={diagnosis}

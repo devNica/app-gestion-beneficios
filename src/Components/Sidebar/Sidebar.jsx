@@ -18,7 +18,6 @@ export default function Sidebar({ isCollapsed }) {
         const element = document.getElementById(who)
 
         const menu = element.children.item(1)
-        console.log(menu)
 
         let height = 0
 
@@ -62,7 +61,7 @@ export default function Sidebar({ isCollapsed }) {
                     <div className='nav__link dropdown__menu'>
                         <PiStudentFill className='nav__icon' />
                         <span className={`nav__title ${isCollapsed ? 'hide' : ''}`}>Becas</span>
-                        <RiArrowDropRightLine className='nav__icon arrow' onClick={()=>handleOpen('becas')} />
+                        <RiArrowDropRightLine className='nav__icon arrow' onClick={() => handleOpen('becas')} />
                     </div>
 
                     <ul className="menu__items">
@@ -92,7 +91,7 @@ export default function Sidebar({ isCollapsed }) {
                     <div className='nav__link dropdown__menu'>
                         <PiStudentFill className='nav__icon' />
                         <span className={`nav__title ${isCollapsed ? 'hide' : ''}`}>Otro</span>
-                        <RiArrowDropRightLine className='nav__icon arrow' onClick={()=>handleOpen('otro')} />
+                        <RiArrowDropRightLine className='nav__icon arrow' onClick={() => handleOpen('otro')} />
                     </div>
 
                     <ul className="menu__items">
@@ -108,7 +107,7 @@ export default function Sidebar({ isCollapsed }) {
                                 <span className='sub__title'>Bajas</span>
                             </Link>
                         </li>
-                        
+
                     </ul>
                 </li>
             </ul>

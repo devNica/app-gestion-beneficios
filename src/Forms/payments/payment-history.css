@@ -1,11 +1,13 @@
-.records {
+.payment__request__history {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
+    font-size: 1.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    gap: 15px;
 
-    .record {
+    .current__data-selected{
         padding: 0.3rem;
         width: 93%;
         height: 30px;
@@ -42,63 +44,33 @@
                         background-color: var(--primary--color);
                     }
                 }
-
-                &.btn__approved {
-                    &:hover {
-                        border: 1px solid var(--success--color);
-                        cursor: pointer;
-                        color: var(--bg-white-100);
-                        background-color: var(--success--color);
-                    }
-                }
-
-                &.btn__rejected {
-                    &:hover {
-                        border: 1px solid var(--danger--color);
-                        cursor: pointer;
-                        color: var(--bg-white-100);
-                        background-color: var(--danger--color);
-                    }
-                }
-
-
             }
         }
     }
-
-    .definitions {
-        display: flex;
-        flex-direction: column;
-
-        .status,
-        .types {
-            line-height: 1.13rem;
-            gap: 10px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            font-family: 'Barlow Condensed', sans-serif;
-            height: 40px;
-
-            >P {
-                height: 20px;
-                display: flex;
-                flex-direction: row;
-                gap: 10px;
-                padding: 0.5rem;
-                font-weight: 400;
-            }
-        }
-    }
-
+    
     .navigation {
+        width: 94%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
         .btn {
-            width: 120px;
+            width: 100px;
             height: 40px;
             border-radius: 4px;
             border: none;
+            font-family: 'Barlow Condensed', sans-serif;
 
             &:hover {
                 cursor: pointer;
+            }
+
+            &.btn__save {
+                background-color: var(--success--color);
+
+                &:hover {
+                    background-color: rgba(12, 194, 139, 0.85);
+                }
             }
 
             &.btn__back {

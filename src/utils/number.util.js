@@ -3,6 +3,11 @@ function formatNumberWithCommas(number) {
 }
 
 
+function currencyToNumber(amountInStringFormat) {
+    return parseFloat(amountInStringFormat.replace(/,/g, ''));
+}
+
 export {
-    formatNumberWithCommas
+    formatNumberWithCommas,
+    currencyToNumber
 }

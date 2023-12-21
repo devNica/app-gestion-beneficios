@@ -1,0 +1,41 @@
+.payment__plan__form {
+    .payment__rows {
+        border: 1px solid var(--bg-gray-500);
+        border-radius: 3px;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 130px 100px 60px 100px;
+        gap: 10px;
+
+        >td {
+            height: 40px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            >select {
+                height: 26px;
+                background-color: var(--bg-white-300);
+                color: var(--bg-gray-600);
+                border-radius: 3px;
+                font-size: 1rem;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+
+            >input {
+                height: 23px;
+                background-color: var(--bg-white-300);
+                color: var(--bg-gray-600);
+                border-radius: 3px;
+                outline: none;
+                border: 1px solid var(--bg-gray-500);
+                text-align: center;
+                font-size: 1rem;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+        }
+
+
+
+    }
+}

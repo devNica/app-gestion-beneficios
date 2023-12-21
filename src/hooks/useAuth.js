@@ -1,9 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import {loginFailed, logout, reload} from '../redux/auth.slice'
+import { loginFailed, logout, reload } from '../redux/auth.slice'
 
 export const useIsAuth = () => useSelector(state => state.auth.isAuth)
 export const useGetUserInfo = () => useSelector(state => state.auth.user)
 
+
+export const useAuthHook = () => {
+    const { user } = useSelector(state => state.auth)
+
+    return {
+        states: {
+            user
+        }
+    }
+}
 
 export const useManageCredential = () => {
     const dispatch = useDispatch()
@@ -13,7 +23,7 @@ export const useManageCredential = () => {
         dispatch(logout())
     }
 
-    function loadCredential () {
+    function loadCredential() {
         if (token !== null) {
             dispatch(reload())
         } else {
