@@ -354,7 +354,7 @@ export const useHandleApplicationSupportForm = ({ updateCurrentIndex, currentInd
             }
         }
         else if (initialOption === 'E' && beneficiary.range === 'Dentro' && beneficiary.received > 0) {
-            setApplicationType(applicationTypes[3])
+            setApplicationType(applicationTypes[2])
         }
         else if (initialOption === 'E' && beneficiary.range === 'Fuera') {
             setApplicationType(applicationTypes[2])

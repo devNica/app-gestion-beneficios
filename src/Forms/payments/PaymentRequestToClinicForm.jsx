@@ -163,18 +163,27 @@ const PaymentRequestToClinicForm = ({ currentIndex, updateCurrentIndex }) => {
             requestToPay: recordsSelected.map(record => ({ glassesRequestId: record.glassesRequestId }))
         }
 
-        const result = await registerPaymentRequestAPI(payload)
-            .finally(() => {
+        await registerPaymentRequestAPI(payload)
+            .then(res => {
+
+                dispatch(loadPayments(res.data))
                 dispatch(setNotification({
                     message: 'Registro de Solicitud Exitoso',
                     type: 'success',
                     delay: 1500
                 }))
             })
+            .catch(err => {
+                dispatch(setNotification({
+                    message: 'Error en el registro',
+                    type: 'error',
+                    delay: 1500
+                }))
+            })
 
         resetFields()
 
-        dispatch(loadPayments(result.data))
+
     }
 
     function goToHistory() {

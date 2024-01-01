@@ -18,12 +18,17 @@ const options = [
 ]
 
 const installments = [
-    { id: 1, value: '1 Cuota' },
+    { id: 1, value: '2 Cuotas' },
     { id: 2, value: '3 Cuotas' },
-    { id: 3, value: '5 Cuotas' },
-    { id: 4, value: '7 Cuotas' },
-    { id: 5, value: '10 Cuotas' },
-    { id: 6, value: '12 Cuotas' }
+    { id: 3, value: '4 Cuotas' },
+    { id: 4, value: '5 Cuotas' },
+    { id: 5, value: '6 Cuotas' },
+    { id: 6, value: '7 Cuotas' },
+    { id: 7, value: '8 Cuotas' },
+    { id: 8, value: '9 Cuotas' },
+    { id: 9, value: '10 Cuotas' },
+    { id: 10, value: '11 Cuotas' },
+    { id: 11, value: '12 Cuotas' }
 ]
 
 const ApplicationSupportsForm = ({
@@ -268,7 +273,7 @@ const ApplicationSupportsForm = ({
 
                 {
                     applicationType.id > 1
-                    ?
+                        ?
                         <Select
                             id="numberDeductions"
                             name="numberDeductions"
@@ -278,7 +283,7 @@ const ApplicationSupportsForm = ({
                             currentValue={installment}
                             onChange={handleInstallmentSelection}
                         />
-                    :
+                        :
                         <CustomInput
                             id="numberDeductions"
                             name="numberDeductions"

@@ -118,12 +118,31 @@
                         }
                     }
 
+                    &.btn__payment {
+                        &:hover {
+                            border: 1px solid var(--bg-gray-600);
+                            cursor: pointer;
+                            color: #585e71;
+                            background-color: var(--bg-white-100);
+                        
+                        }
+                    }
+
                     &.btn__archive {
                         &:hover {
                             border: 1px solid var(--bg-gray-600);
                             cursor: pointer;
                             color: var(--bg-white-100);
                             background-color: var(--bg-gray-600);
+                        }
+                    }
+
+                    &.btn__served {
+                        &:hover {
+                            border: 1px solid var(--bg-gray-600);
+                            cursor: pointer;
+                            color: var(--primary--color);
+                            background-color: var(--bg-white-100);
                         }
                     }
 
@@ -162,9 +181,9 @@
             line-height: 1.13rem;
             gap: 10px;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             font-family: 'Barlow Condensed', sans-serif;
-            height: 40px;
+            height: 60px;
 
             >P {
                 height: 20px;

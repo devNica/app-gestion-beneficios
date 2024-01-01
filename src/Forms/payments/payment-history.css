@@ -35,13 +35,32 @@
                 color: var(--bg-gray-400);
                 border: 1px solid var(--bg-gray-500);
                 transition: .3s ease-in-out;
+                
 
                 &.btn__print {
                     &:hover {
-                        border: 1px solid var(--primary--color);
                         cursor: pointer;
+                        border: 1px solid var(--primary--color);
                         color: var(--bg-white-100);
                         background-color: var(--primary--color);
+                    }
+                }
+
+                &.btn__archive {
+                    &:hover {
+                        cursor: pointer;
+                        border: 1px solid var(--bg-gray-600);
+                        color: var(--bg-white-100);
+                        background-color: var(--bg-gray-600);
+                    }
+                }
+
+                &.btn__revert {
+                    &:hover {
+                        cursor: pointer;
+                        border: 1px solid var(--danger--color);
+                        color: var(--bg-white-100);
+                        background-color: var(--danger--color);
                     }
                 }
             }

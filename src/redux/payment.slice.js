@@ -4,14 +4,15 @@ const initialState = {
     clinics: [],
     periods: [],
     applicationsPendingForPayment: [],
-    payments: []
+    payments: [],
+    paymentPlanProps: []
 }
 
 const paymentSlice = createSlice({
     name: 'payments',
     initialState,
     reducers: {
-        setProps (state, actions) {
+        setProps(state, actions) {
             return {
                 ...state,
                 clinics: actions.payload.clinics,
@@ -19,14 +20,21 @@ const paymentSlice = createSlice({
             }
         },
 
-        loadPayments (state, actions) {
+        loadPaymentPlanProps(state, action) {
+            return {
+                ...state,
+                paymentPlanProps: action.payload
+            }
+        },
+
+        loadPayments(state, actions) {
             return {
                 ...state,
                 payments: actions.payload
             }
         },
 
-        loadApplications (state, actions) {
+        loadApplications(state, actions) {
             return {
                 ...state,
                 applicationsPendingForPayment: actions.payload
@@ -36,6 +44,6 @@ const paymentSlice = createSlice({
 })
 
 
-export const { setProps, loadApplications, loadPayments } = paymentSlice.actions
+export const { setProps, loadApplications, loadPayments, loadPaymentPlanProps } = paymentSlice.actions
 
 export default paymentSlice.reducer

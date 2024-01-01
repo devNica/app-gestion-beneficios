@@ -1,13 +1,22 @@
 import { useState } from "react"
 import DataTable from "../../Components/DataTable/DataTable"
 import { usePaymentHook } from "../../hooks/usePayment"
+import ReactTooltip from 'react-tooltip'
 
 import './payment-history.css'
+import { archivePaymentRequestAPI, revertPaymentRequestAPI } from "../../service/payments.api"
+import { loadPayments } from "../../redux/payment.slice"
+import { useDispatch } from 'react-redux'
+import CustomNotification from "../../Components/Notification/CustomNotification"
+import { setNotification } from "../../redux/notification.slice"
 
 const PaymentRequestHistory = ({ currentIndex, updateCurrentIndex }) => {
 
     const { states: { payments } } = usePaymentHook()
     const [record, setRecord] = useState(null)
+
+    const dispatch = useDispatch()
+    CustomNotification()
 
     function handlePaymentSelection(data) {
         setRecord(data)
@@ -18,7 +27,7 @@ const PaymentRequestHistory = ({ currentIndex, updateCurrentIndex }) => {
     }
 
     function generarPDF() {
-        fetch(`http://localhost:6700/telcor/beneficios/v1/payments/dowload-memo/${record.serie}`, {
+        fetch(`${import.meta.env.VITE_SERVER_URL}${import.meta.env.VITE_API_PREFIX}/payment/${record.serie}/download/payment-memo`, {
             body: JSON.stringify({}), // data can be `string` or {object}!
             headers: {
                 'Content-Type': 'application/json'
@@ -42,6 +51,30 @@ const PaymentRequestHistory = ({ currentIndex, updateCurrentIndex }) => {
         })
     }
 
+    async function archiveRequest() {
+        await archivePaymentRequestAPI(record.serie)
+            .then(res => {
+                dispatch(loadPayments(res.data))
+                dispatch(setNotification({
+                    message: 'Solicitud Archivada',
+                    type: 'success',
+                    delay: 1500
+                }))
+            })
+    }
+
+    async function revertPaymentRequest() {
+        await revertPaymentRequestAPI(record.serie)
+            .then(res => {
+                dispatch(loadPayments(res.data))
+                dispatch(setNotification({
+                    message: 'Reversion Exitosa!',
+                    type: 'success',
+                    delay: 1500
+                }))
+            })
+    }
+
     return (
         <div className="payment__request__history">
 
@@ -49,9 +82,26 @@ const PaymentRequestHistory = ({ currentIndex, updateCurrentIndex }) => {
                 <span className="current__record-info">{record !== null ? `[${record.serie}] - [${record.clinicName}]` : '-/-/-/-'}</span>
                 {record !== null ?
                     <div className="options">
-                        <button className="btn btn__print" onClick={generarPDF}>
+                        <button className="btn btn__print" data-tip data-for='btn-print' onClick={generarPDF}>
                             <i className="bi bi-printer-fill"></i>
                         </button>
+                        <ReactTooltip id='btn-print' place='bottom'>
+                            Imprimir Memorandum
+                        </ReactTooltip>
+
+                        <button className="btn btn__archive" data-tip data-for='btn-archive' onClick={archiveRequest}>
+                            <i className="bi bi-box-seam-fill"></i>
+                        </button>
+                        <ReactTooltip id='btn-archive' place='bottom'>
+                            Archivar Solicitud
+                        </ReactTooltip>
+
+                        <button className="btn btn__revert" data-tip data-for='btn-revert' onClick={revertPaymentRequest}>
+                            <i className="bi bi-database-fill-dash"></i>
+                        </button>
+                        <ReactTooltip id='btn-revert' place='bottom'>
+                            Revertir Solicitud
+                        </ReactTooltip>
                     </div> : <></>
                 }
 

@@ -1,14 +1,141 @@
 .payment__plan__form {
+
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+
+    tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .form__header {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+
+        .references {
+            display: flex;
+            flex-direction: row;
+            width: 70%;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+            font-size: 1.1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+
+
+            .memo__ref {
+                background-color: var(--bg-white-100);
+                outline: none;
+                border: 1px solid var(--bg-gray-600);
+                border-radius: 3px;
+                height: 27px;
+                color: var(--bg-gray-600);
+                text-align: center;
+                font-size: 1.1rem;
+                font-family: 'Barlow Condensed', sans-serif;
+
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            width: 30%;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        .btn {
+            font-size: 1.1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            border-radius: 3px;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            gap: 10px;
+
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            background-color: var(--bg-white-100);
+            color: var(--bg-gray-400);
+            border: 1px solid var(--bg-gray-500);
+            transition: .3s ease-in-out;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &.btn__print,
+            &.btn__update-ref {
+                &:hover {
+                    background-color: #154e8c;
+                    color: var(--bg-white-100);
+                    border: 1px solid #154e8c;
+                }
+            }
+
+            &.btn__calculate {
+                &:hover {
+                    background-color: var(--warning--color);
+                    color: var(--bg-gray-600);
+                    border: 1px solid var(--warning--color);
+                }
+            }
+
+            &.btn__confirmed {
+                &:hover {
+                    background-color: var(--bg-gray-600);
+                    color: var(--warning--color);
+                    border: 1px solid var(--bg-gray-600);
+                }
+            }
+
+        }
+    }
+
+    table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    thead {
+        background-color: #585e71;
+        border-radius: 3px;
+        color: var(--bg-white-100);
+    }
+
     .payment__rows {
         border: 1px solid var(--bg-gray-500);
         border-radius: 3px;
-        padding: 1rem;
+        padding: .7rem;
         display: grid;
-        grid-template-columns: 130px 100px 60px 100px;
-        gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto;
+        gap: 20px;
+
+        >th {
+            height: 5px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            text-align: center;
+        }
 
         >td {
-            height: 40px !important;
+            height: 10px !important;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -17,9 +144,11 @@
                 height: 26px;
                 background-color: var(--bg-white-300);
                 color: var(--bg-gray-600);
+                border: 1px solid var(--bg-gray-500);
                 border-radius: 3px;
                 font-size: 1rem;
                 font-family: 'Barlow Condensed', sans-serif;
+                text-align: center;
             }
 
             >input {

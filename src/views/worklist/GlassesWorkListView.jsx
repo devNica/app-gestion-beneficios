@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import ReactTooltip from 'react-tooltip'
 
-import { approvedRequestStatusAPI, archiveRequestStatusAPI, confirmedRequestStatusAPI, rejectedRequestStatusAPI, updGlassesRequestRefAPI } from '../../service/glasses.api'
+import { approvedRequestStatusAPI, archiveRequestStatusAPI, confirmedRequestStatusAPI, rejectedRequestStatusAPI, servedRequestStatusAPI, updGlassesRequestRefAPI } from '../../service/glasses.api'
 import { setNotification } from '../../redux/notification.slice'
 
 import { loadRequestsInProcess } from '../../redux/glass.slice'
@@ -20,6 +20,8 @@ import { isEmpty } from 'lodash'
 import './work-list-view.css'
 import PaymentPlanForm from '../../Forms/GlassesBenefit/PaymentPlanForm'
 import Modal from '../../Components/Modal/Modal'
+import { fetchPaymentPlanPropsAPI } from '../../service/payments.api'
+import { loadPaymentPlanProps } from '../../redux/payment.slice'
 
 const GlassesWorkListView = () => {
 
@@ -42,7 +44,7 @@ const GlassesWorkListView = () => {
     const registeringProcess = 'GL-REG'
 
     async function generarPDF() {
-        fetch(`http://localhost:6700/telcor/beneficios/v1/glasses/download/letter-to-optician`, {
+        fetch(`${import.meta.env.VITE_SERVER_URL}${import.meta.env.VITE_API_PREFIX}/glasses/download/letter-to-optician`, {
             body: JSON.stringify({ requestId: record.id, username: user.username, typeSerie: record.typeSerie }), // data can be `string` or {object}!
             headers: {
                 'Content-Type': 'application/json'
@@ -149,7 +151,7 @@ const GlassesWorkListView = () => {
             dispatch(loadRequestsInProcess(res.data))
 
             dispatch(setNotification({
-                message: 'Solicitud Aprobada Satisfactoriamente',
+                message: 'Solicitud Confirmada Satisfactoriamente',
                 type: 'success',
                 delay: 1500
             }))
@@ -190,6 +192,37 @@ const GlassesWorkListView = () => {
         })
     }
 
+    async function servedRequest() {
+        await servedRequestStatusAPI(record.id).then(res => {
+            if (res.data?.error) {
+                console.log(res.data)
+                dispatch(setNotification({
+                    message: res.data.message,
+                    type: 'error',
+                    delay: 1500
+                }))
+                return 
+            } else {
+                dispatch(loadRequestsInProcess(res.data))
+
+                dispatch(setNotification({
+                    message: 'Solicitud Atendida',
+                    type: 'info',
+                    delay: 1500
+                }))
+
+                setRecord(null)
+            }
+        }).catch(err => {
+            dispatch(setNotification({
+                message: String(err),
+                type: 'danger',
+                delay: 1500
+            }))
+        })
+
+    }
+
 
     async function rejectedRequest() {
         await rejectedRequestStatusAPI(record.id).then(res => {
@@ -203,7 +236,6 @@ const GlassesWorkListView = () => {
             }))
 
             setRecord(null)
-
 
         }).catch(err => {
             dispatch(setNotification({
@@ -262,6 +294,18 @@ const GlassesWorkListView = () => {
         })
     }
 
+    async function openPaymentPlanForm() {
+        await fetchPaymentPlanPropsAPI(record.id)
+            .then(res => {
+                dispatch(loadPaymentPlanProps(res.data))
+            })
+            .catch(err => console.error(err))
+
+        setTimeout(() => {
+            setPaymentModal(true)
+        }, 100);
+    }
+
     return (
         <div className="worklist__view">
 
@@ -314,7 +358,7 @@ const GlassesWorkListView = () => {
                                 record.reqStatus === 'SF3' && record.hasReference ?
                                     <>
                                         <button className="btn btn__confirmed" data-tip data-for='btn-confirmed' onClick={confirmedRequest}>
-                                            <i class="bi bi-lightning-fill"></i>
+                                            <i className="bi bi-lightning-fill"></i>
                                         </button>
 
                                         <ReactTooltip id='btn-confirmed' place='bottom'>
@@ -341,19 +385,34 @@ const GlassesWorkListView = () => {
                             }
 
                             {
-                                record.typeSerie !== 'CVN' && record.reqStatus === 'SF4' && record.hasReference ?
+                                record.typeSerie !== 'CVN' && record.reqStatus === 'SF5' && record.hasReference ?
                                     <>
                                         <button
-                                            onClick={() => setPaymentModal(true)}
+                                            onClick={openPaymentPlanForm}
                                             type="button"
-                                            className="btn btn__update-ref"
+                                            className="btn btn__payment"
                                             data-tip data-for='btn-payment-plan'>
-                                            <i className="bi bi-calendar2-plus"></i>
+                                            <i className="bi bi-calendar-plus-fill"></i>
                                         </button>
                                         <ReactTooltip id='btn-payment-plan' place='bottom'>
                                             Agregar Plan de Pago
                                         </ReactTooltip>
-                                    </> : <></>
+
+
+                                    </> :
+                                    record.reqStatus === 'SF4' ?
+                                        <>
+                                            <button
+                                                onClick={servedRequest}
+                                                type='button'
+                                                className='btn btn__served'
+                                                data-tip data-for='btn-served'>
+                                                <i className="bi bi-patch-check-fill"></i>
+                                            </button>
+                                            <ReactTooltip id='btn-served' place='bottom'>
+                                                Atendida
+                                            </ReactTooltip>
+                                        </> : <></>
                             }
 
 
@@ -378,7 +437,7 @@ const GlassesWorkListView = () => {
                             }
 
                             {
-                                record.reqStatus !== 'SF2' ?
+                                record.reqStatus !== 'SF2' && record.reqStatus !== 'SF5' ?
                                     <>
                                         <button className="btn btn__edit" data-tip data-for='btn-edit' onClick={handleEditRecord}>
                                             <i className="bi bi-pencil-fill"></i>
@@ -424,7 +483,7 @@ const GlassesWorkListView = () => {
             />
 
             <Modal
-                title='Plan de Pago'
+                title={`Plan de Pago - ${record !== null ? record.fullname : ''}`}
                 isOpen={paymentModal}
                 onClose={() => setPaymentModal(false)}
                 // eslint-disable-next-line react/no-children-prop
@@ -440,6 +499,7 @@ const GlassesWorkListView = () => {
                     <p><strong>SF2:</strong>Sol. No Aprobada</p>
                     <p><strong>SF3:</strong>Sol. Aprobada</p>
                     <p><strong>SF4:</strong>Sol. Confirmada para Atencion</p>
+                    <p><strong>SF5:</strong>Sol. Atendida por la Optica</p>
                 </div>
 
                 <div className={'types'}>

@@ -69,6 +69,14 @@ export const rejectedRequestStatusAPI = async (requestId) => {
 }
 
 
+export const servedRequestStatusAPI = async (requestId) => {
+    return await httpHandler({
+        instance: axiosInstance,
+        endpoint: `/glasses/request/served/${requestId}`,
+        method: 'PATCH'
+    })
+}
+
 export const archiveRequestStatusAPI = async (requestId) => {
     return await httpHandler({
         instance: axiosInstance,

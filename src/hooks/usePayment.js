@@ -4,15 +4,16 @@ import { setProps, loadPayments } from '../redux/payment.slice'
 export const usePaymentHook = () => {
 
     const dispatch = useDispatch()
-    const { 
-        clinics, 
+    const {
+        paymentPlanProps,
+        clinics,
         periods,
-        payments, 
-        applicationsPendingForPayment 
+        payments,
+        applicationsPendingForPayment
     } = useSelector(state => state.payments)
 
 
-    function initializePaymentStore ({ props, payments }) {
+    function initializePaymentStore({ props, payments }) {
         dispatch(setProps({
             clinics: props.data.clinics,
             periods: props.data.periods
@@ -23,6 +24,7 @@ export const usePaymentHook = () => {
 
     return {
         states: {
+            paymentPlanProps,
             clinics,
             periods,
             payments,

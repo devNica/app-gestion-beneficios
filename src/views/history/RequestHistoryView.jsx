@@ -75,7 +75,7 @@ export default function RequestHistoryView({ data, nameSpace }) {
     }
 
     async function generarPDF (){
-        fetch(`http://localhost:6700/telcor/beneficios/v1/${nameSpace.navigationPath}/download-memo`,{
+        fetch(`${import.meta.env.VITE_SERVER_URL}${import.meta.env.VITE_API_PREFIX}/${nameSpace.navigationPath}/download-memo`,{
             body: JSON.stringify({ orderId: currentRecord.recordId, username: user.username }), // data can be `string` or {object}!
             headers:{
               'Content-Type': 'application/json'
