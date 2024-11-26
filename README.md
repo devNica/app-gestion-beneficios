@@ -1,6 +1,6 @@
-# APLICACION EN DESARROLLO DE TELCOR
+# APLICACION EN DESARROLLO DE GESTION DE BENEFICIOS
 
-Aplicacion Cliente del modulo de Beneficios del ministerio de Telecomunicaciones y Correos.
+Aplicacion Cliente de Gestion de Beneficios de Empleados.
 
 
 ## Instalacion
@@ -20,4 +20,4 @@ Aplicacion Cliente del modulo de Beneficios del ministerio de Telecomunicaciones
 | :--- | :--- | :--- |
 | `VITE_APPLICATION_PORT` | `string` |  Puerto de Exposicion de la Aplicacion Cliente |
 | `VITE_SERVER_URL` | `string` |  Dominio de la Aplicacion Servidor (`http://localhost:serverport`) |
-| `VITE_API_PREFIX` | `string` |  Prefijo de Rutas del Servidor (`/telcor/beneficios/v1`) |
+| `VITE_API_PREFIX` | `string` |  Prefijo de Rutas del Servidor (`/beneficios/v1`) |

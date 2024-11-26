@@ -14,10 +14,10 @@ export default function HomePage() {
 
             <div className="contentB">
                 <h2 className='text'>
-                    Telcor
+                    DevNica
                 </h2>
                 <h2 className='text'>
-                    Telcor
+                    DevNica
                 </h2>
             </div>
         </div>

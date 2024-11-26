@@ -25,7 +25,7 @@ const ApplicationsGlassesInProcess = ({ currentIndex, updateCurrentIndex }) => {
     }
 
     async function generarPDF (){
-        fetch(`http://localhost:6700/telcor/beneficios/v1/glasses/download-memo`,{
+        fetch(`http://localhost:6700/beneficios/v1/glasses/download-memo`,{
             body: JSON.stringify({ orderId: record.requestGlassesId, username: user.username }), // data can be `string` or {object}!
             headers:{
               'Content-Type': 'application/json'

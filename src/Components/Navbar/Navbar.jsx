@@ -1,5 +1,5 @@
 import './navbar.css'
-import TelcorLogo from '../../assets/Telcor.svg'
+import DevNicaLogo from '../../assets/devnica-blue.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useManageCredential } from '../../hooks/useAuth'
@@ -23,7 +23,7 @@ export default function Navbar() {
             <ul className="nav__items left">
                 <li className='nav__link__brand'>
                     <Link to={'/home'}>
-                        <img src={TelcorLogo} alt="telcor-logo" className='logo' />
+                        <img src={DevNicaLogo} alt="devnica-logo" className='logo' />
                     </Link>
 
                 </li>
